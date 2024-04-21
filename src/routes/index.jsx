@@ -1,20 +1,11 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
+import { useContext } from "react";
+import PrivateTab from "./PrivateTab.routes";
+import PublicTab from "./PublicTab.routes";
+import { AuthContext } from "../contexts/AuthContext";
 
-import StackRoutes from "./stack.routes";
-import TabRoutes from "./tab.routes";
-import DrawerRoutes from "./drawer.routes";
-
-
-
-
-export default function Routes() {
-  return (
-    <NavigationContainer>
-      {/* <TabRoutes /> */}
-      <DrawerRoutes />
-      {/* <StackRoutes /> */}
-      <StatusBar style="auto" />
-    </NavigationContainer>
-  );
+function Routes() {
+  const { auth } = useContext(AuthContext);
+  return auth ? <PrivateTab /> : <PublicTab />
 }
+
+export default Routes;
