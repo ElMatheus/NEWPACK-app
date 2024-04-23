@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontWeight: 'bold',
-    color: '#2f2f2f',
+    color: '#000',
+    fontFamily: 'Poppins_700Bold',
   },
   containerInps: {
     width: '85%',
@@ -34,7 +34,10 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   inputTxt: {
-    fontSize: 18,
+    color: '#000',
+    flex: 1,
+    fontSize: 17,
+    fontFamily: 'Poppins_500Medium',
   },
   button: {
     backgroundColor: '#4B6584',
@@ -45,6 +48,7 @@ const styles = StyleSheet.create({
   buttonTxt: {
     color: '#fff',
     fontSize: 18,
+    fontFamily: 'Poppins_500Medium',
   },
 });
 

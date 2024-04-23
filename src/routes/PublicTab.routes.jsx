@@ -9,8 +9,20 @@ const Tab = createBottomTabNavigator();
 const PublicTab = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Login" component={Login} />
+      <Tab.Navigator screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          display: 'none',
+        },
+
+      }}>
+        <Tab.Screen name="Login" component={Login} options={
+          {
+            tabBarItemStyle: {
+              display: 'none',
+            },
+          }
+        } />
       </Tab.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

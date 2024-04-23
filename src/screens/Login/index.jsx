@@ -1,15 +1,22 @@
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Title from '../../components/Title';
-
+import { useFonts, Poppins_700Bold, Poppins_500Medium } from '@expo-google-fonts/poppins';
 import styles from './styles';
 
 export default function Login() {
+  let [fontsLoaded, fontError] = useFonts({
+    Poppins_700Bold,
+    Poppins_500Medium,
+  });
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
   return (
     <View style={styles.containerLogin}>
       <View style={styles.container}>
         <Image style={{ width: 130, height: 80 }} source={require('../../../assets/images/newpack-logo.png')} />
-        <Text style={styles.title}>Entre em seu perfil</Text>
+        <Text style={styles.title}>Entre em seu perfil!</Text>
       </View>
       <View style={styles.containerInps}>
 
