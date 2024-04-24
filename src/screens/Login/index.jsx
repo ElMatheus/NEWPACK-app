@@ -5,14 +5,20 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from '@expo-google-fonts/poppins';
 import styles from './styles';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
+  const { auth } = useContext(AuthContext);
+
   const [users, setUsers] = useState([]);
+  const [token, setToken] = useState('');
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (name && password) {
@@ -21,8 +27,9 @@ export default function Login() {
         password: password,
       });
       if (isLogged) {
-        alert('Logado com sucesso!');
-        console.log(isLogged.data.token);
+        setUsers(isLogged.data.user);
+        setToken(isLogged.data.token);
+        navigation.navigate('Home')
       } else {
         alert('Erro ao logar!');
       }
