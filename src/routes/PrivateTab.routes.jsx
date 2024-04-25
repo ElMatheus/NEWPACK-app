@@ -13,7 +13,6 @@ const PrivateTab = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="Login" component={Login} />
         <Tab.Screen name="Home" component={Home} />
         <Tab.Screen name="Profile" component={Profile} />
         <Tab.Screen name="Category" component={Category} />

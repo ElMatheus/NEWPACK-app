@@ -10,15 +10,11 @@ import { useNavigation } from '@react-navigation/native';
 export default function Login() {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
-  const { auth } = useContext(AuthContext);
-
-  const [users, setUsers] = useState([]);
-  const [token, setToken] = useState('');
+  const { auth, setAuth, setUser, setToken } = useContext(AuthContext);
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (name && password) {
@@ -27,9 +23,10 @@ export default function Login() {
         password: password,
       });
       if (isLogged) {
-        setUsers(isLogged.data.user);
+        setAuth(true);
+
+        setUser(isLogged.data.user);
         setToken(isLogged.data.token);
-        navigation.navigate('Home')
       } else {
         alert('Erro ao logar!');
       }
