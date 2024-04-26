@@ -1,34 +1,32 @@
-import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../contexts/AuthContext';
+import { useState, useContext } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useFonts, Poppins_700Bold, Poppins_500Medium } from '@expo-google-fonts/poppins';
-import styles from './styles';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
+import { AuthContext } from '../../contexts/AuthContext';
+
+import styles from './styles';
 
 export default function Login() {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
-
-  const { auth, setAuth, setUser, setToken } = useContext(AuthContext);
-
+  const { signIn } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-
   const handleLogin = async () => {
-    if (name && password) {
-      const isLogged = await axios.post(`${apiURL}/users/login/ `, {
-        name: name,
-        password: password,
-      });
-      if (isLogged) {
-        setAuth(true);
-
-        setUser(isLogged.data.user);
-        setToken(isLogged.data.token);
+    try {
+      if (name && password) {
+        await signIn(name, password);
       } else {
-        alert('Erro ao logar!');
+        alert('Preencha todos os campos!');
+        return;
+      }
+
+    } catch (error) {
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert('Aconteceu algum erro inesperado!');
       }
     }
   }

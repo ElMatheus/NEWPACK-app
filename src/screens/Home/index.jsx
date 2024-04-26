@@ -9,6 +9,7 @@ import styles from './styles';
 
 export default function Home() {
   const { user } = useContext(AuthContext);
+
   return (
     <View style={styles.container}>
       <Title txt={`Hello! ${user.name} 🤳`} />
