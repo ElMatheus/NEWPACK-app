@@ -1,17 +1,14 @@
 import { useState, useContext } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useFonts, Poppins_700Bold, Poppins_500Medium } from '@expo-google-fonts/poppins';
-import axios from 'axios';
 import { AuthContext } from '../../contexts/AuthContext';
-
 import styles from './styles';
 
 export default function Login() {
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
-  const { signIn } = useContext(AuthContext);
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  const { signIn } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
@@ -29,15 +26,6 @@ export default function Login() {
         alert('Aconteceu algum erro inesperado!');
       }
     }
-  }
-
-  let [fontsLoaded, fontError] = useFonts({
-    Poppins_700Bold,
-    Poppins_500Medium,
-  });
-
-  if (!fontsLoaded && !fontError) {
-    return null;
   }
   return (
     <View style={styles.containerLogin}>

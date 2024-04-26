@@ -11,11 +11,12 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const loadingStoreData = async () => {
-      const storageUser = await AsyncStorage.getItem("user");
-      const storageToken = await AsyncStorage.getItem("token");
+      const storageUser = await AsyncStorage.getItem("@asyncStorage:user");
+      const storageToken = await AsyncStorage.getItem("@asyncStorage:token");
 
       if (storageUser && storageToken) {
         setUser(JSON.parse(storageUser));
+        setAuth(true);
       }
     };
     loadingStoreData();
@@ -30,8 +31,8 @@ const AuthProvider = ({ children }) => {
       setUser(isLogged.data);
       setAuth(true);
       axios.defaults.headers.common['Authorization'] = `Bearer ${isLogged.data.token}`;
-      await AsyncStorage.setItem('user', JSON.stringify(isLogged.data.user));
-      await AsyncStorage.setItem('token', isLogged.data.token);
+      await AsyncStorage.setItem('@asyncStorage:user', JSON.stringify(isLogged.data.user));
+      await AsyncStorage.setItem('@asyncStorage:token', isLogged.data.token);
     }
   }
 
