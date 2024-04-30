@@ -2,11 +2,13 @@ import { useState, useContext } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../../contexts/AuthContext';
+import PopUp from '../../components/PopUp';
 import styles from './styles';
 
 export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [popUp, setPopUp] = useState(false);
 
   const { signIn, user } = useContext(AuthContext);
 
@@ -15,8 +17,12 @@ export default function Login() {
       if (name && password) {
         await signIn(name, password);
       } else {
-        alert('Preencha todos os campos!');
-        return;
+        setPopUp(true);
+        setTimeout(() => {
+          setPopUp(false);
+        }, 3000);
+
+
       }
 
     } catch (error) {
@@ -30,6 +36,7 @@ export default function Login() {
 
   return (
     <View style={styles.containerLogin}>
+
       <View style={styles.container}>
         <Image style={{ width: 130, height: 80 }} source={require('../../../assets/images/newpack-logo.png')} />
         <Text style={styles.title}>Entre em seu perfil!</Text>
@@ -49,8 +56,8 @@ export default function Login() {
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonTxt}>Entrar</Text>
         </TouchableOpacity>
-
       </View>
+      {popUp && <PopUp message='Preencha todos os campos!' />}
     </View>
   )
 }
