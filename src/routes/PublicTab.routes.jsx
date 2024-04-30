@@ -23,6 +23,7 @@ const PublicTab = () => {
             },
           }
         } />
+
       </Tab.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

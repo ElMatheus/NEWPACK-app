@@ -8,7 +8,7 @@ export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const { signIn } = useContext(AuthContext);
+  const { signIn, user } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
@@ -27,6 +27,7 @@ export default function Login() {
       }
     }
   }
+
   return (
     <View style={styles.containerLogin}>
       <View style={styles.container}>
@@ -48,6 +49,7 @@ export default function Login() {
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           <Text style={styles.buttonTxt}>Entrar</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   )
