@@ -9,7 +9,7 @@ import styles from './styles';
 export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-  const [popUp, setPopUp] = useState(false);
+  const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
 
   const { signIn, user } = useContext(AuthContext);
@@ -19,9 +19,9 @@ export default function Login() {
       if (name && password) {
         await signIn(name, password);
       } else {
-        setPopUp(true);
+        setPopUp('Preencha todos os campos!');
         setTimeout(() => {
-          setPopUp(false);
+          setPopUp(null);
         }, 3000);
 
 
@@ -31,7 +31,10 @@ export default function Login() {
       if (error.response) {
         setPopUp2(error.response.data.message);
       } else {
-        alert('Aconteceu algum erro inesperado!');
+        setPopUp('Erro interno do servidor');
+        setTimeout(() => {
+          setPopUp(null);
+        }, 3000);
       }
     }
   }
@@ -59,7 +62,7 @@ export default function Login() {
           <Text style={styles.buttonTxt}>Entrar</Text>
         </TouchableOpacity>
       </View>
-      {popUp && <PopUp message='Preencha todos os campos!' />}
+      {popUp && <PopUp message={popUp} />}
       {popUp2 && <PopUp2 user={name} message={popUp2} exitPopUp={setPopUp2} />}
     </View>
   )
