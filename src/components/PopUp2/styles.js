@@ -1,29 +1,54 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  screen: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   container: {
-    backgroundColor: "#221c1c",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "93%",
-    paddingHorizontal: 20,
-    paddingVertical: 13,
-    borderRadius: 10,
+    width: '100%',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
     position: "absolute",
-    top: "5%",
+    bottom: 0,
   },
-  icon: {
+  containerAlert: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  containerTxt: {
-    flex: 1,
+  txtError: {
+    fontSize: 20,
+    fontFamily: 'Poppins_700Bold',
   },
-  title: {
-    textAlign: "center",
-    color: "#fff",
-    fontSize: 18,
+  containerMsg: {
+    marginTop: 10,
+  },
+  msg: {
+    textAlign: 'center',
+    fontSize: 15,
     fontFamily: 'Poppins_500Medium',
   },
+  user: {
+    color: '#4a6584',
+  },
+  button: {
+    backgroundColor: '#4a6584',
+    padding: 10,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  txtButton: {
+    color: '#fff',
+    fontFamily: 'Poppins_500Medium',
+  }
 });
 
 export default styles;

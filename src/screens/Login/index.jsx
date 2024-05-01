@@ -3,12 +3,14 @@ import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../../contexts/AuthContext';
 import PopUp from '../../components/PopUp';
+import PopUp2 from '../../components/PopUp2';
 import styles from './styles';
 
 export default function Login() {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [popUp, setPopUp] = useState(false);
+  const [popUp2, setPopUp2] = useState(null);
 
   const { signIn, user } = useContext(AuthContext);
 
@@ -27,7 +29,7 @@ export default function Login() {
 
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message);
+        setPopUp2(error.response.data.message);
       } else {
         alert('Aconteceu algum erro inesperado!');
       }
@@ -58,6 +60,7 @@ export default function Login() {
         </TouchableOpacity>
       </View>
       {popUp && <PopUp message='Preencha todos os campos!' />}
+      {popUp2 && <PopUp2 user={name} message={popUp2} exitPopUp={setPopUp2} />}
     </View>
   )
 }
