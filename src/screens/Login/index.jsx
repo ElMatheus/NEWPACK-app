@@ -12,7 +12,7 @@ export default function Login() {
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
 
-  const { signIn, user } = useContext(AuthContext);
+  const { signIn, user, setUser } = useContext(AuthContext);
 
   const handleLogin = async () => {
     try {
