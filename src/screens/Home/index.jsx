@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 
 import Title from '../../components/Title';
 
@@ -8,7 +8,7 @@ import { AuthContext } from '../../contexts/AuthContext';
 import styles from './styles';
 
 export default function Home() {
-  const { user, signOut, getUsers } = useContext(AuthContext);
+  const { user, signOut, getUsers, globalLoading } = useContext(AuthContext);
   const [users, setUsers] = useState([{}]);
 
 
@@ -30,14 +30,19 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Title txt={`Hello! ${user.name} 🤳`} />
-      <View>
-        <Text style={styles.title}>Usuários:</Text>
-        {users.map((user, index) => (
-          <Text key={index}>{user.name}</Text>
-        ))}
-
-      </View>
+      {globalLoading ? (
+        <ActivityIndicator size="large" color="#4B6584" />
+      ) : (
+        <>
+          <Title txt={`Hello! ${user.name} 🤳`} />
+          <View>
+            <Text style={styles.title}>Usuários:</Text>
+            {users.map((user, index) => (
+              <Text key={index}>{user.name}</Text>
+            ))}
+          </View>
+        </>
+      )}
     </View>
   )
 }

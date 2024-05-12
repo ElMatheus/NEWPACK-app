@@ -8,9 +8,12 @@ const AuthProvider = ({ children }) => {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const [acessToken, setAcessToken] = useState('');
   const [user, setUser] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [globalLoading, setGlobalLoading] = useState(false);
 
   useEffect(() => {
     const loadingStoreData = async () => {
+      setGlobalLoading(true);
       const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
 
       if (storageToken) {
@@ -33,7 +36,7 @@ const AuthProvider = ({ children }) => {
           AsyncStorage.clear();
         }
       }
-
+      setGlobalLoading(false);
     };
     loadingStoreData();
   }, []);
@@ -52,23 +55,25 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  const signOut = () => {
-    delete axios.defaults.headers.common["Authorization"];
-    AsyncStorage.clear();
-    setUser(null);
-  };
+  // const signOut = () => {
+  //   delete axios.defaults.headers.common["Authorization"];
+  //   AsyncStorage.clear();
+  //   setUser(null);
+  // };
 
   const getUsers = async () => {
+    setGlobalLoading(true);
     const response = await axios.get(`${apiURL}/users`, {
       headers: {
         Authorization: `Bearer ${acessToken}`
       }
     });
+    setGlobalLoading(false);
     return response.data.users;
   };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading }}>
       {children}
     </AuthContext.Provider>
   );

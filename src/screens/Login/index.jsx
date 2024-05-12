@@ -11,10 +11,12 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const { signIn, user, setUser } = useContext(AuthContext);
 
   const handleLogin = async () => {
+    setLoading(true);
     try {
       if (name && password) {
         await signIn(name, password);
@@ -23,10 +25,7 @@ export default function Login() {
         setTimeout(() => {
           setPopUp(null);
         }, 3000);
-
-
       }
-
     } catch (error) {
       if (error.response) {
         setPopUp2(error.response.data.message);
@@ -37,6 +36,7 @@ export default function Login() {
         }, 3000);
       }
     }
+    setLoading(false);
   }
 
   return (
@@ -59,7 +59,9 @@ export default function Login() {
           </View>
         </View>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonTxt}>Entrar</Text>
+          {
+            loading ? <Icon color={"#FFF"} name='spinner' size={18} /> : <Text style={styles.buttonTxt}>Entrar</Text>
+          }
         </TouchableOpacity>
       </View>
       {popUp && <PopUp message={popUp} />}
