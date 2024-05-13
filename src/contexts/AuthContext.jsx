@@ -50,7 +50,6 @@ const AuthProvider = ({ children }) => {
       setAcessToken(isLogged.data.token);
       const { password, ...userWithoutPassword } = isLogged.data.user;
       setUser(userWithoutPassword);
-      console.log(userWithoutPassword);
       await AsyncStorage.setItem('@asyncStorage:refreshToken', JSON.stringify(isLogged.data.refreshToken.id));
     }
   }
