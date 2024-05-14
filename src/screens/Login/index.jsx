@@ -1,10 +1,11 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { AuthContext } from '../../contexts/AuthContext';
 import PopUp from '../../components/PopUp';
 import PopUp2 from '../../components/PopUp2';
 import styles from './styles';
+import { ActivityIndicator } from 'react-native';
 
 export default function Login() {
   const [name, setName] = useState('');
@@ -13,7 +14,7 @@ export default function Login() {
   const [popUp2, setPopUp2] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const { signIn, user, setUser } = useContext(AuthContext);
+  const { signIn, popUpMessage } = useContext(AuthContext);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -39,6 +40,10 @@ export default function Login() {
     setLoading(false);
   }
 
+  useEffect(() => {
+    setPopUp(popUpMessage);
+  }, [popUpMessage]);
+
   return (
     <View style={styles.containerLogin}>
 
@@ -55,12 +60,12 @@ export default function Login() {
           </View>
           <View style={styles.inputContainer}>
             <Icon color={"#b7b7b7"} name='key' size={18} />
-            <TextInput onChangeText={setPassword} value={password} placeholder='Insira sua senha' style={styles.inputTxt} />
+            <TextInput onChangeText={setPassword} value={password} placeholder='Insira sua senha' secureTextEntry={true} style={styles.inputTxt} />
           </View>
         </View>
         <TouchableOpacity onPress={handleLogin} style={styles.button}>
           {
-            loading ? <Icon color={"#FFF"} name='spinner' size={18} /> : <Text style={styles.buttonTxt}>Entrar</Text>
+            loading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.buttonTxt}>Entrar</Text>
           }
         </TouchableOpacity>
       </View>

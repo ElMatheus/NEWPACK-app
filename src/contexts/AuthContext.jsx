@@ -8,8 +8,8 @@ const AuthProvider = ({ children }) => {
   const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const [acessToken, setAcessToken] = useState('');
   const [user, setUser] = useState('');
-  const [loading, setLoading] = useState(false);
   const [globalLoading, setGlobalLoading] = useState(false);
+  const [popUpMessage, setPopUpMessage] = useState(null);
 
   useEffect(() => {
     const loadingStoreData = async () => {
@@ -32,7 +32,10 @@ const AuthProvider = ({ children }) => {
             setUser(userWithoutPassword);
           }
         } catch (error) {
-          alert('Erro ao carregar usuário');
+          setPopUpMessage("Faça login novamente");
+          setTimeout(() => {
+            setPopUpMessage(null);
+          }, 3000);
           AsyncStorage.clear();
         }
       }
@@ -72,7 +75,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage }}>
       {children}
     </AuthContext.Provider>
   );
