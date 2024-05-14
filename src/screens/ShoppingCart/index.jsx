@@ -4,10 +4,10 @@ import Title from '../../components/Title';
 
 import styles from './styles';
 
-export default function Profile() {
+export default function ShoppingCart() {
   return (
     <View style={styles.container}>
-      <Title txt={'Profile - 😜'} />
+      <Title txt={'Carrinho de compras - 😁😁'} />
     </View>
   )
 }
