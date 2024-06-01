@@ -20,6 +20,10 @@ const PopUp = ({ user, message, exitPopUp }) => {
               <Text style={styles.msg}>
                 Não foi possível encontrar um usuário apelidado de <Text style={styles.user}>{user}</Text>
               </Text>
+            ) : message == 'Este usuário não possui pedidos ainda' ? (
+              <Text style={styles.msg}>
+                Este usuário não possui pedidos ainda
+              </Text>
             ) : (
               <Text style={styles.msg}>
                 Ocorreu um erro inesperado!

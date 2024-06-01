@@ -74,8 +74,19 @@ const AuthProvider = ({ children }) => {
     return response.data.users;
   };
 
+  const getProductsForUser = async () => {
+    setGlobalLoading(true);
+    const response = await axios.get(`${apiURL}/orders/name/${user.name}`, {
+      headers: {
+        Authorization: `Bearer ${acessToken}`
+      }
+    });
+    setGlobalLoading(false);
+    return response.data;
+  };
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser }}>
       {children}
     </AuthContext.Provider>
   );
