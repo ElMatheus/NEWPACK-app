@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { View, TouchableOpacity, Text, ActivityIndicator, ScrollView } from 'react-native';
 
 import Title from '../../components/Title';
 
@@ -12,7 +12,7 @@ import styles from './styles';
 
 export default function Home() {
   const { user, signOut, getUsers, globalLoading, getProductsForUser } = useContext(AuthContext);
-  const [products, setProducts] = useState([{}]);
+  const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
 
@@ -58,9 +58,14 @@ export default function Home() {
           </View>
           <View style={styles.containerProducts}>
             <Text style={styles.title}>Pedidos recentes</Text>
-            {products.map((product, index) => (
-              <CardProduct key={product.produto_id} name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
-            ))}
+            <ScrollView>
+              <View style={styles.containerCards}>
+
+                {products.length > 0 && products.map((product, index) => (
+                  <CardProduct key={product.produto_id} name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
+                ))}
+              </View>
+            </ScrollView>
           </View>
         </View>
       )}

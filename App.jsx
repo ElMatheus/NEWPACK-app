@@ -1,9 +1,10 @@
 import Routes from "./src/routes";
 import AuthProvider from "./src/contexts/AuthContext";
-import { useFonts, Poppins_700Bold, Poppins_500Medium } from '@expo-google-fonts/poppins';
+import { useFonts, Poppins_700Bold, Poppins_500Medium, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
 export default function App() {
   let [fontsLoaded, fontError] = useFonts({
+    Poppins_400Regular,
     Poppins_700Bold,
     Poppins_500Medium,
   });

@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: '#f3f3f3',
   },
   headerApp: {
     marginTop: 40,
@@ -21,8 +22,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold'
   },
   containerProducts: {
+    flex: 1,
     padding: 10,
     marginTop: 20,
+  },
+  containerCards: {
+    gap: 8,
   },
   title: {
     fontSize: 18,
