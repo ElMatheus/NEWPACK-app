@@ -61,8 +61,8 @@ export default function Home() {
               <View style={styles.containerCards}>
 
                 {products.length > 0 && products.map((product, index) => (
-                  <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { product })}>
-                    <CardProduct key={product.produto_id} name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
+                  <TouchableOpacity key={index} onPress={() => navigation.navigate('ProductDetails', { product })}>
+                    <CardProduct name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
                   </TouchableOpacity>
                 ))}
               </View>
