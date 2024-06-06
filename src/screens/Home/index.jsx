@@ -1,8 +1,6 @@
 import { View, TouchableOpacity, Text, ActivityIndicator, ScrollView } from 'react-native';
-
-import Title from '../../components/Title';
-
 import { useContext, useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/AuthContext';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import CardProduct from '../../components/CardProduct';
@@ -11,6 +9,7 @@ import PopUp2 from '../../components/PopUp2';
 import styles from './styles';
 
 export default function Home() {
+  const navigation = useNavigation();
   const { user, signOut, getUsers, globalLoading, getProductsForUser } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
@@ -62,7 +61,9 @@ export default function Home() {
               <View style={styles.containerCards}>
 
                 {products.length > 0 && products.map((product, index) => (
-                  <CardProduct key={product.produto_id} name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
+                  <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { product })}>
+                    <CardProduct key={product.produto_id} name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
+                  </TouchableOpacity>
                 ))}
               </View>
             </ScrollView>
