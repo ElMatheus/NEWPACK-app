@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import { useState, useEffect } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
@@ -8,6 +9,12 @@ import Feather from '@expo/vector-icons/Feather';
 export default function ProductDetails({ route }) {
   const navigation = useNavigation();
   const { product } = route.params;
+  const [quantity, setQuantity] = useState(product.produto_quantidade);
+
+  useEffect(() => {
+    setQuantity(product.produto_quantidade);
+  }, [product.produto_quantidade]);
+
   return (
     <>
       <ScrollView>
@@ -42,7 +49,7 @@ export default function ProductDetails({ route }) {
           </View>
           <View style={styles.containerQuantity}>
             <Text style={styles.txtQuant}>Quantidade:</Text>
-            <TextInput style={styles.input} />
+            <TextInput value={quantity.toString()} onChangeText={(text) => setQuantity(text)} style={styles.input} />
           </View>
         </View >
       </ScrollView>
