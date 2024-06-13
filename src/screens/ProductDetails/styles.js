@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     fontSize: 25,
     color: '#4B6584',
-    marginTop: 10,
     fontFamily: 'Poppins_700Bold',
   },
   addToCart: {
@@ -122,6 +121,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 13,
     fontFamily: 'Poppins_500Medium',
+  },
+  containerPoints: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 20,
   },
 });
 

@@ -1,19 +1,34 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
-import { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Dimensions } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
 
+const { width } = Dimensions.get('window');
+
 export default function ProductDetails({ route }) {
+  const flatListRef = useRef();
   const navigation = useNavigation();
   const { product } = route.params;
   const [quantity, setQuantity] = useState(product.produto_quantidade);
+  const [imageIndex, setImageIndex] = useState(0);
 
   useEffect(() => {
     setQuantity(product.produto_quantidade);
   }, [product.produto_quantidade]);
+
+  const ImageSlider = ({ image }) => {
+    return (
+      <Image source={{ uri: image }} style={styles.image} />
+    );
+  }
+
+  const handlePress = (index) => {
+    setImageIndex(index);
+    flatListRef.current.scrollToIndex({ animated: true, index: index }); // Scroll to the selected index
+  };
 
   return (
     <>
@@ -28,7 +43,40 @@ export default function ProductDetails({ route }) {
             </TouchableOpacity>
           </View>
           <View>
-            <Image source={{ uri: product.produto_imagens[0] }} style={styles.image} />
+            <FlatList
+              ref={flatListRef}
+              data={product.produto_imagens}
+              style={{ maxHeight: 299, width: 358 }}
+              pagingEnabled
+              horizontal
+              onMomentumScrollEnd={(e) => {
+                const index = Math.round(e.nativeEvent.contentOffset.x / width);
+                setImageIndex(index);
+              }}
+              scrollEventThrottle={16}
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => <ImageSlider image={item} />}
+            />
+            {
+              product.produto_imagens.length > 1 && (
+                <View style={styles.containerPoints}>
+                  {product.produto_imagens.map((_, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => handlePress(index)}
+                      style={{
+                        height: 10,
+                        width: 10,
+                        borderRadius: 5,
+                        backgroundColor: imageIndex === index ? '#4B6584' : '#A7A7A7',
+                        margin: 5,
+                      }}
+                    />
+                  ))}
+                </View>
+              )
+            }
           </View>
           <View style={styles.containerDetails}>
             <Text style={styles.txtName}>{product.produto_nome}</Text>
