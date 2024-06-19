@@ -14,45 +14,54 @@ export default function Login() {
   const [popUp2, setPopUp2] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // funcao sign: serve para fazer login
   const { signIn, popUpMessage } = useContext(AuthContext);
 
+  // quando clicar em entrar esta funcao sera acionada
   const handleLogin = async () => {
+    // seta o loading para true
     setLoading(true);
     try {
+      // verifica se os campos estao preenchidos
       if (name && password) {
+        // chama a funcao signIn do AuthContext se estiver tudo preenchido
         await signIn(name, password);
       } else {
+        // se nao estiver preenchido, seta um popUp de erro
         setPopUp('Preencha todos os campos!');
         setTimeout(() => {
           setPopUp(null);
         }, 3000);
       }
     } catch (error) {
+      // se der erro na requisicao, seta um popUp de erro
       if (error.response) {
+        // se a requisicao tiver uma mensagem programada do meu back como: "Usuario nao encontrado" seta um popUp2 com a mensagem que nela esta
         setPopUp2(error.response.data.message);
       } else {
+        // ai se nao tiver uma mensagem programada, seta um popUp de erro interno do servidor
         setPopUp('Erro interno do servidor');
         setTimeout(() => {
           setPopUp(null);
         }, 3000);
       }
     }
+    // seta o loading para false assim fazendo parar de carregar
     setLoading(false);
   }
 
   useEffect(() => {
+    // se o popUpMessage mudar, seta o popUp com a mensagem que esta nele
     setPopUp(popUpMessage);
   }, [popUpMessage]);
 
   return (
     <View style={styles.containerLogin}>
-
       <View style={styles.container}>
         <Image style={{ width: 130, height: 80 }} source={require('../../../assets/images/newpack-logo.png')} />
         <Text style={styles.title}>Entre em seu perfil!</Text>
       </View>
       <View style={styles.containerInps}>
-
         <View style={styles.containerInps2}>
           <View style={styles.inputContainer}>
             <Icon color={"#b7b7b7"} name='user-check' size={18} />

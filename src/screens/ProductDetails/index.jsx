@@ -6,6 +6,9 @@ import styles from './styles';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
 
+// esta pagina e a pagina de detalhes do produto, onde o usuario vai poder ver as imagens do produto, o nome, o preco, a quantidade, e adicionar ao carrinho, esta pagina so ira aparecer se o usuario clicar em um produto na tela Home
+
+// pegar a largura da tela
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails({ route }) {
@@ -15,16 +18,19 @@ export default function ProductDetails({ route }) {
   const [quantity, setQuantity] = useState(product.produto_quantidade);
   const [imageIndex, setImageIndex] = useState(0);
 
+  // toda vez que o produto mudar, ele vai setar a quantidade do produto
   useEffect(() => {
     setQuantity(product.produto_quantidade);
   }, [product.produto_quantidade]);
 
+  // funcao que vai ser chamada toda vez que o usuario clicar em um ponto para mudar a imagem: sao duas funcoes as duas se complementam
   const ImageSlider = ({ image }) => {
     return (
       <Image source={{ uri: image }} style={styles.image} />
     );
   }
 
+  // funcao que vai ser chamada toda vez que o usuario clicar em um ponto para mudar a imagem: sao duas funcoes as duas se complementam
   const handlePress = (index) => {
     setImageIndex(index);
     flatListRef.current.scrollToIndex({ animated: true, index: index }); // Scroll to the selected index
@@ -35,14 +41,17 @@ export default function ProductDetails({ route }) {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.containerHeader}>
+            {/* navegar para voltar para a tela Home */}
             <TouchableOpacity onPress={() => { navigation.navigate('Home'); handlePress(0); }}>
               <AntDesign style={styles.icon} name="left" size={24} color="#4B6584" />
             </TouchableOpacity>
+            {/* navegar para a tela de carrinho */}
             <TouchableOpacity onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
               <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
             </TouchableOpacity>
           </View>
           <View>
+            {/* aqui eu uso o flat list e meio que um map para pegar todas as imagens daquele determinado produto */}
             <FlatList
               ref={flatListRef}
               data={product.produto_imagens}
@@ -58,6 +67,7 @@ export default function ProductDetails({ route }) {
               keyExtractor={(item, index) => index.toString()}
               renderItem={({ item }) => <ImageSlider image={item} />}
             />
+            {/* bolinhas para alternancia de imagem */}
             {
               product.produto_imagens.length > 1 && (
                 <View style={styles.containerPoints}>
@@ -106,6 +116,7 @@ export default function ProductDetails({ route }) {
           <Text style={styles.txtDesc}>{product.produto_desc}</Text>
           <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
         </View>
+        {/* botao de adicionar este produto para o carrinho */}
         <TouchableOpacity style={styles.addToCart}>
           <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
         </TouchableOpacity>

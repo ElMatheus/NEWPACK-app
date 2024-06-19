@@ -3,6 +3,7 @@ import Feather from '@expo/vector-icons/Feather';
 import styles from './styles';
 
 const CardProduct = ({ name, image, unitary_price, toughness, dimension, cod }) => {
+  // funcao de se o nome do produto for maior que alguns caracteres, ele vai cortar o nome e colocar tres pontinhos
   const truncate = (str, n) => {
     return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
   };
