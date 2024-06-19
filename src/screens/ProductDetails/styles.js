@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   txtCode: {
-    fontSize: 13,
-    color: '#A7A7A7',
+    fontSize: 15,
+    color: '#000',
     fontFamily: 'Poppins_500Medium',
   },
   containerSpecifications: {

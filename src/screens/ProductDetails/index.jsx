@@ -35,10 +35,10 @@ export default function ProductDetails({ route }) {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.containerHeader}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => { navigation.navigate('Home'); handlePress(0); }}>
               <AntDesign style={styles.icon} name="left" size={24} color="#4B6584" />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+            <TouchableOpacity onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
               <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
             </TouchableOpacity>
           </View>
@@ -81,7 +81,7 @@ export default function ProductDetails({ route }) {
           <View style={styles.containerDetails}>
             <Text style={styles.txtName}>{product.produto_nome}</Text>
             <View style={styles.containerCod}>
-              <Feather name="tag" size={18} color="#A7A7A7" />
+              <Feather name="tag" size={22} color="#000" />
               <Text style={styles.txtCode}>Cod. {product.produto_id}</Text>
             </View>
           </View>
