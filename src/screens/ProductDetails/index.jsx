@@ -111,16 +111,32 @@ export default function ProductDetails({ route }) {
           </View>
         </View >
       </ScrollView>
-      <View style={styles.containerPurchase}>
-        <View style={styles.containerPrice}>
-          <Text style={styles.txtDesc}>{product.produto_desc}</Text>
-          <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
-        </View>
-        {/* botao de adicionar este produto para o carrinho */}
-        <TouchableOpacity style={styles.addToCart}>
-          <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
-        </TouchableOpacity>
-      </View>
+      {
+        product.produto_tipo == 'caixa' ? (
+          <View style={styles.containerPurchase}>
+            <View style={styles.containerPrice}>
+              <Text style={styles.txtDesc}>{product.produto_desc}</Text>
+              <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
+            </View>
+            {/* botao de adicionar este produto para o carrinho */}
+            <TouchableOpacity style={styles.addToCart}>
+              <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
+            </TouchableOpacity>
+          </View>
+        ) : product.produto_tipo == 'rolo' ? (
+          <View style={styles.containerPurchase}>
+            <View style={styles.containerPrice}>
+              <Text style={styles.txtDesc}>Preço por metro linear:</Text>
+              <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
+              <Text style={styles.txtDesc}>{product.produto_desc}</Text>
+            </View>
+            {/* botao de adicionar este produto para o carrinho */}
+            <TouchableOpacity style={styles.addToCart}>
+              <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null
+      }
     </>
 
   )
