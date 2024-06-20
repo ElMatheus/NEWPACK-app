@@ -23,6 +23,14 @@ export default function ProductDetails({ route }) {
     setQuantity(product.produto_quantidade);
   }, [product.produto_quantidade]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('blur', () => {
+      setQuantity(product.produto_quantidade);
+    });
+
+    return unsubscribe;
+  }, [navigation, product.produto_quantidade]);
+
   // funcao que vai ser chamada toda vez que o usuario clicar em um ponto para mudar a imagem: sao duas funcoes as duas se complementam
   const ImageSlider = ({ image }) => {
     return (
