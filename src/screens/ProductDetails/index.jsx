@@ -17,6 +17,7 @@ export default function ProductDetails({ route }) {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(product.produto_quantidade);
   const [imageIndex, setImageIndex] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(product.produto_preco * product.produto_preco);
 
   // toda vez que o produto mudar, ele vai setar a quantidade do produto
   useEffect(() => {
@@ -30,6 +31,11 @@ export default function ProductDetails({ route }) {
 
     return unsubscribe;
   }, [navigation, product.produto_quantidade]);
+
+  useEffect(() => {
+    const newTotalPrice = product.produto_preco * quantity;
+    setTotalPrice(newTotalPrice);
+  }, [quantity, product.produto_preco]);
 
   // funcao que vai ser chamada toda vez que o usuario clicar em um ponto para mudar a imagem: sao duas funcoes as duas se complementam
   const ImageSlider = ({ image }) => {
@@ -115,7 +121,7 @@ export default function ProductDetails({ route }) {
           </View>
           <View style={styles.containerQuantity}>
             <Text style={styles.txtQuant}>Quantidade:</Text>
-            <TextInput value={quantity.toString()} onChangeText={(text) => setQuantity(text)} style={styles.input} />
+            <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(text)} style={styles.input} />
           </View>
         </View >
       </ScrollView>
@@ -124,7 +130,7 @@ export default function ProductDetails({ route }) {
           <View style={styles.containerPurchase}>
             <View style={styles.containerPrice}>
               <Text style={styles.txtDesc}>{product.produto_desc}</Text>
-              <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
+              <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
             </View>
             {/* botao de adicionar este produto para o carrinho */}
             <TouchableOpacity style={styles.addToCart}>
@@ -135,7 +141,7 @@ export default function ProductDetails({ route }) {
           <View style={styles.containerPurchase}>
             <View style={styles.containerPrice}>
               <Text style={styles.txtDesc}>Preço por metro linear:</Text>
-              <Text style={styles.txtPrice}>R${product.produto_preco}</Text>
+              <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
               <Text style={styles.txtDesc}>{product.produto_desc}</Text>
             </View>
             {/* botao de adicionar este produto para o carrinho */}
