@@ -34,6 +34,16 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Poppins_500Medium',
   },
+  categories: {
+    gap: 28,
+
+    flexDirection: 'row',
+  },
+  txtCategories: {
+    fontSize: 14,
+    color: '#000',
+    fontFamily: 'Poppins_400Regular',
+  },
 });
 
 export default styles;

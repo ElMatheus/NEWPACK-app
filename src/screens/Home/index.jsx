@@ -12,6 +12,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('Tudo');
 
   // toda vez que eu entrar na tela de home, ele vai chamar a funcao getProductsForUser do meu AuthContext
   useEffect(() => {
@@ -60,6 +61,15 @@ export default function Home() {
               onPress={() => signOut()} />
           </View>
           <View style={styles.containerProducts}>
+            <ScrollView style={{ marginBottom: 20 }} horizontal={true} showsHorizontalScrollIndicator={false} >
+              <View style={styles.categories}>
+                {['Tudo', 'Clichês', 'Facas Rotativas', 'Facas Planas', 'Facas Gráficas'].map((category) => (
+                  <TouchableOpacity key={category} onPress={() => setSelectedCategory(category)} style={selectedCategory == category ? { borderBottomWidth: 2.3, borderBottomColor: '#4B6584' } : {}}>
+                    <Text style={styles.txtCategories}>{category}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </ScrollView>
             <Text style={styles.title}>Pedidos recentes</Text>
             <ScrollView>
               <View style={styles.containerCards}>
