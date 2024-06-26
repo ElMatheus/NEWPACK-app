@@ -39,12 +39,12 @@ export default function Home() {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <>
       {/* loading */}
       {globalLoading ? (
         <ActivityIndicator size="large" color="#4B6584" />
       ) : (
-        <View>
+        <View style={styles.container}>
           <View style={styles.headerApp}>
             <View>
               <Text style={styles.txtStyle}>
@@ -61,15 +61,19 @@ export default function Home() {
               onPress={() => signOut()} />
           </View>
           <View style={styles.containerProducts}>
-            <ScrollView style={{ marginBottom: 20 }} horizontal={true} showsHorizontalScrollIndicator={false} >
-              <View style={styles.categories}>
-                {['Tudo', 'Clichês', 'Facas Rotativas', 'Facas Planas', 'Facas Gráficas'].map((category) => (
-                  <TouchableOpacity key={category} onPress={() => setSelectedCategory(category)} style={selectedCategory == category ? { borderBottomWidth: 2.3, borderBottomColor: '#4B6584' } : {}}>
-                    <Text style={styles.txtCategories}>{category}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </ScrollView>
+            <View style={styles.categories}>
+              <ScrollView style={{ marginBottom: 20 }} horizontal={true} showsHorizontalScrollIndicator={false} >
+                <View style={styles.categories}>
+
+                  {['Tudo', 'Clichês', 'Facas Rotativas', 'Facas Planas', 'Facas Gráficas'].map((category) => (
+                    <TouchableOpacity key={category} onPress={() => setSelectedCategory(category)} style={selectedCategory == category ? { borderBottomWidth: 2.3, borderBottomColor: '#4B6584' } : {}}>
+                      <Text style={styles.txtCategories}>{category}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+
+              </ScrollView>
+            </View>
             <Text style={styles.title}>Pedidos recentes</Text>
             <ScrollView>
               <View style={styles.containerCards}>
@@ -84,6 +88,6 @@ export default function Home() {
           </View>
         </View>
       )}
-    </View>
+    </>
   )
 }

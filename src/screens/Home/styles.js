@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
   },
   categories: {
     gap: 28,
-
     flexDirection: 'row',
   },
   txtCategories: {
