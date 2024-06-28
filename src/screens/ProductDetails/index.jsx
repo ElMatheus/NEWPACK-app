@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Dimensions } from 'react-native';
-import { useState, useEffect, useRef } from 'react';
+import { CartContext } from '../../contexts/CartContext';
+import { useState, useEffect, useRef, useContext } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
@@ -12,6 +13,7 @@ import Feather from '@expo/vector-icons/Feather';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails({ route }) {
+  const { addToCart } = useContext(CartContext);
   const flatListRef = useRef();
   const navigation = useNavigation();
   const { product } = route.params;
@@ -49,6 +51,23 @@ export default function ProductDetails({ route }) {
     setImageIndex(index);
     flatListRef.current.scrollToIndex({ animated: true, index: index }); // Scroll to the selected index
   };
+
+  const handleAddToCart = async () => {
+    try {
+      const productCart = {
+        produto_id: product.produto_id,
+        produto_nome: product.produto_nome,
+        total_value: product.total_value,
+        produto_tipo: product.produto_tipo,
+        produto_categoria: product.produto_categoria,
+        quantity: quantity,
+        produto_imagem: product.produto_imagens[0]
+      };
+      await addToCart(productCart);
+    } catch (error) {
+      alert('Erro ao adicionar produto ao carrinho');
+    }
+  }
 
   return (
     <>
@@ -133,7 +152,7 @@ export default function ProductDetails({ route }) {
               <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
             </View>
             {/* botao de adicionar este produto para o carrinho */}
-            <TouchableOpacity style={styles.addToCart}>
+            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCart}>
               <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
             </TouchableOpacity>
           </View>
@@ -145,7 +164,7 @@ export default function ProductDetails({ route }) {
               <Text style={styles.txtDesc}>{product.produto_desc}</Text>
             </View>
             {/* botao de adicionar este produto para o carrinho */}
-            <TouchableOpacity style={styles.addToCart}>
+            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCart}>
               <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
             </TouchableOpacity>
           </View>

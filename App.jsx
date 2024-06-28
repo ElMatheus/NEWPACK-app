@@ -1,5 +1,6 @@
 import Routes from "./src/routes";
 import AuthProvider from "./src/contexts/AuthContext";
+import CartProvider from "./src/contexts/CartContext";
 import { useFonts, Poppins_700Bold, Poppins_500Medium, Poppins_400Regular } from '@expo-google-fonts/poppins';
 
 export default function App() {
@@ -14,7 +15,9 @@ export default function App() {
   }
   return (
     <AuthProvider>
-      <Routes />
+      <CartProvider>
+        <Routes />
+      </CartProvider>
     </AuthProvider>
   );
 }
