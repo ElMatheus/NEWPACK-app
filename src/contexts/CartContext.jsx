@@ -50,14 +50,37 @@ const CartProvider = ({ children }) => {
     }
   }
 
-  const removeFromCart = async (product) => {
-    const newCart = cart.filter((item) => item.id !== product.id);
+  const onDecrease = (item) => {
+    const newCart = cart.map((cartItem) => {
+      if (cartItem.produto_id === item.produto_id) {
+        if (cartItem.quantity === 1) {
+          return cartItem;
+        } else {
+          return { ...cartItem, quantity: Number(cartItem.quantity) - 1 };
+        }
+      }
+      return cartItem;
+    });
     setCart(newCart);
-    await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+  };
+
+  const onIncrease = (item) => {
+    const newCart = cart.map((cartItem) => {
+      if (cartItem.produto_id === item.produto_id) {
+        return { ...cartItem, quantity: Number(cartItem.quantity) + 1 };
+      }
+      return cartItem;
+    });
+    setCart(newCart);
+  };
+
+  const removeFromCart = (product) => {
+    const newCart = cart.filter((item) => item.produto_id !== product.produto_id);
+    setCart(newCart);
   }
 
   return (
-    <CartContext.Provider value={{ cart, globalLoading, popUpMessage, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cart, globalLoading, popUpMessage, addToCart, onDecrease, onIncrease, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );
