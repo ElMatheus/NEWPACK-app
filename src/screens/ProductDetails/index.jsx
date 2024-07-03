@@ -61,7 +61,8 @@ export default function ProductDetails({ route }) {
         produto_tipo: product.produto_tipo,
         produto_categoria: product.produto_categoria,
         quantity: quantity,
-        produto_imagem: product.produto_imagens[0]
+        produto_imagem: product.produto_imagens[0],
+        produto_descricao: product.produto_desc
       };
       await addToCart(productCart);
     } catch (error) {

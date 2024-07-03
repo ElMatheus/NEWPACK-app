@@ -22,9 +22,14 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
         <Text style={styles.txtName}>
           {truncate(item.produto_nome, 45)}
         </Text>
-        <Text style={styles.txtPrice}>
-          {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total_value)}
-        </Text>
+        <View style={styles.containerDesc}>
+          <Text style={styles.txtPrice}>
+            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total_value)}
+          </Text>
+          <Text style={styles.txtDesc}>
+            ({item.produto_descricao})
+          </Text>
+        </View>
         <View style={styles.containerQuantity}>
           <TouchableOpacity onPress={() => onDecrease(item)}>
             <AntDesign name="minuscircleo" size={20} color="#b9c3cd" />
@@ -34,7 +39,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
             <AntDesign name="pluscircleo" size={20} color="#b9c3cd" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onDelete(item)} style={styles.btnDeleteProduct}>
-            <Feather name="trash" size={18} color="#000" />
+            <Feather name="trash" size={16} color="#000" />
           </TouchableOpacity>
         </View>
       </View>

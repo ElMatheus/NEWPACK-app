@@ -39,9 +39,19 @@ const styles = StyleSheet.create({
   },
   btnDeleteProduct: {
     marginLeft: 'auto',
-    padding: 6,
+    padding: 9,
     backgroundColor: '#F3F3F3',
     borderRadius: 100,
+    marginRight: 5,
+  },
+  containerDesc: {
+    flexDirection: 'row',
+    gap: 2
+  },
+  txtDesc: {
+    fontSize: 11,
+    color: '#000',
+    fontFamily: 'Poppins_400Regular',
   },
 });
 
