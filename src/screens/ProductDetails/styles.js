@@ -127,6 +127,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20,
   },
+  cartBtn: {
+    backgroundColor: '#4B6584',
+    width: 24,
+    height: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 15,
+    position: 'absolute',
+    top: -7,
+    right: -7,
+    zIndex: 1,
+  },
+  cartText: {
+    fontSize: 10,
+    color: '#fff',
+    fontFamily: 'Poppins_500Medium',
+  },
 });
 
 export default styles;

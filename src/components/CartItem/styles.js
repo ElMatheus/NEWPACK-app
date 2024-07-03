@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
   },
   containerDesc: {
     flexDirection: 'row',
-    gap: 2
+    gap: 2,
+    alignItems: 'center',
   },
   txtDesc: {
     fontSize: 11,

@@ -20,7 +20,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
       <Image source={{ uri: item.produto_imagem }} style={styles.image} />
       <View style={styles.containerInfos}>
         <Text style={styles.txtName}>
-          {truncate(item.produto_nome, 45)}
+          {truncate(item.produto_nome, 55)}
         </Text>
         <View style={styles.containerDesc}>
           <Text style={styles.txtPrice}>

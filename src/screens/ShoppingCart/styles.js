@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f3f3',
-    margin: 20,
+    marginVertical: 22,
+    marginHorizontal: 16,
   },
   productList: {
     backgroundColor: '#fff',

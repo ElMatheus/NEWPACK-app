@@ -7,18 +7,20 @@ import Home from "../screens/Home";
 import ProductDetails from "../screens/ProductDetails";
 import ShoppingCart from "../screens/ShoppingCart";
 import { Text } from 'react-native';
+import { CartContext } from '../../src/contexts/CartContext';
+import { useContext } from "react";
 
 const Tab = createBottomTabNavigator();
 
 const PrivateTab = () => {
+  const { cart } = useContext(CartContext);
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: 64,
-          paddingBottom: 2,
-          paddingTop: 10,
+          height: 67,
+
         },
       }}>
         <Tab.Screen name="Home" component={Home}
@@ -26,6 +28,7 @@ const PrivateTab = () => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome6
                 name="boxes-stacked"
+                style={{ marginTop: 12 }}
                 size={24}
                 color={focused ? "#4B6584" : "#b9c3cd"} />
             ),
@@ -42,12 +45,21 @@ const PrivateTab = () => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
                 name="shopping-cart"
+                style={{ marginTop: 12 }}
                 size={24}
                 color={focused ? "#4B6584" : "#b9c3cd"} />
             ),
             tabBarLabel: ({ focused, color }) => (
               <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Carrinho</Text>
             ),
+            tabBarBadge: cart.length > 0 ? cart.length : undefined,
+            tabBarBadgeStyle: {
+              backgroundColor: "#4B6584",
+              color: "#fff",
+              fontFamily: 'Poppins_500Medium',
+              fontSize: 10,
+              top: 0,
+            },
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
           }

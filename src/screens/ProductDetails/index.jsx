@@ -13,7 +13,7 @@ import Feather from '@expo/vector-icons/Feather';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails({ route }) {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, cart } = useContext(CartContext);
   const flatListRef = useRef();
   const navigation = useNavigation();
   const { product } = route.params;
@@ -80,9 +80,18 @@ export default function ProductDetails({ route }) {
               <AntDesign style={styles.icon} name="left" size={24} color="#4B6584" />
             </TouchableOpacity>
             {/* navegar para a tela de carrinho */}
-            <TouchableOpacity onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
-              <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
-            </TouchableOpacity>
+            <View>
+              {
+                cart.length > 0 && (
+                  <View style={styles.cartBtn}>
+                    <Text style={styles.cartText}>{cart.length}</Text>
+                  </View>
+                )
+              }
+              <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
+                <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
+              </TouchableOpacity>
+            </View>
           </View>
           <View>
             {/* aqui eu uso o flat list e meio que um map para pegar todas as imagens daquele determinado produto */}

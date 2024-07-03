@@ -5,9 +5,11 @@ import { AuthContext } from '../../contexts/AuthContext';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import CardProduct from '../../components/CardProduct';
 import styles from './styles';
+import { CartContext } from '../../contexts/CartContext';
 
 export default function Home() {
   const navigation = useNavigation();
+  const { cart } = useContext(CartContext);
   const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
@@ -42,7 +44,9 @@ export default function Home() {
     <>
       {/* loading */}
       {globalLoading ? (
-        <ActivityIndicator size="large" color="#4B6584" />
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <ActivityIndicator size="large" color="#4B6584" />
+        </View>
       ) : (
         <View style={styles.container}>
           <View style={styles.headerApp}>
@@ -54,11 +58,22 @@ export default function Home() {
                 {user.name}
               </Text>
             </View>
-            <FontAwesome5
-              name="shopping-cart"
-              size={24}
-              color="#4B6584"
-              onPress={() => signOut()} />
+            <View>
+              {
+                cart.length > 0 && (
+                  <View style={styles.cartBtn}>
+                    <Text style={styles.cartText}>{cart.length}</Text>
+                  </View>
+                )
+              }
+              <FontAwesome5
+                name="shopping-cart"
+                size={24}
+                color="#4B6584"
+                onPress={() => navigation.navigate('Cart')}
+                style={styles.cart} />
+            </View>
+
           </View>
           <View style={styles.containerProducts}>
             <View style={styles.categories}>
