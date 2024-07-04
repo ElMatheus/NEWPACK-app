@@ -13,6 +13,7 @@ import Feather from '@expo/vector-icons/Feather';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails({ route }) {
+  console.log(route.params);
   const { addToCart, cart } = useContext(CartContext);
   const flatListRef = useRef();
   const navigation = useNavigation();
@@ -60,9 +61,14 @@ export default function ProductDetails({ route }) {
         total_value: product.total_value,
         produto_tipo: product.produto_tipo,
         produto_categoria: product.produto_categoria,
-        quantity: quantity,
-        produto_imagem: product.produto_imagens[0],
-        produto_descricao: product.produto_desc
+        produto_quantidade: Number(quantity),
+        produto_imagens: product.produto_imagens,
+        produto_desc: product.produto_desc,
+        produto_dimensao: product.produto_dimensao,
+        produto_dureza: product.produto_dureza,
+        produto_preco: product.produto_preco,
+        produto_quantidade_mts: product.produto_quantidade_mts,
+        full_price: product.full_price
       };
       await addToCart(productCart);
     } catch (error) {

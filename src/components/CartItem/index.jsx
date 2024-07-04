@@ -5,11 +5,11 @@ import { Feather } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 
 const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
-  const [quantityAll, setQuantityAll] = useState(item.quantity);
+  const [quantityAll, setQuantityAll] = useState(item.produto_quantidade);
 
   useEffect(() => {
-    setQuantityAll(item.quantity);
-  }, [item.quantity]);
+    setQuantityAll(item.produto_quantidade);
+  }, [item.produto_quantidade]);
 
   const truncate = (str, n) => {
     return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
@@ -17,7 +17,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
 
   return (
     <View style={styles.product}>
-      <Image source={{ uri: item.produto_imagem }} style={styles.image} />
+      <Image source={{ uri: item.produto_imagens[0] }} style={styles.image} />
       <View style={styles.containerInfos}>
         <Text style={styles.txtName}>
           {truncate(item.produto_nome, 55)}
@@ -27,7 +27,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
             {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total_value)}
           </Text>
           <Text style={styles.txtDesc}>
-            ({item.produto_descricao})
+            ({item.produto_desc})
           </Text>
         </View>
         <View style={styles.containerQuantity}>

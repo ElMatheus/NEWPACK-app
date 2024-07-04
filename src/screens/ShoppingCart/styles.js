@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     borderStyle: 'dashed',
+    maxHeight: 530,
   },
   title: {
     marginTop: 10,

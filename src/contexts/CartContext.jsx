@@ -37,7 +37,7 @@ const CartProvider = ({ children }) => {
     if (productExists) {
       const newCart = cart.map((item) => {
         if (item.produto_id === product.produto_id) {
-          return { ...item, quantity: Number(item.quantity) + Number(product.quantity) };
+          return { ...item, produto_quantidade: Number(item.produto_quantidade) + Number(product.produto_quantidade) };
         }
         return item;
       });
@@ -53,10 +53,10 @@ const CartProvider = ({ children }) => {
   const onDecrease = (item) => {
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
-        if (cartItem.quantity === 1) {
+        if (cartItem.produto_quantidade === 1) {
           return cartItem;
         } else {
-          return { ...cartItem, quantity: Number(cartItem.quantity) - 1 };
+          return { ...cartItem, produto_quantidade: Number(cartItem.produto_quantidade) - 1 };
         }
       }
       return cartItem;
@@ -67,7 +67,7 @@ const CartProvider = ({ children }) => {
   const onIncrease = (item) => {
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
-        return { ...cartItem, quantity: Number(cartItem.quantity) + 1 };
+        return { ...cartItem, produto_quantidade: Number(cartItem.produto_quantidade) + 1 };
       }
       return cartItem;
     });
