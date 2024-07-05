@@ -20,7 +20,7 @@ export default function ProductDetails({ route }) {
   const { product } = route.params;
   const [quantity, setQuantity] = useState(product.produto_quantidade);
   const [imageIndex, setImageIndex] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(product.produto_preco * product.produto_preco);
+  const [totalPrice, setTotalPrice] = useState(product.produto_preco * product.produto_quantidade);
 
   // toda vez que o produto mudar, ele vai setar a quantidade do produto
   useEffect(() => {
@@ -156,7 +156,7 @@ export default function ProductDetails({ route }) {
           </View>
           <View style={styles.containerQuantity}>
             <Text style={styles.txtQuant}>Quantidade:</Text>
-            <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(text)} style={styles.input} />
+            <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(Number(text))} style={styles.input} />
           </View>
         </View >
       </ScrollView>
