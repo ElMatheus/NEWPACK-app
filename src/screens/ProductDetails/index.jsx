@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Dimensions, Animated } from 'react-native';
 import { CartContext } from '../../contexts/CartContext';
 import { useState, useEffect, useRef, useContext } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
+import useAnimatedScale from '../../hooks/useAnimatedScale';
 
 // esta pagina e a pagina de detalhes do produto, onde o usuario vai poder ver as imagens do produto, o nome, o preco, a quantidade, e adicionar ao carrinho, esta pagina so ira aparecer se o usuario clicar em um produto na tela Home
 
@@ -21,6 +22,7 @@ export default function ProductDetails({ route }) {
   const [quantity, setQuantity] = useState(product.produto_quantidade);
   const [imageIndex, setImageIndex] = useState(0);
   const [totalPrice, setTotalPrice] = useState(product.produto_preco * product.produto_quantidade);
+  const scale = useAnimatedScale(cart.length);
 
   // toda vez que o produto mudar, ele vai setar a quantidade do produto
   useEffect(() => {
@@ -89,9 +91,9 @@ export default function ProductDetails({ route }) {
             <View>
               {
                 cart.length > 0 && (
-                  <View style={styles.cartBtn}>
+                  <Animated.View style={[styles.cartBtn, { transform: [{ scale: scale }] }]}>
                     <Text style={styles.cartText}>{cart.length}</Text>
-                  </View>
+                  </Animated.View>
                 )
               }
               <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
