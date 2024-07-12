@@ -7,6 +7,7 @@ import styles from './styles';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Feather from '@expo/vector-icons/Feather';
 import useAnimatedScale from '../../hooks/useAnimatedScale';
+import ContainerPurchase from '../../components/ContainerPurchase';
 
 // esta pagina e a pagina de detalhes do produto, onde o usuario vai poder ver as imagens do produto, o nome, o preco, a quantidade, e adicionar ao carrinho, esta pagina so ira aparecer se o usuario clicar em um produto na tela Home
 
@@ -14,7 +15,6 @@ import useAnimatedScale from '../../hooks/useAnimatedScale';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails({ route }) {
-  console.log(route.params);
   const { addToCart, cart } = useContext(CartContext);
   const flatListRef = useRef();
   const navigation = useNavigation();
@@ -162,32 +162,7 @@ export default function ProductDetails({ route }) {
           </View>
         </View >
       </ScrollView>
-      {
-        product.produto_tipo == 'caixa' ? (
-          <View style={styles.containerPurchase}>
-            <View style={styles.containerPrice}>
-              <Text style={styles.txtDesc}>{product.produto_desc}</Text>
-              <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
-            </View>
-            {/* botao de adicionar este produto para o carrinho */}
-            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCart}>
-              <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
-            </TouchableOpacity>
-          </View>
-        ) : product.produto_tipo == 'rolo' ? (
-          <View style={styles.containerPurchase}>
-            <View style={styles.containerPrice}>
-              <Text style={styles.txtDesc}>Preço por metro linear:</Text>
-              <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
-              <Text style={styles.txtDesc}>{product.produto_desc}</Text>
-            </View>
-            {/* botao de adicionar este produto para o carrinho */}
-            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCart}>
-              <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null
-      }
+      <ContainerPurchase type={product.produto_tipo} desc={product.produto_desc} totalPrice={totalPrice} handleAddToCart={handleAddToCart} />
     </>
 
   )

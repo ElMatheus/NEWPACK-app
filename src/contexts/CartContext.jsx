@@ -1,39 +1,27 @@
-import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
   const [cart, setCart] = useState([]);
   const [globalLoading, setGlobalLoading] = useState(false);
-  const [popUpMessage, setPopUpMessage] = useState(null);
 
-  // useEffect(() => {
-  //   const loadingStoreData = async () => {
-  //     setGlobalLoading(true);
-  //     const storageCart = await AsyncStorage.getItem("@asyncStorage:cart");
-
-  //     if (storageCart) {
-  //       try {
-  //         setCart(JSON.parse(storageCart));
-  //       } catch (error) {
-  //         setPopUpMessage("Erro ao carregar o carrinho");
-  //         setTimeout(() => {
-  //           setPopUpMessage(null);
-  //         }, 3000);
-  //         AsyncStorage.clear();
-  //       }
-  //     }
-  //     setGlobalLoading(false);
-  //   };
-  //   loadingStoreData();
-  // }, []);
+  useEffect(() => {
+    const loadingStoreData = async () => {
+      setGlobalLoading(true);
+      const localCart = await AsyncStorage.getItem('@asyncStorage:cart');
+      if (localCart) {
+        setCart(JSON.parse(localCart));
+      }
+      setGlobalLoading(false);
+    }
+    loadingStoreData();
+  }, [])
 
   const addToCart = async (product) => {
     const productExists = cart.find((item) => item.produto_id === product.produto_id);
-
+    setGlobalLoading(true);
     if (productExists) {
       const newCart = cart.map((item) => {
         if (item.produto_id === product.produto_id) {
@@ -42,15 +30,17 @@ const CartProvider = ({ children }) => {
         return item;
       });
       setCart(newCart);
-      // await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+      await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
     } else {
       const newCart = [...cart, product];
       setCart(newCart);
-      // await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+      await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
     }
+    setGlobalLoading(false);
   }
 
-  const onDecrease = (item) => {
+  const onDecrease = async (item) => {
+    setGlobalLoading(true);
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
         if (cartItem.produto_quantidade === 1) {
@@ -62,9 +52,12 @@ const CartProvider = ({ children }) => {
       return cartItem;
     });
     setCart(newCart);
+    await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+    setGlobalLoading(false);
   };
 
-  const onIncrease = (item) => {
+  const onIncrease = async (item) => {
+    setGlobalLoading(true);
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
         return { ...cartItem, produto_quantidade: Number(cartItem.produto_quantidade) + 1 };
@@ -72,15 +65,20 @@ const CartProvider = ({ children }) => {
       return cartItem;
     });
     setCart(newCart);
+    await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+    setGlobalLoading(false);
   };
 
-  const removeFromCart = (product) => {
+  const removeFromCart = async (product) => {
+    setGlobalLoading(true);
     const newCart = cart.filter((item) => item.produto_id !== product.produto_id);
     setCart(newCart);
+    await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
+    setGlobalLoading(false);
   }
 
   return (
-    <CartContext.Provider value={{ cart, globalLoading, popUpMessage, addToCart, onDecrease, onIncrease, removeFromCart }}>
+    <CartContext.Provider value={{ cart, globalLoading, addToCart, onDecrease, onIncrease, removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

@@ -6,6 +6,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import CardProduct from '../../components/CardProduct';
 import styles from './styles';
 import { CartContext } from '../../contexts/CartContext';
+import GlobalLoading from '../../components/GlobalLoading';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -44,9 +45,7 @@ export default function Home() {
     <>
       {/* loading */}
       {globalLoading ? (
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <ActivityIndicator size="large" color="#4B6584" />
-        </View>
+        <GlobalLoading />
       ) : (
         <View style={styles.container}>
           <View style={styles.headerApp}>

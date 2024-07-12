@@ -43,6 +43,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins_500Medium',
   },
+  popUpContainer: {
+    alignItems: 'center',
+    zIndex: 20,
+    marginTop: 26,
+  },
 });
 
 export default styles;
