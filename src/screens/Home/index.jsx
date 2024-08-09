@@ -7,6 +7,7 @@ import CardProduct from '../../components/CardProduct';
 import styles from './styles';
 import { CartContext } from '../../contexts/CartContext';
 import GlobalLoading from '../../components/GlobalLoading';
+import NoProductsMessage from '../../components/NoProductsMessage';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -109,7 +110,7 @@ export default function Home() {
                     </TouchableOpacity>
                   ))
                 ) : (
-                  <Text>No products available</Text>
+                  <NoProductsMessage />
                 )}
               </View>
             </ScrollView>
