@@ -35,12 +35,6 @@ export default function ShoppingCart() {
     onIncrease(item);
   };
 
-  const handleTeste = async () => {
-    const keys = await AsyncStorage.getAllKeys();
-    const result = await AsyncStorage.multiGet(keys);
-    console.log(result);
-  };
-
   return (
     <>
       {
