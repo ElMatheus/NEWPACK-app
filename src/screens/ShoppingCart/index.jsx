@@ -21,10 +21,6 @@ export default function ShoppingCart() {
 
   const onDelete = (item) => {
     removeFromCart(item);
-    setPopUp('Produto removido com sucesso!');
-    setTimeout(() => {
-      setPopUp(null);
-    }, 3000);
   };
 
   const onDecreaseFunc = (item) => {
@@ -37,13 +33,6 @@ export default function ShoppingCart() {
 
   return (
     <>
-      {
-        popUp && (
-          <View style={styles.popUpContainer}>
-            <PopUp message={popUp} />
-          </View>
-        )
-      }
       {
         globalLoading ? (
           <GlobalLoading />

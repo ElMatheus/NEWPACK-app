@@ -92,6 +92,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 20,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 20,
+    position: 'absolute',
+    bottom: -20,
+    alignSelf: 'center',
+    elevation: 5,
+
   },
   cartBtn: {
     backgroundColor: '#4B6584',
