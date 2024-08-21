@@ -28,6 +28,18 @@ const ContainerPurchase = ({ type, desc, totalPrice, handleAddToCart }) => {
               <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
             </TouchableOpacity>
           </View>
+        ) : type == 'unidade' ? (
+          <View style={styles.containerPurchase}>
+            <View style={styles.containerPrice}>
+              <Text style={styles.txtDesc}>Preço por unidade:</Text>
+              <Text style={styles.txtPrice}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalPrice)}</Text>
+              <Text style={styles.txtDesc}>{desc}</Text>
+            </View>
+            {/* botao de adicionar este produto para o carrinho */}
+            <TouchableOpacity onPress={handleAddToCart} style={styles.addToCart}>
+              <Text style={styles.txtAddToCart}>Adicionar ao carrinho</Text>
+            </TouchableOpacity>
+          </View>
         ) : null
       }
     </>

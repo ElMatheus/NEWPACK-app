@@ -45,9 +45,10 @@ export default function Home() {
   const categoryMapping = {
     'Tudo': 'tudo',
     'Clichês': 'cliches',
-    'teste': 'teste',
+    'Facas Rotativas': 'facas_rotativas',
     'Facas Planas': 'facas_planas',
-    'Facas Gráficas': 'facas_graficas'
+    'Facas Gráficas': 'facas_graficas',
+    'Outros': 'outros'
   };
 
   return (

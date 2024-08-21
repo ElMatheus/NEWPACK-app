@@ -18,14 +18,18 @@ const CardProduct = ({ name, image, unitary_price, toughness, dimension, cod }) 
         <Text style={styles.titleProduct}>{truncate(name, 50)}</Text>
         <Text style={styles.titlePrice}>R${unitary_price}</Text>
         <View style={styles.specifications}>
-          <View style={styles.specificationCard}>
-            <Feather name="box" size={16} color="#4B6584" />
-            <Text style={styles.specificationText}>{toughness}</Text>
-          </View>
-          <View style={styles.specificationCard}>
-            <Feather name="maximize" size={16} color="#4B6584" />
-            <Text style={styles.specificationText}>{dimension}</Text>
-          </View>
+          {toughness && (
+            <View style={styles.specificationCard}>
+              <Feather name="box" size={16} color="#4B6584" />
+              <Text style={styles.specificationText}>{toughness}</Text>
+            </View>
+          )}
+          {dimension && (
+            <View style={styles.specificationCard}>
+              <Feather name="maximize" size={16} color="#4B6584" />
+              <Text style={styles.specificationText}>{dimension}</Text>
+            </View>
+          )}
         </View>
       </View>
     </View>

@@ -147,14 +147,18 @@ export default function ProductDetails({ route }) {
             </View>
           </View>
           <View style={styles.containerSpecifications}>
-            <View style={styles.card}>
-              <Feather name="maximize" size={18} color="#fff" />
-              <Text style={styles.txtSpecification}>{product.produto_dimensao}</Text>
-            </View>
-            <View style={styles.card}>
-              <Feather name="box" size={18} color="#fff" />
-              <Text style={styles.txtSpecification}>{product.produto_dureza}</Text>
-            </View>
+            {product.produto_dimensao && (
+              <View style={styles.card}>
+                <Feather name="maximize" size={18} color="#fff" />
+                <Text style={styles.txtSpecification}>{product.produto_dimensao}</Text>
+              </View>
+            )}
+            {product.produto_dureza && (
+              <View style={styles.card}>
+                <Feather name="box" size={18} color="#fff" />
+                <Text style={styles.txtSpecification}>{product.produto_dureza}</Text>
+              </View>
+            )}
           </View>
           <View style={styles.containerQuantity}>
             <Text style={styles.txtQuant}>Quantidade:</Text>

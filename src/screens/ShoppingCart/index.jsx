@@ -78,10 +78,10 @@ export default function ShoppingCart() {
               </TouchableOpacity>
               {/* <TouchableOpacity onPress={handleTeste} style={styles.btn}>
                 <Text style={styles.txtBtn}>Teste</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <TouchableOpacity onPress={() => AsyncStorage.clear()} style={styles.btn}>
                 <Text style={styles.txtBtn}>Limpar</Text>
-              </TouchableOpacity> */}
+              </TouchableOpacity>
             </View>
           </View>
         )}
