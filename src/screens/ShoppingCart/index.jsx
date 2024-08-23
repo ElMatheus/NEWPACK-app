@@ -31,6 +31,17 @@ export default function ShoppingCart() {
     onIncrease(item);
   };
 
+  const handleSubmit = async () => {
+    if (cart.length === 0) {
+      setPopUp('Adicione produtos ao carrinho para continuar');
+      setTimeout(() => {
+        setPopUp(null);
+      }, 3000);
+    } else {
+      navigation.navigate('UserForm');
+    }
+  };
+
   return (
     <>
       {
@@ -73,15 +84,15 @@ export default function ShoppingCart() {
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalValue)}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
                 <Text style={styles.txtBtn}>Concluir Compra</Text>
               </TouchableOpacity>
               {/* <TouchableOpacity onPress={handleTeste} style={styles.btn}>
                 <Text style={styles.txtBtn}>Teste</Text>
               </TouchableOpacity> */}
-              <TouchableOpacity onPress={() => AsyncStorage.clear()} style={styles.btn}>
+              {/* <TouchableOpacity onPress={() => AsyncStorage.clear()} style={styles.btn}>
                 <Text style={styles.txtBtn}>Limpar</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         )}

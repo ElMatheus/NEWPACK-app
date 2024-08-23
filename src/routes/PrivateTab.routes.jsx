@@ -6,6 +6,7 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Home from "../screens/Home";
 import ProductDetails from "../screens/ProductDetails";
 import ShoppingCart from "../screens/ShoppingCart";
+import UserForm from "../screens/UserForm";
 import { Text } from 'react-native';
 import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
@@ -84,8 +85,25 @@ const PrivateTab = () => {
           }
           }
         />
-
-
+        <Tab.Screen name="UserForm" component={UserForm}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <FontAwesome5
+                name="shopping-cart"
+                size={24}
+                color={focused ? "#4B6584" : "#b9c3cd"} />
+            ),
+            tabBarItemStyle: {
+              display: "none",
+            },
+            tabBarLabel: ({ focused, color }) => (
+              <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Detalhes de pedido</Text>
+            ),
+            tabBarActiveTintColor: "#4B6584",
+            tabBarInactiveTintColor: "#b9c3cd",
+          }
+          }
+        />
       </Tab.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>
