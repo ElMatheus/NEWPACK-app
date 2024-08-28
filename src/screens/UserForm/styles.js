@@ -19,6 +19,10 @@ const styles = StyleSheet.create({
   containerTxt: {
     marginTop: 10,
   },
+  containerInps: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
   containerInp: {
     marginTop: 16,
   },
@@ -38,7 +42,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_400Regular',
   },
   btn: {
-    marginTop: 40,
+    marginBottom: 10,
     width: '100%',
     height: 56,
     backgroundColor: '#4B6584',

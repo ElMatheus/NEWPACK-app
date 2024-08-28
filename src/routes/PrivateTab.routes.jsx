@@ -101,6 +101,7 @@ const PrivateTab = () => {
             ),
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
+            tabBarStyle: { display: 'none' },
           }
           }
         />

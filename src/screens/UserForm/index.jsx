@@ -14,20 +14,25 @@ export default function UserForm() {
       <View style={styles.containerTxt}>
         <Text style={styles.txt}>Para concluir, precisamos de algumas informações para finalizar seu pedido</Text>
       </View>
-      <View>
-        <View style={styles.containerInp}>
-          <Text style={styles.txtInp}>Nome</Text>
-          <TextInput placeholder='José Carlos' style={styles.input} />
-        </View>
-        <View style={styles.containerInp}>
-          <Text style={styles.txtInp}>Telefone</Text>
-          <PhoneInput
-            defaultCode="BR"
-            layout="first"
-            placeholder='(99) 99999-9999'
-            containerStyle={styles.input}
-            textContainerStyle={{ fontSize: 18, fontFamily: 'Poppins_400Regular' }}
-          />
+      <View style={styles.containerInps}>
+        <View>
+
+          <View style={styles.containerInp}>
+            <Text style={styles.txtInp}>Nome</Text>
+            <TextInput placeholder='José Carlos' style={styles.input} />
+          </View>
+          <View style={styles.containerInp}>
+            <Text style={styles.txtInp}>Telefone</Text>
+            <PhoneInput
+              defaultCode="BR"
+              layout="first"
+              placeholder='(99) 99999-9999'
+              containerStyle={styles.input}
+              textContainerStyle={{ fontSize: 18, fontFamily: 'Poppins_400Regular' }}
+              codeTextStyle={{ fontSize: 16, fontFamily: 'Poppins_400Regular', color: '#5E5E5E' }}
+              filterProps={{ placeholder: 'Insira o nome do país' }}
+            />
+          </View>
         </View>
         <TouchableOpacity style={styles.btn}>
           <Text style={styles.txtBtn}>Continuar</Text>
