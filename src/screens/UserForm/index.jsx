@@ -39,11 +39,12 @@ export default function UserForm() {
         <View>
           <View style={styles.containerInp}>
             <Text style={styles.txtInp}>Nome</Text>
-            <TextInput onChangeText={setName} placeholder='José Carlos' style={styles.input} />
+            <TextInput onChangeText={setName} placeholder='José Carlos' style={styles.input} value={name} />
           </View>
           <View style={styles.containerInp}>
             <Text style={styles.txtInp}>Telefone</Text>
             <PhoneInput
+              value={phone}
               onChangeFormattedText={(text) => setPhone(text)}
               defaultCode="BR"
               layout="first"
