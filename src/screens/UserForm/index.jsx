@@ -3,11 +3,32 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import PopUp from '../../components/PopUp';
 
 export default function UserForm() {
   const navigation = useNavigation();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [msgPopUp, setMsgPopUp] = useState('');
+
+  const handleSubmit = () => {
+    if (!name || !phone) {
+      setMsgPopUp('Preencha todos os campos');
+      setTimeout(() => {
+        setMsgPopUp('');
+      }, 3000);
+      return;
+    }
+    console.log(name, phone);
+
+  }
+
   return (
     <View style={styles.container}>
+      <View style={{ alignItems: 'center' }}>
+        {msgPopUp ? <PopUp message={msgPopUp} /> : null}
+      </View>
       <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.navigate('Cart')}>
         <AntDesign style={styles.icon} name="left" size={26} color="#000" />
       </TouchableOpacity>
@@ -16,14 +37,14 @@ export default function UserForm() {
       </View>
       <View style={styles.containerInps}>
         <View>
-
           <View style={styles.containerInp}>
             <Text style={styles.txtInp}>Nome</Text>
-            <TextInput placeholder='José Carlos' style={styles.input} />
+            <TextInput onChangeText={setName} placeholder='José Carlos' style={styles.input} />
           </View>
           <View style={styles.containerInp}>
             <Text style={styles.txtInp}>Telefone</Text>
             <PhoneInput
+              onChangeFormattedText={(text) => setPhone(text)}
               defaultCode="BR"
               layout="first"
               placeholder='(99) 99999-9999'
@@ -34,7 +55,7 @@ export default function UserForm() {
             />
           </View>
         </View>
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
           <Text style={styles.txtBtn}>Continuar</Text>
         </TouchableOpacity>
       </View>
