@@ -85,8 +85,28 @@ const AuthProvider = ({ children }) => {
     return response.data;
   };
 
+  const createProfileUser = async (name, telephone) => {
+    setGlobalLoading(true);
+    const profile = {
+      name: name,
+      telephone: telephone,
+    };
+    await AsyncStorage.setItem('@asyncStorage:profile', JSON.stringify(profile));
+    setGlobalLoading(false);
+  }
+
+  const getProfileFromAsyncStorage = async () => {
+    const profile = await AsyncStorage.getItem('@asyncStorage:profile');
+    return profile;
+  };
+
+  const clearProfileFromAsyncStorage = async () => {
+    await AsyncStorage.removeItem('@asyncStorage:profile');
+  };
+
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage }}>
       {children}
     </AuthContext.Provider>
   );

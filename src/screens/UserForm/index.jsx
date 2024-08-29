@@ -1,16 +1,18 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import PopUp from '../../components/PopUp';
+import { AuthContext } from '../../contexts/AuthContext';
 
 export default function UserForm() {
   const navigation = useNavigation();
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [msgPopUp, setMsgPopUp] = useState('');
+  const { createProfileUser, globalLoading } = useContext(AuthContext);
 
   const handleSubmit = () => {
     if (!name || !phone) {
@@ -20,8 +22,8 @@ export default function UserForm() {
       }, 3000);
       return;
     }
-    console.log(name, phone);
-
+    createProfileUser(name, phone);
+    navigation.navigate('Checkout');
   }
 
   return (
@@ -57,7 +59,10 @@ export default function UserForm() {
           </View>
         </View>
         <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
-          <Text style={styles.txtBtn}>Continuar</Text>
+          {
+            globalLoading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.txtBtn}>Continuar</Text>
+          }
+
         </TouchableOpacity>
       </View>
     </View>

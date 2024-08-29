@@ -38,7 +38,7 @@ export default function ShoppingCart() {
         setPopUp(null);
       }, 3000);
     } else {
-      navigation.navigate('UserForm');
+      navigation.navigate('Checkout');
     }
   };
 
