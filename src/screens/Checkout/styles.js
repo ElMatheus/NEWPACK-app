@@ -1,68 +1,56 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#f3f3f3',
+  containerHeader: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    marginTop: 10,
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#ccc',
+    gap: 8,
   },
-  headerApp: {
-    marginTop: 40,
+  containerIcon: {
+    marginTop: 10,
+  },
+  titleHeader: {
+    fontSize: 28,
+    fontFamily: 'Poppins_700Bold',
+    color: '#000000',
+  },
+  cardInfo: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 12,
-    width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#4B6584',
+    paddingVertical: 12,
+    paddingHorizontal: 28,
+    backgroundColor: '#fff',
   },
-  txtStyle: {
-    fontSize: 15,
-    color: '#4B6584',
-    fontFamily: 'Poppins_700Bold'
-  },
-  containerProducts: {
-    flex: 1,
-    padding: 10,
-    marginTop: 20,
-  },
-  containerCards: {
-    gap: 8,
-  },
-  title: {
-    fontSize: 18,
-    color: '#000',
-    fontFamily: 'Poppins_500Medium',
-  },
-  categories: {
-    gap: 28,
+  containerCard: {
     flexDirection: 'row',
-  },
-  txtCategories: {
-    fontSize: 14,
-    color: '#000',
-    fontFamily: 'Poppins_400Regular',
-  },
-  cartBtn: {
-    backgroundColor: '#4B6584',
-    width: 24,
-    height: 24,
-    justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 15,
-    position: 'absolute',
-    top: -7,
-    right: -7,
-
+    gap: 17,
   },
-  cartText: {
-    fontSize: 10,
-    color: '#fff',
-    fontFamily: 'Poppins_500Medium',
+  containerDesc: {
+    gap: -4,
   },
-  cart: {
-    position: 'relative',
-    padding: 10,
+  titleCard: {
+    fontSize: 16,
+    fontFamily: 'Poppins_600SemiBold',
+    color: '#000',
+  },
+  txtCard: {
+    fontSize: 14,
+    fontFamily: 'Poppins_400Regular',
+    color: '#000',
+  },
+  txtButton: {
+    fontSize: 14,
+    fontFamily: 'Poppins_600SemiBold',
+    color: '#4B6584',
+  },
+  container: {
+    gap: 1,
   },
 });
 
