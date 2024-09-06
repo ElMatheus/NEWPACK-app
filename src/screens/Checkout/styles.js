@@ -52,6 +52,21 @@ const styles = StyleSheet.create({
   container: {
     gap: 1,
   },
+  containerItems: {
+
+  },
+  containerTxts: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 16,
+    marginBottom: 3,
+  },
+  txt: {
+    fontSize: 16,
+    fontFamily: 'Poppins_500Medium',
+    color: '#000',
+  },
 });
 
 export default styles;
