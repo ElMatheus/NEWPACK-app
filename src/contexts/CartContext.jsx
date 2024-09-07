@@ -6,6 +6,7 @@ export const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [globalLoading, setGlobalLoading] = useState(false);
+  const [totalValue, setTotalValue] = useState(0);
 
   useEffect(() => {
     const loadingStoreData = async () => {
@@ -17,7 +18,7 @@ const CartProvider = ({ children }) => {
       setGlobalLoading(false);
     }
     loadingStoreData();
-  }, [])
+  }, []);
 
   const addToCart = async (product) => {
     const productExists = cart.find((item) => item.produto_id === product.produto_id);
@@ -75,10 +76,15 @@ const CartProvider = ({ children }) => {
     setCart(newCart);
     await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
     setGlobalLoading(false);
-  }
+  };
+
+  const calculateTotal = () => {
+    const total = cart.reduce((acc, item) => acc + Number(item.produto_quantidade) * Number(item.total_value), 0);
+    setTotalValue(total);
+  };
 
   return (
-    <CartContext.Provider value={{ cart, globalLoading, addToCart, onDecrease, onIncrease, removeFromCart }}>
+    <CartContext.Provider value={{ cart, globalLoading, addToCart, onDecrease, onIncrease, removeFromCart, calculateTotal, totalValue }}>
       {children}
     </CartContext.Provider>
   );

@@ -62,10 +62,41 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 3,
   },
+  containerTxtsInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
   txt: {
     fontSize: 16,
     fontFamily: 'Poppins_500Medium',
     color: '#000',
+  },
+  txtTitle: {
+    fontSize: 16,
+    fontFamily: 'Poppins_500Medium',
+    color: '#6B6B6B',
+  },
+  input: {
+    marginTop: 5,
+    width: "100%",
+    backgroundColor: '#ff3',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    minHeight: 93,
+    backgroundColor: '#fff',
+    fontFamily: 'Poppins_500Medium',
+    fontSize: 14,
+    color: '#000',
+    textAlignVertical: 'top',
+  },
+  containerInfo: {
+    gap: 10,
+    marginTop: 20,
+  },
+  picker: {
+    width: 100,
+    marginTop: -15,
   },
 });
 

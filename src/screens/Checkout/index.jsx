@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { CartContext } from '../../contexts/CartContext';
@@ -8,13 +8,16 @@ import styles from './styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import CardItem from '../../components/CardItem';
+import { Picker } from '@react-native-picker/picker';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, clearProfileFromAsyncStorage, user } = useContext(AuthContext);
-  const { cart } = useContext(CartContext);
+  const { cart, totalValue } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
+  const [selectedValue, setSelectedValue] = useState(1);
+  const [valueInstallment, setValueInstallment] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
@@ -33,13 +36,18 @@ export default function Checkout() {
     }, [])
   );
 
+  useEffect(() => {
+    const installment = totalValue / Number(selectedValue);
+    setValueInstallment(installment);
+  }, [selectedValue]);
+
   return (
     <>
       {
         loading || profile == null || user == null ? (
           <GlobalLoading />
         ) : (
-          <View>
+          <ScrollView>
             <View style={styles.containerHeader}>
               <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.navigate('Cart')}>
                 <AntDesign style={styles.icon} name="left" size={26} color="#000" />
@@ -97,7 +105,45 @@ export default function Checkout() {
                 }
               </View>
             </View>
-          </View >
+            <View style={styles.containerObs}>
+              <View style={styles.containerTxts}>
+                <Text style={styles.txt}>Observações</Text>
+              </View>
+              <TextInput multiline={true} style={styles.input} placeholder="Adicione uma observação em seu pedido (adicionar apenas as borrachas mais macias)" />
+            </View>
+            <View style={styles.containerInfo}>
+              <View style={styles.containerTxtsInfo}>
+                <Text style={styles.txtTitle}>Subtotal</Text>
+                <Text style={styles.txt}>  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalValue)}</Text>
+              </View>
+              <View style={styles.containerTxtsInfo}>
+                <Text style={styles.txtTitle}>Parcelamento</Text>
+                <Picker
+                  selectedValue={selectedValue}
+                  itemStyle={{ backgroundColor: "grey", color: "blue", fontSize: 5 }}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                >
+                  <Picker.Item label="1x" value="1" />
+                  <Picker.Item label="2x" value="2" />
+                  {
+                    totalValue >= 3000 && (
+                      <Picker.Item label="3x" value="3" />
+                    )
+                  }
+                </Picker>
+              </View>
+              <View style={styles.containerTxtsInfo}>
+                <Text style={styles.txtTitle}>Prestação</Text>
+                <Text style={styles.txt}>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valueInstallment)}</Text>
+              </View>
+              <View style={styles.containerTxtsInfo}>
+                <Text style={styles.txtTitle}>Tipo de frete</Text>
+                <Text style={styles.txt}>FOB</Text>
+              </View>
+
+            </View>
+          </ScrollView>
         )
 
       }

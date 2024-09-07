@@ -11,7 +11,7 @@ import PopUp from '../../components/PopUp';
 export default function ShoppingCart() {
   const navigation = useNavigation();
   const [totalValue, setTotalValue] = useState(0);
-  const { cart, onDecrease, onIncrease, removeFromCart, globalLoading } = useContext(CartContext);
+  const { cart, onDecrease, onIncrease, removeFromCart, globalLoading, calculateTotal } = useContext(CartContext);
   const [popUp, setPopUp] = useState(null);
 
   useEffect(() => {
@@ -38,6 +38,7 @@ export default function ShoppingCart() {
         setPopUp(null);
       }, 3000);
     } else {
+      await calculateTotal();
       navigation.navigate('Checkout');
     }
   };
