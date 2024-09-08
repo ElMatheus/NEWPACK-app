@@ -41,6 +41,12 @@ export default function Checkout() {
     setValueInstallment(installment);
   }, [selectedValue]);
 
+  const items = [
+    { label: '1x', value: 1 },
+    { label: '2x', value: 2 },
+    totalValue > 3000 ? { label: '3x', value: 3 } : null,
+  ].filter(Boolean);
+
   return (
     <>
       {
@@ -122,12 +128,7 @@ export default function Checkout() {
                   <Text style={styles.txt}>{selectedValue}x</Text>
                   <RNPickerSelect
                     onValueChange={(value) => setSelectedValue(value)}
-                    items={[
-                      { label: '1x', value: 1 },
-                      { label: '2x', value: 2 },
-                      { label: '3x', value: 3 },
-                      { label: '4x', value: 4 },
-                    ]}
+                    items={items}
                     style={{
                       inputIOS: styles.inputIOS,
                       inputAndroid: styles.inputAndroid,
