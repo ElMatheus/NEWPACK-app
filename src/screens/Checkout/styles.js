@@ -64,7 +64,13 @@ const styles = StyleSheet.create({
 
   },
   containerTxtsInfo: {
-    paddingVertical: 10,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  containerTxtsInfo2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',

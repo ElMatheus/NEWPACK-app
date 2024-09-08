@@ -116,7 +116,7 @@ export default function Checkout() {
                 <Text style={styles.txtTitle}>Subtotal</Text>
                 <Text style={styles.txt}>  {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalValue)}</Text>
               </View>
-              <View style={styles.containerTxtsInfo}>
+              <View style={styles.containerTxtsInfo2}>
                 <Text style={styles.txtTitle}>Parcelamento</Text>
                 <View style={styles.containerSelectValue}>
                   <Text style={styles.txt}>{selectedValue}x</Text>
