@@ -23,6 +23,7 @@ export default function Checkout() {
     useCallback(() => {
       const fetchProfile = async () => {
         setLoading(true);
+        setSelectedValue(1);
         const profileData = await getProfileFromAsyncStorage();
         if (profileData) {
           setProfile(JSON.parse(profileData));
@@ -145,7 +146,12 @@ export default function Checkout() {
                 <Text style={styles.txtTitle}>Tipo de frete</Text>
                 <Text style={styles.txt}>FOB</Text>
               </View>
-
+            </View>
+            <View style={styles.containerFinish}>
+              <Text style={styles.txtWarning}>Antes de confirmar, confira seus produtos e métodos de identificação.</Text>
+              <TouchableOpacity style={styles.btn}>
+                <Text style={styles.txtBtn}>Finalizar Compra</Text>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         )

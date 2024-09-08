@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   containerInfo: {
 
     marginTop: 20,
-    marginBottom: 20,
   },
   picker: {
     width: 100,
@@ -125,6 +124,32 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Poppins_500Medium',
     fontSize: 14,
+  },
+  containerFinish: {
+    width: '100%',
+    borderTopWidth: 1,
+    borderTopColor: '#D9D9D9',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    gap: 15,
+  },
+  txtWarning: {
+    fontSize: 13,
+    fontFamily: 'Poppins_400Regular',
+    color: '#000000',
+  },
+  btn: {
+    backgroundColor: '#4B6584',
+    alignItems: 'center',
+    borderRadius: 6,
+    paddingVertical: 12,
+
+  },
+  txtBtn: {
+    fontSize: 16,
+    fontFamily: 'Poppins_500Medium',
+    color: '#fff',
   },
 });
 
