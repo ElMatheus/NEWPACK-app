@@ -8,7 +8,7 @@ import styles from './styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import CardItem from '../../components/CardItem';
-import { Picker } from '@react-native-picker/picker';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, clearProfileFromAsyncStorage, user } = useContext(AuthContext);
@@ -118,20 +118,23 @@ export default function Checkout() {
               </View>
               <View style={styles.containerTxtsInfo}>
                 <Text style={styles.txtTitle}>Parcelamento</Text>
-                <Picker
-                  selectedValue={selectedValue}
-                  itemStyle={{ backgroundColor: "grey", color: "blue", fontSize: 5 }}
-                  style={styles.picker}
-                  onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                  <Picker.Item label="1x" value="1" />
-                  <Picker.Item label="2x" value="2" />
-                  {
-                    totalValue >= 3000 && (
-                      <Picker.Item label="3x" value="3" />
-                    )
-                  }
-                </Picker>
+                <View style={styles.containerSelectValue}>
+                  <Text style={styles.txt}>{selectedValue}x</Text>
+                  <RNPickerSelect
+                    onValueChange={(value) => setSelectedValue(value)}
+                    items={[
+                      { label: '1x', value: 1 },
+                      { label: '2x', value: 2 },
+                      { label: '3x', value: 3 },
+                      { label: '4x', value: 4 },
+                    ]}
+                    style={{
+                      inputIOS: styles.inputIOS,
+                      inputAndroid: styles.inputAndroid,
+                    }}
+                    placeholder={{}}
+                  />
+                </View>
               </View>
               <View style={styles.containerTxtsInfo}>
                 <Text style={styles.txtTitle}>Prestação</Text>
