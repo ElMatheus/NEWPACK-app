@@ -86,7 +86,7 @@ const PrivateTab = () => {
           }
           }
         />
-        <Tab.Screen name="UserForm" component={UserForm}
+        <Tab.Screen name="UserForm" initialParams={{ element: null }} component={UserForm}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome5

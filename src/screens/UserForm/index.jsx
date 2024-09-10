@@ -3,26 +3,46 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import styles from './styles';
 import PhoneInput from 'react-native-phone-number-input';
 import { useNavigation } from '@react-navigation/native';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import PopUp from '../../components/PopUp';
 import { AuthContext } from '../../contexts/AuthContext';
 
-export default function UserForm() {
+export default function UserForm({ route }) {
   const navigation = useNavigation();
+  const { element } = route.params;
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [phoneFormatted, setPhoneFormatted] = useState('');
+  const [phone, setPhone] = useState(null);
   const [msgPopUp, setMsgPopUp] = useState('');
   const { createProfileUser, globalLoading } = useContext(AuthContext);
 
+  useEffect(() => {
+    if (element) {
+      setName(element.name);
+      setPhoneFormatted(element.telephone);
+      // tire o +55
+      const bosta = element.telephone = element.telephone.replace('+55', '');
+      console.log(bosta);
+
+      setPhone(bosta);
+    }
+  }, [element]);
+
   const handleSubmit = () => {
+    console.log(phone);
+
+    // seber o tipo de uma variavel
+    // console.log(typeof phone);
+    // console.log("formated", typeof phoneFormatted);
     if (!name || !phone) {
+
       setMsgPopUp('Preencha todos os campos');
       setTimeout(() => {
         setMsgPopUp('');
       }, 3000);
       return;
     }
-    createProfileUser(name, phone);
+    createProfileUser(name, phoneFormatted);
     navigation.navigate('Checkout');
   }
 
@@ -46,8 +66,10 @@ export default function UserForm() {
           <View style={styles.containerInp}>
             <Text style={styles.txtInp}>Telefone</Text>
             <PhoneInput
-              value={phone}
-              onChangeFormattedText={(text) => setPhone(text)}
+              textInputProps={{ value: phone }}
+              defaultValue={phone}
+              onChangeText={(text) => setPhone(text)}
+              onChangeFormattedText={(text) => setPhoneFormatted(text)}
               defaultCode="BR"
               layout="first"
               placeholder='(99) 99999-9999'

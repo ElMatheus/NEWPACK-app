@@ -101,7 +101,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const clearProfileFromAsyncStorage = async () => {
-    await AsyncStorage.removeItem('@asyncStorage:profile');
+    await AsyncStorage.clear();
   };
 
 

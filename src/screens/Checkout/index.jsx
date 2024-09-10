@@ -28,7 +28,7 @@ export default function Checkout() {
         if (profileData) {
           setProfile(JSON.parse(profileData));
         } else {
-          navigation.navigate('UserForm');
+          navigation.navigate('UserForm', { element: null });
         }
         setLoading(false);
       };
@@ -47,6 +47,10 @@ export default function Checkout() {
     { label: '2x', value: 2 },
     totalValue > 3000 ? { label: '3x', value: 3 } : null,
   ].filter(Boolean);
+
+  const handleChange = (element) => {
+    navigation.navigate('UserForm', { element });
+  }
 
   return (
     <>
@@ -82,7 +86,7 @@ export default function Checkout() {
                     <Text style={styles.txtCard}>{profile.telephone}</Text>
                   </View>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handleChange(profile)}>
                   <Text style={styles.txtButton}>Mudar</Text>
                 </TouchableOpacity>
               </View>
