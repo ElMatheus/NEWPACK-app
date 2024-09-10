@@ -21,21 +21,13 @@ export default function UserForm({ route }) {
       setName(element.name);
       setPhoneFormatted(element.telephone);
       // tire o +55
-      const bosta = element.telephone = element.telephone.replace('+55', '');
-      console.log(bosta);
-
-      setPhone(bosta);
+      const removeFormatting = element.telephone = element.telephone.replace('+55', '');
+      setPhone(removeFormatting);
     }
   }, [element]);
 
   const handleSubmit = () => {
-    console.log(phone);
-
-    // seber o tipo de uma variavel
-    // console.log(typeof phone);
-    // console.log("formated", typeof phoneFormatted);
     if (!name || !phone) {
-
       setMsgPopUp('Preencha todos os campos');
       setTimeout(() => {
         setMsgPopUp('');
