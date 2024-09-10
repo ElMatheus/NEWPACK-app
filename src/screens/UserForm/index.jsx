@@ -20,7 +20,6 @@ export default function UserForm({ route }) {
     if (element) {
       setName(element.name);
       setPhoneFormatted(element.telephone);
-      // tire o +55
       const removeFormatting = element.telephone = element.telephone.replace('+55', '');
       setPhone(removeFormatting);
     }
