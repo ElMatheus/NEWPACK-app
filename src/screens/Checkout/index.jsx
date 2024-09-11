@@ -9,6 +9,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import CardItem from '../../components/CardItem';
 import RNPickerSelect from 'react-native-picker-select';
+import InfoUser from '../../components/InfoUser';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, clearProfileFromAsyncStorage, user } = useContext(AuthContext);
@@ -18,6 +19,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState(1);
   const [valueInstallment, setValueInstallment] = useState(0);
+  const [modalVisible, setModalVisible] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -74,7 +76,7 @@ export default function Checkout() {
                     <Text style={styles.txtCard}>{user.cnpj}</Text>
                   </View>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
                   <Text style={styles.txtButton}>Mudar</Text>
                 </TouchableOpacity>
               </View>
@@ -157,6 +159,7 @@ export default function Checkout() {
                 <Text style={styles.txtBtn}>Finalizar Compra</Text>
               </TouchableOpacity>
             </View>
+            <InfoUser modalVisible={modalVisible} setModalVisible={setModalVisible} />
           </ScrollView>
         )
 
