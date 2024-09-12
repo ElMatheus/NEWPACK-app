@@ -19,7 +19,7 @@ export default function Checkout() {
   const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState(1);
   const [valueInstallment, setValueInstallment] = useState(0);
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -100,7 +100,7 @@ export default function Checkout() {
                     <Text style={styles.txtCard}>Valinhos</Text>
                   </View>
                 </View>
-                <TouchableOpacity onPress={() => console.log(cart)}>
+                <TouchableOpacity>
                   <Text style={styles.txtButton}>Mudar</Text>
                 </TouchableOpacity>
               </View>
