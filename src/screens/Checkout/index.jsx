@@ -100,7 +100,7 @@ export default function Checkout() {
                     <Text style={styles.txtCard}>Valinhos</Text>
                   </View>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("Address")}>
                   <Text style={styles.txtButton}>Mudar</Text>
                 </TouchableOpacity>
               </View>

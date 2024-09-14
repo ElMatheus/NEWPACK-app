@@ -104,9 +104,17 @@ const AuthProvider = ({ children }) => {
     await AsyncStorage.clear();
   };
 
+  const getAddressesUser = async () => {
+    setGlobalLoading(true);
+    const response = await axios.get(`${apiURL}/users/address/${user.id}`
+    );
+    setGlobalLoading(false);
+    return response.data.address;
+  };
+
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser }}>
       {children}
     </AuthContext.Provider>
   );
