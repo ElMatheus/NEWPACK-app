@@ -4,7 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import styles from './styles';
 import { AuthContext } from '../../contexts/AuthContext';
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import CardAddress from '../../components/CardAddress';
 import CreateAddress from '../../components/CreateAddress';
 
@@ -12,6 +12,7 @@ export default function Address() {
   const [modalVisible, setModalVisible] = useState(false);
   const { getAddressesUser } = useContext(AuthContext);
   const [addresses, setAddresses] = useState(null);
+  const navigation = useNavigation();
 
   useFocusEffect(
     useCallback(() => {
@@ -34,7 +35,7 @@ export default function Address() {
     <ScrollView>
       <View style={styles.containerHeader}>
         <View style={styles.containerIcon}>
-          <TouchableOpacity onPress={() => handleTeste()}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <AntDesign style={styles.icon} name="left" size={29} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -46,8 +47,8 @@ export default function Address() {
         </View>
       </View>
       <View>
-        {addresses && addresses.map((address) => (
-          <CardAddress key={addresses.id} address={address} />
+        {addresses && addresses.map((address, index) => (
+          <CardAddress key={index} address={address} />
         ))}
       </View>
       <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />

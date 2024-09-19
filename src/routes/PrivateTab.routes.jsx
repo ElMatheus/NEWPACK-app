@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
@@ -14,6 +15,27 @@ import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const HomeStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    <Stack.Screen name="UserForm" component={UserForm} />
+    <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="Checkout" component={Checkout} />
+  </Stack.Navigator>
+);
+
+const CartStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Cart" component={ShoppingCart} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    <Stack.Screen name="UserForm" component={UserForm} />
+    <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="Checkout" component={Checkout} />
+  </Stack.Navigator>
+);
 
 const PrivateTab = () => {
   const { cart } = useContext(CartContext);
@@ -23,10 +45,9 @@ const PrivateTab = () => {
         headerShown: false,
         tabBarStyle: {
           height: 67,
-
         },
       }}>
-        <Tab.Screen name="Home" component={Home}
+        <Tab.Screen name="HomeTab" component={HomeStack}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome6
@@ -40,10 +61,9 @@ const PrivateTab = () => {
             ),
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
-          }
-          }
+          }}
         />
-        <Tab.Screen name="Cart" component={ShoppingCart}
+        <Tab.Screen name="CartTab" component={CartStack}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome5
@@ -65,86 +85,7 @@ const PrivateTab = () => {
             },
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
-          }
-          }
-        />
-        <Tab.Screen name="ProductDetails" component={ProductDetails}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <FontAwesome5
-                name="shopping-cart"
-                size={24}
-                color={focused ? "#4B6584" : "#b9c3cd"} />
-            ),
-            tabBarItemStyle: {
-              display: "none",
-            },
-            tabBarLabel: ({ focused, color }) => (
-              <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Detalhes de pedido</Text>
-            ),
-            tabBarActiveTintColor: "#4B6584",
-            tabBarInactiveTintColor: "#b9c3cd",
-          }
-          }
-        />
-        <Tab.Screen name="UserForm" initialParams={{ element: null }} component={UserForm}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <FontAwesome5
-                name="shopping-cart"
-                size={24}
-                color={focused ? "#4B6584" : "#b9c3cd"} />
-            ),
-            tabBarItemStyle: {
-              display: "none",
-            },
-            tabBarLabel: ({ focused, color }) => (
-              <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Detalhes de pedido</Text>
-            ),
-            tabBarActiveTintColor: "#4B6584",
-            tabBarInactiveTintColor: "#b9c3cd",
-            tabBarStyle: { display: 'none' },
-          }
-          }
-        />
-        <Tab.Screen name="Address" component={Address}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <FontAwesome5
-                name="shopping-cart"
-                size={24}
-                color={focused ? "#4B6584" : "#b9c3cd"} />
-            ),
-            tabBarItemStyle: {
-              display: "none",
-            },
-            tabBarLabel: ({ focused, color }) => (
-              <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Detalhes de pedido</Text>
-            ),
-            tabBarActiveTintColor: "#4B6584",
-            tabBarInactiveTintColor: "#b9c3cd",
-            tabBarStyle: { display: 'none' },
-          }
-          }
-        />
-        <Tab.Screen name="Checkout" component={Checkout}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <FontAwesome5
-                name="shopping-cart"
-                size={24}
-                color={focused ? "#4B6584" : "#b9c3cd"} />
-            ),
-            tabBarItemStyle: {
-              display: "none",
-            },
-            tabBarLabel: ({ focused, color }) => (
-              <Text style={{ color, fontFamily: 'Poppins_500Medium', fontSize: 13 }}>Detalhes de pedido</Text>
-            ),
-            tabBarActiveTintColor: "#4B6584",
-            tabBarInactiveTintColor: "#b9c3cd",
-          }
-          }
+          }}
         />
       </Tab.Navigator>
       <StatusBar style="auto" />

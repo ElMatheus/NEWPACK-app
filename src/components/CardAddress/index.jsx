@@ -98,7 +98,6 @@ const CardAddress = ({ address }) => {
               <TouchableOpacity style={styles.btnRmv}>
                 <Text style={styles.txtBtn}>Remover</Text>
               </TouchableOpacity>
-
             </View>
           </View>
 

@@ -62,7 +62,7 @@ export default function Checkout() {
         ) : (
           <ScrollView>
             <View style={styles.containerHeader}>
-              <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.navigate('Cart')}>
+              <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.goBack()}>
                 <AntDesign style={styles.icon} name="left" size={26} color="#000" />
               </TouchableOpacity>
               <Text style={styles.titleHeader}>Finalização de Compra</Text>

@@ -84,7 +84,7 @@ export default function ProductDetails({ route }) {
         <View style={styles.container}>
           <View style={styles.containerHeader}>
             {/* navegar para voltar para a tela Home */}
-            <TouchableOpacity onPress={() => { navigation.navigate('Home'); handlePress(0); }}>
+            <TouchableOpacity onPress={() => { navigation.goBack(); handlePress(0); }}>
               <AntDesign style={styles.icon} name="left" size={24} color="#4B6584" />
             </TouchableOpacity>
             {/* navegar para a tela de carrinho */}
@@ -96,7 +96,7 @@ export default function ProductDetails({ route }) {
                   </Animated.View>
                 )
               }
-              <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
+              <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('CartTab'); handlePress(0); }}>
                 <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
               </TouchableOpacity>
             </View>
