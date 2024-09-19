@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   containerIcon: {
     marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   txt: {
     fontSize: 28,
@@ -14,7 +16,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   containerHeader: {
-
     padding: 10,
   },
 });

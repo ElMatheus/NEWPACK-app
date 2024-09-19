@@ -77,6 +77,27 @@ const styles = StyleSheet.create({
     color: "#6B6B6B",
     fontFamily: 'Poppins_500Medium',
   },
+  containerBtn: {
+    flexDirection: "row",
+    gap: 10,
+  },
+  btn: {
+    backgroundColor: "#4B6584",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  btnRmv: {
+    backgroundColor: "#FF6347",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  txtBtn: {
+    fontSize: 12,
+    color: "#fff",
+    fontFamily: 'Poppins_600SemiBold',
+  },
 });
 
 export default styles;

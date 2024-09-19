@@ -1,12 +1,15 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useContext, useState, useEffect, useCallback } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Feather from '@expo/vector-icons/Feather';
 import styles from './styles';
 import { AuthContext } from '../../contexts/AuthContext';
 import { useFocusEffect } from '@react-navigation/native';
 import CardAddress from '../../components/CardAddress';
+import CreateAddress from '../../components/CreateAddress';
 
 export default function Address() {
+  const [modalVisible, setModalVisible] = useState(false);
   const { getAddressesUser } = useContext(AuthContext);
   const [addresses, setAddresses] = useState(null);
 
@@ -28,11 +31,16 @@ export default function Address() {
 
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.containerHeader}>
-        <TouchableOpacity style={styles.containerIcon} onPress={() => handleTeste()}>
-          <AntDesign style={styles.icon} name="left" size={26} color="#000" />
-        </TouchableOpacity>
+        <View style={styles.containerIcon}>
+          <TouchableOpacity onPress={() => handleTeste()}>
+            <AntDesign style={styles.icon} name="left" size={29} color="#000" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <Feather style={styles.icon} name="plus-square" size={29} color="#000" />
+          </TouchableOpacity>
+        </View>
         <View style={styles.containerTxt}>
           <Text style={styles.txt}>Meus Endereços</Text>
         </View>
@@ -42,6 +50,7 @@ export default function Address() {
           <CardAddress key={addresses.id} address={address} />
         ))}
       </View>
-    </View>
+      <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />
+    </ScrollView>
   )
 }

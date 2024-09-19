@@ -25,7 +25,13 @@ const CardAddress = ({ address }) => {
         </View>
         <View style={{ marginLeft: "auto" }}>
           <TouchableOpacity onPress={() => setMoreInfo(!moreInfo)}>
-            <Entypo name="chevron-small-down" size={37} color="#4B6584" />
+            {
+              moreInfo ? (
+                <Entypo name="chevron-small-up" size={37} color="#4B6584" />
+              ) : (
+                <Entypo name="chevron-small-down" size={37} color="#4B6584" />
+              )
+            }
           </TouchableOpacity>
         </View>
       </View>
@@ -85,7 +91,17 @@ const CardAddress = ({ address }) => {
                 />
               </View>
             </View>
+            <View style={styles.containerBtn}>
+              <TouchableOpacity style={styles.btn}>
+                <Text style={styles.txtBtn}>Atualiar</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btnRmv}>
+                <Text style={styles.txtBtn}>Remover</Text>
+              </TouchableOpacity>
+
+            </View>
           </View>
+
         )
       }
     </View>
