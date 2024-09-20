@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Switch } from 'react-native';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -90,6 +90,13 @@ const CardAddress = ({ address }) => {
                   value={String(address.number)}
                 />
               </View>
+              <View style={styles.containerSwitch}>
+                <Switch
+
+                />
+                <Text style={styles.switchText}>Definir padrão</Text>
+              </View>
+
             </View>
             <View style={styles.containerBtn}>
               <TouchableOpacity style={styles.btn}>

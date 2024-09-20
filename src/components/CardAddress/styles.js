@@ -98,6 +98,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontFamily: 'Poppins_600SemiBold',
   },
+  containerSwitch: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 7,
+  },
+  switchText: {
+    fontSize: 16,
+    color: "#000",
+    fontFamily: 'Poppins_500Medium',
+  },
 });
 
 export default styles;
