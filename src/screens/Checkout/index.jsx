@@ -12,7 +12,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import InfoUser from '../../components/InfoUser';
 
 export default function Checkout() {
-  const { getProfileFromAsyncStorage, clearProfileFromAsyncStorage, user } = useContext(AuthContext);
+  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading } = useContext(AuthContext);
   const { cart, totalValue } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
@@ -20,12 +20,15 @@ export default function Checkout() {
   const [selectedValue, setSelectedValue] = useState(1);
   const [valueInstallment, setValueInstallment] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
       const fetchProfile = async () => {
         setLoading(true);
         setSelectedValue(1);
+        const address = await getAddressActiveUser();
+        setSelectedAddress(address);
         const profileData = await getProfileFromAsyncStorage();
         if (profileData) {
           setProfile(JSON.parse(profileData));
@@ -38,6 +41,15 @@ export default function Checkout() {
       fetchProfile();
     }, [])
   );
+
+  // globalLoading
+  useEffect(() => {
+    if (globalLoading) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [globalLoading]);
 
   useEffect(() => {
     const installment = totalValue / Number(selectedValue);
@@ -96,7 +108,7 @@ export default function Checkout() {
                 <View style={styles.containerCard}>
                   <Feather name="map-pin" size={27} color="#000" />
                   <View style={styles.containerDesc}>
-                    <Text style={styles.titleCard}>R. São Paulo, 05</Text>
+                    <Text style={styles.titleCard}>{selectedAddress.street}, {selectedAddress.number}</Text>
                     <Text style={styles.txtCard}>Valinhos</Text>
                   </View>
                 </View>
