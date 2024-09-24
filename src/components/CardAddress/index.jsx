@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Switch, Modal } from 'react-native';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -7,7 +7,7 @@ import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { useState } from 'react';
 
-const CardAddress = ({ address }) => {
+const CardAddress = ({ address, setPopUp }) => {
   const [moreInfo, setMoreInfo] = useState(false);
   const [inpStreet, setInpStreet] = useState(address.street);
   const [inpCep, setInpCep] = useState(address.cep);
@@ -19,7 +19,10 @@ const CardAddress = ({ address }) => {
 
   const handleUpdate = () => {
     if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
-      console.log('Nenhuma alteração foi feita');
+      setPopUp('Nenhuma alteração foi feita');
+      setTimeout(() => {
+        setPopUp(null);
+      }, 3000);
     } else {
       console.log('Atualizar');
     }
@@ -132,7 +135,6 @@ const CardAddress = ({ address }) => {
               </TouchableOpacity>
             </View>
           </View>
-
         )
       }
     </View>
