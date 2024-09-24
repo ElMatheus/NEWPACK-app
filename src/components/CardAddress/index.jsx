@@ -9,6 +9,22 @@ import { useState } from 'react';
 
 const CardAddress = ({ address }) => {
   const [moreInfo, setMoreInfo] = useState(false);
+  const [inpStreet, setInpStreet] = useState(address.street);
+  const [inpCep, setInpCep] = useState(address.cep);
+  const [inpCity, setInpCity] = useState(address.city);
+  const [inpState, setInpState] = useState(address.state);
+  const [inpComplement, setInpComplement] = useState(address.complement);
+  const [inpNumber, setInpNumber] = useState(address.number);
+  const [inpActive, setInpActive] = useState(address.active);
+
+  const handleUpdate = () => {
+    if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
+      console.log('Nenhuma alteração foi feita');
+    } else {
+      console.log('Atualizar');
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.containerAddress}>
@@ -44,7 +60,8 @@ const CardAddress = ({ address }) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Rua"
-                  value={address.street}
+                  value={inpStreet}
+                  onChangeText={setInpStreet}
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -52,7 +69,8 @@ const CardAddress = ({ address }) => {
                 <TextInput
                   style={styles.input}
                   placeholder="CEP"
-                  value={address.cep}
+                  value={inpCep}
+                  onChangeText={setInpCep}
                 />
               </View>
               <View style={styles.containerRow}>
@@ -61,7 +79,8 @@ const CardAddress = ({ address }) => {
                   <TextInput
                     style={styles.input}
                     placeholder="Cidade"
-                    value={address.city}
+                    value={inpCity}
+                    onChangeText={setInpCity}
                   />
                 </View>
                 <View style={styles.inputContainer2}>
@@ -69,7 +88,8 @@ const CardAddress = ({ address }) => {
                   <TextInput
                     style={styles.input}
                     placeholder="Estado"
-                    value={address.state}
+                    value={inpState}
+                    onChangeText={setInpState}
                   />
                 </View>
               </View>
@@ -78,7 +98,8 @@ const CardAddress = ({ address }) => {
                 <TextInput
                   style={styles.input}
                   placeholder="Complemento"
-                  value={address.complement}
+                  value={inpComplement}
+                  onChangeText={setInpComplement}
                 />
               </View>
               <View style={styles.inputContainer}>
@@ -87,19 +108,23 @@ const CardAddress = ({ address }) => {
                   style={styles.input}
                   keyboardType="numeric"
                   placeholder="Número"
-                  value={String(address.number)}
+                  value={String(inpNumber)}
+                  onChangeText={setInpNumber}
                 />
               </View>
               <View style={styles.containerSwitch}>
                 <Switch
-
+                  trackColor={{ false: "#767577", true: "#4B6584" }}
+                  thumbColor="#F3F3F3"
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={setInpActive}
+                  value={inpActive}
                 />
                 <Text style={styles.switchText}>Definir padrão</Text>
               </View>
-
             </View>
             <View style={styles.containerBtn}>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity onPress={handleUpdate} style={styles.btn}>
                 <Text style={styles.txtBtn}>Atualiar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btnRmv}>

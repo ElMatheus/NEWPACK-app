@@ -162,7 +162,7 @@ export default function Checkout() {
               </View>
               <View style={styles.containerTxtsInfo}>
                 <Text style={styles.txtTitle}>Tipo de frete</Text>
-                <Text style={styles.txt}>FOB</Text>
+                <Text style={styles.txt}>{selectedAddress.freight}</Text>
               </View>
             </View>
             <View style={styles.containerFinish}>
