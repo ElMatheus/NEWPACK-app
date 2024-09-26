@@ -1,11 +1,12 @@
-import { View, Text, TouchableOpacity, TextInput, Switch, Modal } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Switch } from 'react-native';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const CardAddress = ({ address, setPopUp }) => {
   const [moreInfo, setMoreInfo] = useState(false);
@@ -16,20 +17,37 @@ const CardAddress = ({ address, setPopUp }) => {
   const [inpComplement, setInpComplement] = useState(address.complement);
   const [inpNumber, setInpNumber] = useState(address.number);
   const [inpActive, setInpActive] = useState(address.active);
+  const { updateAddress } = useContext(AuthContext);
 
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
       setPopUp('Nenhuma alteração foi feita');
       setTimeout(() => {
         setPopUp(null);
       }, 3000);
     } else {
-      console.log('Atualizar');
+      const addressObj = {
+        cep: inpCep,
+        street: inpStreet,
+        number: inpNumber,
+        complement: inpComplement,
+        city: inpCity,
+        state: inpState,
+        active: inpActive
+      }
+      await updateAddress(address.id, addressObj);
     }
   }
 
   return (
     <View style={styles.container}>
+      {
+        address.active && (
+          <View style={styles.containerActive}>
+            <Text style={styles.txtActive}>padrão</Text>
+          </View>
+        )
+      }
       <View style={styles.containerAddress}>
         <View style={styles.containerIcon}>
           <MaterialCommunityIcons name="home-map-marker" size={42} color="#F3F3F3" />

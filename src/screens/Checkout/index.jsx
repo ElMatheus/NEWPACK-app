@@ -107,10 +107,21 @@ export default function Checkout() {
               <View style={styles.cardInfo}>
                 <View style={styles.containerCard}>
                   <Feather name="map-pin" size={27} color="#000" />
-                  <View style={styles.containerDesc}>
-                    <Text style={styles.titleCard}>{selectedAddress.street}, {selectedAddress.number}</Text>
-                    <Text style={styles.txtCard}>Valinhos</Text>
-                  </View>
+                  {
+                    selectedAddress == null ? (
+                      <View>
+                        <Text style={styles.titleCard}>Endereço não selecionado</Text>
+                        <Text style={styles.txtCard}>Selecione um endereço para entrega</Text>
+                      </View>
+
+                    ) : (
+                      <View style={styles.containerDesc}>
+                        <Text style={styles.titleCard}>{selectedAddress.street}, {selectedAddress.number}</Text>
+                        <Text style={styles.txtCard}>{selectedAddress.city}</Text>
+                      </View>
+                    )
+                  }
+
                 </View>
                 <TouchableOpacity onPress={() => navigation.navigate("Address")}>
                   <Text style={styles.txtButton}>Mudar</Text>
@@ -162,7 +173,14 @@ export default function Checkout() {
               </View>
               <View style={styles.containerTxtsInfo}>
                 <Text style={styles.txtTitle}>Tipo de frete</Text>
-                <Text style={styles.txt}>{selectedAddress.freight}</Text>
+                {
+                  selectedAddress == null ? (
+                    <Text style={styles.txt}></Text>
+                  ) : (
+                    <Text style={styles.txt}>{selectedAddress.freight}</Text>
+                  )
+
+                }
               </View>
             </View>
             <View style={styles.containerFinish}>

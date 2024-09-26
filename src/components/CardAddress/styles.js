@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 16,
     gap: 20,
-    paddingVertical: 10,
-    marginVertical: 10,
+    paddingVertical: 25,
+    marginVertical: 12,
     backgroundColor: "#FFFFFF",
   },
   containerIcon: {
@@ -107,6 +107,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     fontFamily: 'Poppins_500Medium',
+  },
+  containerActive: {
+    position: "absolute",
+    top: 0,
+    zIndex: 10,
+    backgroundColor: "#4B6584",
+    paddingHorizontal: 7,
+    paddingVertical: 5,
+  },
+  txtActive: {
+    fontSize: 12,
+    color: "#F3F3F3",
+    fontFamily: 'Poppins_500Medium',
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
   },
 });
 

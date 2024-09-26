@@ -114,15 +114,28 @@ const AuthProvider = ({ children }) => {
 
   const getAddressActiveUser = async () => {
     setGlobalLoading(true);
-    const response = await axios.get(`${apiURL}/users/address/${user.id}?active=true`
-    );
+    try {
+      const response = await axios.get(`${apiURL}/users/address/${user.id}?active=true`
+      );
+      return response.data.address;
+    } catch (error) {
+      if (error.response.status === 404) {
+        return null;
+      }
+    }
     setGlobalLoading(false);
-    return response.data.address;
+  };
+
+  const updateAddress = async (id, address) => {
+    setGlobalLoading(true);
+    const response = await axios.put(`${apiURL}/users/address/${id}`, address);
+    setGlobalLoading(false);
+    return response.data;
   };
 
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress }}>
       {children}
     </AuthContext.Provider>
   );
