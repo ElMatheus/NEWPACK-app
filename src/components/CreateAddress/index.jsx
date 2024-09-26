@@ -1,14 +1,74 @@
 import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { useContext, useState } from 'react';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
+import { AuthContext } from '../../contexts/AuthContext';
+import PopUp from '../../components/PopUp';
 
 const CreateAddress = ({ modalVisible, setModalVisible }) => {
+  const { addAddress } = useContext(AuthContext);
+  const [street, setStreet] = useState(null);
+  const [cep, setCep] = useState(null);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [complement, setComplement] = useState(null);
+  const [number, setNumber] = useState(null);
+  const [msgError, setMsgError] = useState(null);
+
+  const handleAddAddress = async () => {
+    if (street && cep && city && state && number) {
+      const address = {
+        cep: cep,
+        street: street,
+        number: number,
+        complement: complement,
+        city: city,
+        state: state,
+      };
+      await addAddress(address);
+      setModalVisible(false);
+      clearFields();
+    } else {
+      setMsgError('Preencha todos os campos');
+      setTimeout(() => {
+        setMsgError(null);
+      }, 3000);
+    }
+  };
+
+  const handleCancel = () => {
+    setModalVisible(false);
+    clearFields();
+  };
+
+  const handleStateChange = (text) => {
+    if (text.length <= 2) {
+      setState(text.toUpperCase());
+    }
+  };
+
+  const handleCepChange = (text) => {
+    if (text.length <= 8) {
+      setCep(text);
+    }
+  };
+
+  const clearFields = () => {
+    setStreet(null);
+    setCep(null);
+    setCity(null);
+    setState(null);
+    setComplement(null);
+    setNumber(null);
+  };
+
   return (
     <Modal transparent={true} animationType="slide" visible={modalVisible}>
       <TouchableOpacity style={styles.modalBackground} onPress={() => setModalVisible(false)} activeOpacity={1}>
+        {msgError && <PopUp message={msgError} />}
         <TouchableWithoutFeedback>
           <View style={styles.containerModal}>
             <Text style={styles.title}>Adicionar Endereço</Text>
@@ -19,6 +79,8 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                   <TextInput
                     style={styles.input}
                     placeholder="Rua"
+                    value={street}
+                    onChangeText={setStreet}
                   />
                 </View>
                 <View style={styles.inputContainer}>
@@ -26,6 +88,8 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                   <TextInput
                     style={styles.input}
                     placeholder="CEP"
+                    value={cep}
+                    onChangeText={handleCepChange}
                   />
                 </View>
                 <View style={styles.containerRow}>
@@ -34,6 +98,8 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                     <TextInput
                       style={styles.input}
                       placeholder="Cidade"
+                      value={city}
+                      onChangeText={setCity}
                     />
                   </View>
                   <View style={styles.inputContainer2}>
@@ -41,6 +107,8 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                     <TextInput
                       style={styles.input}
                       placeholder="Estado"
+                      value={state}
+                      onChangeText={handleStateChange}
                     />
                   </View>
                 </View>
@@ -49,6 +117,8 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                   <TextInput
                     style={styles.input}
                     placeholder="Complemento"
+                    value={complement}
+                    onChangeText={setComplement}
                   />
                 </View>
                 <View style={styles.inputContainer}>
@@ -57,15 +127,17 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                     style={styles.input}
                     keyboardType="numeric"
                     placeholder="Número"
+                    value={number}
+                    onChangeText={setNumber}
                   />
                 </View>
               </View>
             </View>
             <View style={styles.containerBtn}>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} onPress={handleAddAddress}>
                 <Text style={styles.txtBtn}>Adicionar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btnRmv} onPress={() => setModalVisible(false)}>
+              <TouchableOpacity style={styles.btnRmv} onPress={handleCancel}>
                 <Text style={styles.txtBtn}>Cancelar</Text>
               </TouchableOpacity>
             </View>

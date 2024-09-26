@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const CardAddress = ({ address, setPopUp }) => {
@@ -17,7 +17,7 @@ const CardAddress = ({ address, setPopUp }) => {
   const [inpComplement, setInpComplement] = useState(address.complement);
   const [inpNumber, setInpNumber] = useState(address.number);
   const [inpActive, setInpActive] = useState(address.active);
-  const { updateAddress } = useContext(AuthContext);
+  const { updateAddress, removeAddress } = useContext(AuthContext);
 
   const handleUpdate = async () => {
     if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
@@ -37,7 +37,33 @@ const CardAddress = ({ address, setPopUp }) => {
       }
       await updateAddress(address.id, addressObj);
     }
-  }
+  };
+
+  const handleDelete = async () => {
+    await removeAddress(address.id);
+  };
+
+  const handleStateChange = (text) => {
+    if (text.length <= 2) {
+      setInpState(text.toUpperCase());
+    }
+  };
+
+  const handleCepChange = (text) => {
+    if (text.length <= 8) {
+      setInpCep(text);
+    }
+  };
+
+  useEffect(() => {
+    setInpStreet(address.street);
+    setInpCep(address.cep);
+    setInpCity(address.city);
+    setInpState(address.state);
+    setInpComplement(address.complement);
+    setInpNumber(address.number);
+    setInpActive(address.active);
+  }, [address]);
 
   return (
     <View style={styles.container}>
@@ -91,7 +117,7 @@ const CardAddress = ({ address, setPopUp }) => {
                   style={styles.input}
                   placeholder="CEP"
                   value={inpCep}
-                  onChangeText={setInpCep}
+                  onChangeText={handleCepChange}
                 />
               </View>
               <View style={styles.containerRow}>
@@ -110,7 +136,7 @@ const CardAddress = ({ address, setPopUp }) => {
                     style={styles.input}
                     placeholder="Estado"
                     value={inpState}
-                    onChangeText={setInpState}
+                    onChangeText={handleStateChange}
                   />
                 </View>
               </View>
@@ -148,7 +174,7 @@ const CardAddress = ({ address, setPopUp }) => {
               <TouchableOpacity onPress={handleUpdate} style={styles.btn}>
                 <Text style={styles.txtBtn}>Atualiar</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btnRmv}>
+              <TouchableOpacity style={styles.btnRmv} onPress={handleDelete}>
                 <Text style={styles.txtBtn}>Remover</Text>
               </TouchableOpacity>
             </View>

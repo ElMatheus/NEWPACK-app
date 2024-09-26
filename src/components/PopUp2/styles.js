@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    zIndex: 5,
   },
   container: {
     width: '100%',
@@ -17,6 +18,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 50,
     position: "absolute",
     bottom: 0,
+    zIndex: 10,
   },
   containerAlert: {
     alignItems: 'center',

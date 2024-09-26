@@ -110,6 +110,7 @@ const AuthProvider = ({ children }) => {
     );
     setGlobalLoading(false);
     return response.data.address;
+
   };
 
   const getAddressActiveUser = async () => {
@@ -128,14 +129,37 @@ const AuthProvider = ({ children }) => {
 
   const updateAddress = async (id, address) => {
     setGlobalLoading(true);
-    const response = await axios.put(`${apiURL}/users/address/${id}`, address);
+    try {
+      await axios.put(`${apiURL}/users/address/${id}`, address);
+    } catch (error) {
+      setPopUpMessage("Não foi possível atualizar o endereço");
+    }
     setGlobalLoading(false);
-    return response.data;
   };
 
+  const addAddress = async (address) => {
+    setGlobalLoading(true);
+    try {
+      await axios.post(`${apiURL}/users/address/${user.id}`, address,
+      );
+    } catch (error) {
+      setPopUpMessage("Não foi possível adicionar o endereço");
+    }
+    setGlobalLoading(false);
+  };
+
+  const removeAddress = async (id) => {
+    setGlobalLoading(true);
+    try {
+      await axios.delete(`${apiURL}/users/address/${id}`);
+    } catch (error) {
+      setPopUpMessage("Não foi possível excluir o endereço");
+    }
+    setGlobalLoading(false);
+  };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress }}>
       {children}
     </AuthContext.Provider>
   );

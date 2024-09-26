@@ -9,14 +9,16 @@ import CardAddress from '../../components/CardAddress';
 import CreateAddress from '../../components/CreateAddress';
 import PopUp from '../../components/PopUp';
 import GlobalLoading from '../../components/GlobalLoading';
+import PopUp2 from '../../components/PopUp2';
 
 export default function Address() {
   const [modalVisible, setModalVisible] = useState(false);
-  const { getAddressesUser, globalLoading } = useContext(AuthContext);
+  const { getAddressesUser, globalLoading, popUpMessage, setPopUpMessage } = useContext(AuthContext);
   const [addresses, setAddresses] = useState(null);
   const navigation = useNavigation();
   const [popUp, setPopUp] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchAddresses = async () => {
     const addresses = await getAddressesUser();
@@ -28,6 +30,14 @@ export default function Address() {
       fetchAddresses();
     }, [])
   );
+
+  useEffect(() => {
+    if (popUpMessage) {
+      setError(true)
+    } else {
+      setError(false)
+    }
+  }, [popUpMessage]);
 
   useEffect(() => {
     if (globalLoading) {
@@ -46,6 +56,7 @@ export default function Address() {
         ) : (
           <>
             {popUp && <PopUp message={popUp} />}
+            {error && <PopUp2 exitPopUp={setPopUpMessage} />}
             <ScrollView>
               <View style={styles.containerHeader}>
                 <View style={styles.containerIcon}>
