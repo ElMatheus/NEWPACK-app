@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
   titleCard: {
     fontSize: 16,
     fontFamily: 'Poppins_600SemiBold',
-    color: '#000',
+    maxWidth: 300,
+    maxHeight: 25,
   },
   txtCard: {
     fontSize: 14,
     fontFamily: 'Poppins_400Regular',
-    color: '#000',
   },
   txtButton: {
     fontSize: 14,

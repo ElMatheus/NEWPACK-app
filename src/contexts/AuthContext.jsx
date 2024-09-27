@@ -106,25 +106,38 @@ const AuthProvider = ({ children }) => {
 
   const getAddressesUser = async () => {
     setGlobalLoading(true);
-    const response = await axios.get(`${apiURL}/users/address/${user.id}`
-    );
-    setGlobalLoading(false);
-    return response.data.address;
-
+    try {
+      const response = await axios.get(`${apiURL}/users/address/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      }
+      );
+      return response.data.address;
+    } catch (error) {
+      setPopUpMessage("Não foi possível carregar os endereços");
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   const getAddressActiveUser = async () => {
     setGlobalLoading(true);
     try {
-      const response = await axios.get(`${apiURL}/users/address/${user.id}?active=true`
+      const response = await axios.get(`${apiURL}/users/address/${user.id}?active=true`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      }
       );
       return response.data.address;
     } catch (error) {
       if (error.response.status === 404) {
         return null;
       }
+    } finally {
+      setGlobalLoading(false);
     }
-    setGlobalLoading(false);
   };
 
   const updateAddress = async (id, address) => {
@@ -133,19 +146,25 @@ const AuthProvider = ({ children }) => {
       await axios.put(`${apiURL}/users/address/${id}`, address);
     } catch (error) {
       setPopUpMessage("Não foi possível atualizar o endereço");
+    } finally {
+      setGlobalLoading(false);
     }
-    setGlobalLoading(false);
   };
 
   const addAddress = async (address) => {
     setGlobalLoading(true);
     try {
-      await axios.post(`${apiURL}/users/address/${user.id}`, address,
+      await axios.post(`${apiURL}/users/address/${user.id}`, address, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      }
       );
     } catch (error) {
       setPopUpMessage("Não foi possível adicionar o endereço");
+    } finally {
+      setGlobalLoading(false);
     }
-    setGlobalLoading(false);
   };
 
   const removeAddress = async (id) => {
@@ -154,8 +173,9 @@ const AuthProvider = ({ children }) => {
       await axios.delete(`${apiURL}/users/address/${id}`);
     } catch (error) {
       setPopUpMessage("Não foi possível excluir o endereço");
+    } finally {
+      setGlobalLoading(false);
     }
-    setGlobalLoading(false);
   };
 
   return (

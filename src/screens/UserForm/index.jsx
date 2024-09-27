@@ -35,7 +35,15 @@ export default function UserForm({ route }) {
     }
     createProfileUser(name, phoneFormatted);
     navigation.navigate('Checkout');
-  }
+  };
+
+  const handlePhoneChange = (text) => {
+    if (text.length <= 11) {
+      const removeFormatting = text.replace(/[^0-9]/g, '');
+      setPhone(removeFormatting);
+    }
+
+  };
 
   return (
     <View style={styles.container}>
@@ -59,11 +67,11 @@ export default function UserForm({ route }) {
             <PhoneInput
               textInputProps={{ value: phone }}
               defaultValue={phone}
-              onChangeText={(text) => setPhone(text)}
+              onChangeText={(text) => handlePhoneChange(text)}
               onChangeFormattedText={(text) => setPhoneFormatted(text)}
               defaultCode="BR"
               layout="first"
-              placeholder='(99) 99999-9999'
+              placeholder='99999999999'
               containerStyle={styles.input}
               textContainerStyle={{ fontSize: 18, fontFamily: 'Poppins_400Regular' }}
               codeTextStyle={{ fontSize: 16, fontFamily: 'Poppins_400Regular', color: '#5E5E5E' }}

@@ -10,6 +10,7 @@ import Feather from '@expo/vector-icons/Feather';
 import CardItem from '../../components/CardItem';
 import RNPickerSelect from 'react-native-picker-select';
 import InfoUser from '../../components/InfoUser';
+import PopUp from '../../components/PopUp';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading } = useContext(AuthContext);
@@ -21,6 +22,7 @@ export default function Checkout() {
   const [valueInstallment, setValueInstallment] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [msgError, setMsgError] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -64,10 +66,24 @@ export default function Checkout() {
 
   const handleChange = (element) => {
     navigation.navigate('UserForm', { element });
-  }
+  };
+
+  const handleCompletion = () => {
+    if (selectedAddress == null) {
+      setMsgError('Selecione um endereço para entrega');
+      setTimeout(() => {
+        setMsgError(null);
+      }, 3000);
+      return;
+    }
+    console.log('Compra finalizada');
+  };
 
   return (
     <>
+      {
+        msgError && <PopUp message={msgError} />
+      }
       {
         loading || profile == null || user == null ? (
           <GlobalLoading />
@@ -185,7 +201,7 @@ export default function Checkout() {
             </View>
             <View style={styles.containerFinish}>
               <Text style={styles.txtWarning}>Antes de confirmar, confira seus produtos e métodos de identificação.</Text>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} onPress={handleCompletion}>
                 <Text style={styles.txtBtn}>Finalizar Compra</Text>
               </TouchableOpacity>
             </View>
