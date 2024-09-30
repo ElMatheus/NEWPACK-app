@@ -20,16 +20,15 @@ const Stack = createStackNavigator();
 const HomeStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="Cart" component={ShoppingCart} />
     <Stack.Screen name="ProductDetails" component={ProductDetails} />
-    <Stack.Screen name="UserForm" component={UserForm} />
-    <Stack.Screen name="Address" component={Address} />
-    <Stack.Screen name="Checkout" component={Checkout} />
   </Stack.Navigator>
 );
 
 const CartStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Cart" component={ShoppingCart} />
+    <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="ProductDetails" component={ProductDetails} />
     <Stack.Screen name="UserForm" component={UserForm} />
     <Stack.Screen name="Address" component={Address} />

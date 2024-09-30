@@ -96,7 +96,7 @@ export default function ProductDetails({ route }) {
                   </Animated.View>
                 )
               }
-              <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('Cart'); handlePress(0); }}>
+              <TouchableOpacity style={{ position: 'relative' }} onPress={() => { navigation.navigate('CartTab'); handlePress(0); }}>
                 <FontAwesome5 style={styles.icon} name="shopping-cart" size={24} color="#4B6584" />
               </TouchableOpacity>
             </View>
