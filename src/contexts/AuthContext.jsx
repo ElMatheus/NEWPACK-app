@@ -178,8 +178,40 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const createOrder = async (desc, installment) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.post(`${apiURL}/orders`, {
+        "client_id": user.id,
+        "status": "Inválido",
+        "description": desc,
+        "installment": installment
+      });
+      return response.data;
+    } catch (error) {
+      setPopUpMessage("Não foi possível criar o pedido");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const createOrderItem = async (orderItem) => {
+    setGlobalLoading(true);
+    try {
+      await axios.post(`${apiURL}/orders/details`, orderItem, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+    } catch (error) {
+      setPopUpMessage("Não foi possível criar o item do pedido");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem }}>
       {children}
     </AuthContext.Provider>
   );

@@ -11,9 +11,10 @@ import CardItem from '../../components/CardItem';
 import RNPickerSelect from 'react-native-picker-select';
 import InfoUser from '../../components/InfoUser';
 import PopUp from '../../components/PopUp';
+import PopUp2 from '../../components/PopUp2';
 
 export default function Checkout() {
-  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading } = useContext(AuthContext);
+  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage } = useContext(AuthContext);
   const { cart, totalValue } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
@@ -22,7 +23,9 @@ export default function Checkout() {
   const [valueInstallment, setValueInstallment] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [description, setDescription] = useState(null);
   const [msgError, setMsgError] = useState(null);
+  const [error, setError] = useState(null);
 
   useFocusEffect(
     useCallback(() => {
@@ -54,6 +57,15 @@ export default function Checkout() {
   }, [globalLoading]);
 
   useEffect(() => {
+    if (popUpMessage) {
+      console.log(popUpMessage);
+      setError(true)
+    } else {
+      setError(false)
+    }
+  }, [popUpMessage]);
+
+  useEffect(() => {
     const installment = totalValue / Number(selectedValue);
     setValueInstallment(installment);
   }, [selectedValue]);
@@ -68,7 +80,7 @@ export default function Checkout() {
     navigation.navigate('UserForm', { element });
   };
 
-  const handleCompletion = () => {
+  const handleCompletion = async () => {
     if (selectedAddress == null) {
       setMsgError('Selecione um endereço para entrega');
       setTimeout(() => {
@@ -76,13 +88,25 @@ export default function Checkout() {
       }, 3000);
       return;
     }
-    console.log('Compra finalizada');
-  };
+    const order = await createOrder(description, selectedValue);
+    cart.map(async (item) => {
+      const orderItem = {
+        "order_id": order.order.id,
+        "product_id": item.produto_id,
+        "quantity": item.produto_quantidade
+      };
+      await createOrderItem(orderItem);
+    });
+    console.log('Pedido criado com sucesso');
 
+  };
   return (
     <>
       {
         msgError && <PopUp message={msgError} />
+      }
+      {
+        error && <PopUp2 exitPopUp={setPopUpMessage} />
       }
       {
         loading || profile == null || user == null ? (
@@ -161,7 +185,7 @@ export default function Checkout() {
               <View style={styles.containerTxts}>
                 <Text style={styles.txt}>Observações</Text>
               </View>
-              <TextInput multiline={true} style={styles.input} placeholder="Adicione uma observação em seu pedido (adicionar apenas as borrachas mais macias)" />
+              <TextInput onChangeText={setDescription} value={description} multiline={true} style={styles.input} placeholder="Adicione uma observação em seu pedido (adicionar apenas as borrachas mais macias)" />
             </View>
             <View style={styles.containerInfo}>
               <View style={styles.containerTxtsInfo}>
