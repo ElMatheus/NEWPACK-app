@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
 
   const getProductsForUser = async (category) => {
     setGlobalLoading(true);
-    const response = await axios.get(`${apiURL}/orders/user/${user.id}?category=${category}`, {
+    const response = await axios.get(`${apiURL}/orders/user/${user.id}?category=${category}&unique=true`, {
       headers: {
         Authorization: `Bearer ${acessToken}`
       }
