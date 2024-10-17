@@ -14,7 +14,7 @@ import PopUp from '../../components/PopUp';
 import PopUp2 from '../../components/PopUp2';
 
 export default function Checkout() {
-  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage } = useContext(AuthContext);
+  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail } = useContext(AuthContext);
   const { cart, totalValue } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
@@ -97,7 +97,8 @@ export default function Checkout() {
       };
       await createOrderItem(orderItem);
     });
-    console.log('Pedido criado com sucesso');
+    await sendEmail(order.order.id);
+    navigation.navigate('Sucess');
 
   };
   return (

@@ -210,8 +210,19 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const sendEmail = async (orderId) => {
+    setGlobalLoading(true);
+    try {
+      await axios.post(`${apiURL}/emails/${orderId}`);
+    } catch (error) {
+      setPopUpMessage("Não foi possível enviar o e-mail");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
       {children}
     </AuthContext.Provider>
   );

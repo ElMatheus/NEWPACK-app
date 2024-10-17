@@ -10,6 +10,7 @@ import Checkout from "../screens/Checkout";
 import Address from "../screens/Address";
 import ShoppingCart from "../screens/ShoppingCart";
 import UserForm from "../screens/UserForm";
+import Sucess from "../screens/SucessScreen";
 import { Text } from 'react-native';
 import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
@@ -33,6 +34,7 @@ const CartStack = () => (
     <Stack.Screen name="UserForm" component={UserForm} />
     <Stack.Screen name="Address" component={Address} />
     <Stack.Screen name="Checkout" component={Checkout} />
+    <Stack.Screen name="Sucess" component={Sucess} />
   </Stack.Navigator>
 );
 
