@@ -24,7 +24,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
         </Text>
         <View style={styles.containerDesc}>
           <Text style={styles.txtPrice}>
-            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total_value)}
+            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(item.produto_preco))}
           </Text>
           <Text style={styles.txtDesc}>
             ({item.produto_desc})

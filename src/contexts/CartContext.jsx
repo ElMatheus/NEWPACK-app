@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";
 
 export const CartContext = createContext();
 
@@ -21,6 +22,8 @@ const CartProvider = ({ children }) => {
   }, []);
 
   const addToCart = async (product) => {
+    console.log(product);
+
     const productExists = cart.find((item) => item.produto_id === product.produto_id);
     setGlobalLoading(true);
     if (productExists) {

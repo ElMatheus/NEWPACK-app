@@ -221,8 +221,20 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const getProductById = async (id) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.get(`${apiURL}/products/${id}`);
+      return response.data.product;
+    } catch (error) {
+      setPopUpMessage("Não foi possível carregar o produto pelo id");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
       {children}
     </AuthContext.Provider>
   );

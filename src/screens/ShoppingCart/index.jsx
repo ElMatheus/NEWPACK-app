@@ -4,9 +4,7 @@ import styles from './styles';
 import { useContext, useEffect, useState } from 'react';
 import CartItem from '../../components/CartItem';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import GlobalLoading from '../../components/GlobalLoading';
-import PopUp from '../../components/PopUp';
 
 export default function ShoppingCart() {
   const navigation = useNavigation();
@@ -15,7 +13,7 @@ export default function ShoppingCart() {
   const [popUp, setPopUp] = useState(null);
 
   useEffect(() => {
-    const total = cart.reduce((acc, item) => acc + Number(item.produto_quantidade) * Number(item.total_value), 0);
+    const total = cart.reduce((acc, item) => acc + (item.produto_quantidade_mts || 1) * (Number(item.produto_quantidade) * Number(item.produto_preco)), 0);
     setTotalValue(total);
   }, [cart]);
 
