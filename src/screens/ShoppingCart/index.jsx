@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import CartItem from '../../components/CartItem';
 import { useNavigation } from '@react-navigation/native';
 import GlobalLoading from '../../components/GlobalLoading';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ShoppingCart() {
   const navigation = useNavigation();
