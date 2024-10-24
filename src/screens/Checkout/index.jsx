@@ -177,7 +177,7 @@ export default function Checkout() {
               <View>
                 {
                   cart.map((item, index) => (
-                    <CardItem key={index} cod={item.produto_id} desc={item.produto_desc} image={item.produto_imagens[0]} name={item.produto_nome} price={item.total_value} quantity={item.produto_quantidade} />
+                    <CardItem key={index} cod={item.produto_id} desc={item.produto_desc} image={item.produto_imagens[0]} name={item.produto_nome} price={parseInt(item.total_value)} quantity={item.produto_quantidade} />
                   ))
                 }
               </View>

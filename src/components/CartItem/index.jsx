@@ -15,6 +15,8 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
     return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
   };
 
+  // ERRO DO CARAMBA DE QUANDO EU MUDO A QUANTIDADE DE UM ITEM NO CARRINHO, E CLICO CONCLUIR COMPRA ELE FICA COM O VALOR ANTIGO E NAO ATUALIZA
+
   return (
     <View style={styles.product}>
       <Image source={{ uri: item.produto_imagens[0] }} style={styles.image} />

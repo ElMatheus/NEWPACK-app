@@ -77,7 +77,7 @@ export default function ProductDetails({ route }) {
         produto_dureza: productData.toughness,
         produto_preco: productData.unitary_value,
         produto_quantidade_mts: productData.quantity_mts,
-        full_price: fullPrice,
+        full_price: fullPrice.toFixed(2)
       };
       await addToCart(productCart);
     } catch (error) {

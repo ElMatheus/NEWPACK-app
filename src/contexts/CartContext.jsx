@@ -21,6 +21,7 @@ const CartProvider = ({ children }) => {
     loadingStoreData();
   }, []);
 
+
   const addToCart = async (product) => {
     console.log(product);
 
@@ -45,33 +46,55 @@ const CartProvider = ({ children }) => {
 
   const onDecrease = async (item) => {
     setGlobalLoading(true);
+
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
-        if (cartItem.produto_quantidade === 1) {
-          return cartItem;
-        } else {
-          return { ...cartItem, produto_quantidade: Number(cartItem.produto_quantidade) - 1 };
+        if (cartItem.produto_quantidade > 1) {
+          const newQuantity = Number(cartItem.produto_quantidade) - 1;
+          const fullPrice = (cartItem.produto_preco * newQuantity).toFixed(2);
+          const totalValue = (newQuantity * cartItem.produto_preco * (cartItem.produto_quantidade_mts || 1)).toFixed(2);
+
+          return {
+            ...cartItem,
+            produto_quantidade: newQuantity,
+            total_value: totalValue,
+            full_price: fullPrice
+          };
         }
       }
       return cartItem;
     });
+
     setCart(newCart);
     await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
     setGlobalLoading(false);
   };
 
+
   const onIncrease = async (item) => {
     setGlobalLoading(true);
+
     const newCart = cart.map((cartItem) => {
       if (cartItem.produto_id === item.produto_id) {
-        return { ...cartItem, produto_quantidade: Number(cartItem.produto_quantidade) + 1 };
+        const newQuantity = Number(cartItem.produto_quantidade) + 1;
+        const fullPrice = (cartItem.produto_preco * newQuantity).toFixed(2);
+        const totalValue = (newQuantity * cartItem.produto_preco * (cartItem.produto_quantidade_mts || 1)).toFixed(2);
+
+        return {
+          ...cartItem,
+          produto_quantidade: newQuantity,
+          total_value: totalValue,
+          full_price: fullPrice
+        };
       }
       return cartItem;
     });
+
     setCart(newCart);
     await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify(newCart));
     setGlobalLoading(false);
   };
+
 
   const removeFromCart = async (product) => {
     setGlobalLoading(true);
@@ -82,8 +105,10 @@ const CartProvider = ({ children }) => {
   };
 
   const calculateTotal = () => {
-    const total = cart.reduce((acc, item) => acc + Number(item.produto_quantidade) * Number(item.total_value), 0);
+    const total = cart.reduce((acc, item) => acc + (item.produto_quantidade_mts || 1) * (Number(item.produto_quantidade) * Number(item.produto_preco)), 0);
     setTotalValue(total);
+    console.log(total);
+
   };
 
   return (
