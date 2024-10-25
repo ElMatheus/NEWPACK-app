@@ -23,8 +23,6 @@ const CartProvider = ({ children }) => {
 
 
   const addToCart = async (product) => {
-    console.log(product);
-
     const productExists = cart.find((item) => item.produto_id === product.produto_id);
     setGlobalLoading(true);
     if (productExists) {
@@ -107,8 +105,6 @@ const CartProvider = ({ children }) => {
   const calculateTotal = () => {
     const total = cart.reduce((acc, item) => acc + (item.produto_quantidade_mts || 1) * (Number(item.produto_quantidade) * Number(item.produto_preco)), 0);
     setTotalValue(total);
-    console.log(total);
-
   };
 
   return (

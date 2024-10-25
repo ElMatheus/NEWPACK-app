@@ -213,7 +213,12 @@ const AuthProvider = ({ children }) => {
   const sendEmail = async (orderId) => {
     setGlobalLoading(true);
     try {
-      await axios.post(`${apiURL}/emails/${orderId}`);
+      const profileData = await getProfileFromAsyncStorage();
+      const parsedProfileData = JSON.parse(profileData);
+      await axios.post(`${apiURL}/emails/${orderId}`, {
+        name: parsedProfileData.name,
+        telephone: parsedProfileData.telephone,
+      });
     } catch (error) {
       setPopUpMessage("Não foi possível enviar o e-mail");
     } finally {
