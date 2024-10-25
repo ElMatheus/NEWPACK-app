@@ -34,7 +34,6 @@ const CartStack = () => (
     <Stack.Screen name="UserForm" component={UserForm} />
     <Stack.Screen name="Address" component={Address} />
     <Stack.Screen name="Checkout" component={Checkout} />
-    <Stack.Screen name="Sucess" component={Sucess} />
   </Stack.Navigator>
 );
 
@@ -86,6 +85,15 @@ const PrivateTab = () => {
             },
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
+          }}
+        />
+        <Tab.Screen name="Sucess" component={Sucess}
+          options={{
+            tabBarVisible: false,
+            tabBarItemStyle: {
+              display: "none",
+            },
+            tabBarStyle: { display: 'none' },
           }}
         />
       </Tab.Navigator>

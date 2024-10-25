@@ -98,6 +98,7 @@ export default function Checkout() {
       await createOrderItem(orderItem);
     });
     await sendEmail(order.order.id);
+    navigation.popToTop();
     navigation.navigate('Sucess');
 
   };
