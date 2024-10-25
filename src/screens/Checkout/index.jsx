@@ -15,7 +15,7 @@ import PopUp2 from '../../components/PopUp2';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail } = useContext(AuthContext);
-  const { cart, totalValue } = useContext(CartContext);
+  const { cart, totalValue, clearCart } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);
@@ -100,7 +100,7 @@ export default function Checkout() {
     await sendEmail(order.order.id);
     navigation.popToTop();
     navigation.navigate('Sucess');
-
+    clearCart();
   };
   return (
     <>
@@ -139,7 +139,7 @@ export default function Checkout() {
                   <Feather name="user" size={27} color="#000" />
                   <View style={styles.containerDesc}>
                     <Text style={styles.titleCard}>{profile.name}</Text>
-                    <Text style={styles.txtCard}>{profile.telephone}</Text>
+                    <Text style={styles.txtCard}>{profile.country.callingCode} {profile.telephone}</Text>
                   </View>
                 </View>
                 <TouchableOpacity onPress={() => handleChange(profile)}>

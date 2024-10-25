@@ -97,10 +97,11 @@ const AuthProvider = ({ children }) => {
     return response.data;
   };
 
-  const createProfileUser = async (name, telephone) => {
+  const createProfileUser = async (name, country, telephone) => {
     setGlobalLoading(true);
     const profile = {
       name: name,
+      country: country,
       telephone: telephone,
     };
     await AsyncStorage.setItem('@asyncStorage:profile', JSON.stringify(profile));
@@ -229,7 +230,7 @@ const AuthProvider = ({ children }) => {
       const parsedProfileData = JSON.parse(profileData);
       await axios.post(`${apiURL}/emails/${orderId}`, {
         name: parsedProfileData.name,
-        telephone: parsedProfileData.telephone,
+        telephone: `${parsedProfileData.country.callingCode} ${parsedProfileData.telephone}`
       });
     } catch (error) {
       setPopUpMessage("Não foi possível enviar o e-mail");
