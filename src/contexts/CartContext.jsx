@@ -21,7 +21,6 @@ const CartProvider = ({ children }) => {
     loadingStoreData();
   }, []);
 
-
   const addToCart = async (product) => {
     const productExists = cart.find((item) => item.produto_id === product.produto_id);
     setGlobalLoading(true);
@@ -107,8 +106,14 @@ const CartProvider = ({ children }) => {
     setTotalValue(total);
   };
 
+  const clearCart = async () => {
+    setGlobalLoading(true);
+    setCart([]);
+    setGlobalLoading(false);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, globalLoading, addToCart, onDecrease, onIncrease, removeFromCart, calculateTotal, totalValue }}>
+    <CartContext.Provider value={{ cart, globalLoading, addToCart, onDecrease, onIncrease, removeFromCart, calculateTotal, totalValue, clearCart }}>
       {children}
     </CartContext.Provider>
   );

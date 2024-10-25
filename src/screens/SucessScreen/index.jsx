@@ -8,7 +8,7 @@ export default function Sucess() {
     <View style={styles.container}>
       <Text style={styles.title}>Pedido Concluído!</Text>
       <Text style={styles.txt}>O seu pedido foi processado com sucesso.</Text>
-      <TouchableOpacity onPress={() => navigation.navigate('HomeTab')} style={styles.btn}>
+      <TouchableOpacity onPress={() => navigation.navigate('CartTab')} style={styles.btn}>
         <Text style={styles.btnTxt}>Voltar para a Área de Produtos</Text>
       </TouchableOpacity>
     </View>

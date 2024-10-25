@@ -57,11 +57,14 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  // const signOut = () => {
-  //   delete axios.defaults.headers.common["Authorization"];
-  //   AsyncStorage.clear();
-  //   setUser(null);
-  // };
+  const signOut = () => {
+    setGlobalLoading(true);
+    delete axios.defaults.headers.common["Authorization"];
+    AsyncStorage.clear();
+    setUser(null);
+    setAcessToken(null);
+    setGlobalLoading(false);
+  };
 
   const getUsers = async () => {
     setGlobalLoading(true);
@@ -239,7 +242,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
       {children}
     </AuthContext.Provider>
   );

@@ -11,12 +11,17 @@ import NoProductsMessage from '../../components/NoProductsMessage';
 
 export default function Home() {
   const navigation = useNavigation();
-  const { cart } = useContext(CartContext);
+  const { cart, clearCart } = useContext(CartContext);
   const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('tudo');
+
+  const handleExit = () => {
+    signOut();
+    clearCart();
+  }
 
   // toda vez que eu entrar na tela de home, ele vai chamar a funcao getProductsForUser do meu AuthContext
   useEffect(() => {
@@ -66,6 +71,9 @@ export default function Home() {
               <Text style={styles.txtStyle}>
                 {user.name}
               </Text>
+              <TouchableOpacity onPress={handleExit}>
+                <Text style={styles.txtExit}>Sair</Text>
+              </TouchableOpacity>
             </View>
             <View>
               {

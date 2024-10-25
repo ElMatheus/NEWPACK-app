@@ -21,6 +21,11 @@ const styles = StyleSheet.create({
     color: '#4B6584',
     fontFamily: 'Poppins_700Bold'
   },
+  txtExit: {
+    fontSize: 15,
+    color: '#4B6584',
+    fontFamily: 'Poppins_500Medium',
+  },
   containerProducts: {
     flex: 1,
     padding: 10,
