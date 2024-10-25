@@ -57,13 +57,22 @@ const AuthProvider = ({ children }) => {
     }
   }
 
-  const signOut = () => {
+  const signOut = async () => {
     setGlobalLoading(true);
-    delete axios.defaults.headers.common["Authorization"];
-    AsyncStorage.clear();
-    setUser(null);
-    setAcessToken(null);
-    setGlobalLoading(false);
+    try {
+      const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
+      await axios.delete(`${apiURL}/users/refresh/${JSON.parse(storageToken)}`)
+      delete axios.defaults.headers.common["Authorization"];
+      AsyncStorage.clear();
+      setUser(null);
+      setAcessToken(null);
+    } catch (error) {
+      setPopUpMessage("Não foi possível fazer logout");
+      console.log(error);
+
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   const getUsers = async () => {
