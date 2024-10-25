@@ -26,8 +26,6 @@ export default function UserForm({ route }) {
 
   useEffect(() => {
     if (element) {
-      console.log(element);
-
       setName(element.name);
       setInputValue(element.telephone);
       setSelectedCountry(element.country);
