@@ -89,7 +89,7 @@ export default function Checkout() {
       return;
     }
     const order = await createOrder(description, selectedValue);
-    cart.map(async (item) => {
+    const orderItemsPromises = cart.map(async (item) => {
       const orderItem = {
         "order_id": order.order.id,
         "product_id": item.produto_id,
@@ -97,11 +97,13 @@ export default function Checkout() {
       };
       await createOrderItem(orderItem);
     });
+    await Promise.all(orderItemsPromises);
     await sendEmail(order.order.id);
     navigation.popToTop();
     navigation.navigate('Sucess');
     clearCart();
   };
+
   return (
     <>
       {
