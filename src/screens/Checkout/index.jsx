@@ -8,7 +8,7 @@ import styles from './styles';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
 import CardItem from '../../components/CardItem';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-picker/picker';
 import InfoUser from '../../components/InfoUser';
 import PopUp from '../../components/PopUp';
 import PopUp2 from '../../components/PopUp2';
@@ -73,7 +73,7 @@ export default function Checkout() {
   const items = [
     { label: '1x', value: 1 },
     { label: '2x', value: 2 },
-    totalValue > 3000 ? { label: '3x', value: 3 } : null,
+    totalValue > 3000 && { label: '3x', value: 3 },
   ].filter(Boolean);
 
   const handleChange = (element) => {
@@ -189,6 +189,7 @@ export default function Checkout() {
               </View>
               <TextInput onChangeText={setDescription} value={description} multiline={true} style={styles.input} placeholder="Adicione uma observação em seu pedido (adicionar apenas as borrachas mais macias)" />
             </View>
+
             <View style={styles.containerInfo}>
               <View style={styles.containerTxtsInfo}>
                 <Text style={styles.txtTitle}>Subtotal</Text>
@@ -197,16 +198,15 @@ export default function Checkout() {
               <View style={styles.containerTxtsInfo2}>
                 <Text style={styles.txtTitle}>Parcelamento</Text>
                 <View style={styles.containerSelectValue}>
-                  <Text style={styles.txt}>{selectedValue}x</Text>
-                  <RNPickerSelect
-                    onValueChange={(value) => setSelectedValue(value)}
-                    items={items}
-                    style={{
-                      inputIOS: styles.inputIOS,
-                      inputAndroid: styles.inputAndroid,
-                    }}
-                    placeholder={{}}
-                  />
+                  <Picker
+                    selectedValue={selectedValue}
+                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    style={styles.picker}
+                  >
+                    {items.map((item, index) => (
+                      <Picker.Item key={index} label={item.label} value={item.value} />
+                    ))}
+                  </Picker>
                 </View>
               </View>
               <View style={styles.containerTxtsInfo}>

@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: 100,
-    marginTop: -15,
+    padding: 0,
   },
   containerSelectValue: {
     flexDirection: 'row',
