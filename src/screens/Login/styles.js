@@ -1,20 +1,35 @@
+import { version } from 'react';
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    flex: 1,
+  },
   containerLogin: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#e8e8e8',
-    gap: 40,
-  },
-  container: {
+    padding: 10,
     alignItems: 'center',
-    gap: 12,
+    borderTopLeftRadius: 110,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+    elevation: 2,
 
   },
+  containerImg: {
+    alignItems: 'center',
+    padding: "20%",
+  },
   title: {
-    fontSize: 30,
+    fontSize: 34,
+    marginTop: 70,
+    marginBottom: 50,
     color: '#000',
     fontFamily: 'Poppins_700Bold',
   },
@@ -23,7 +38,7 @@ const styles = StyleSheet.create({
   },
   containerInps2: {
     gap: 40,
-    marginBottom: 20,
+    marginBottom: 30,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -50,6 +65,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Poppins_500Medium',
   },
+  versionContainer: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+
+  },
+  version: {
+    fontFamily: 'Poppins_500Medium',
+    color: '#f2c',
+  }
 });
 
 export default styles;
