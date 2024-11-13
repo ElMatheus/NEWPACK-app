@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Poppins_500Medium',
   },
+  showPasswordIcon: {
+    position: 'absolute',
+    right: 15,
+    zIndex: 1,
+  },
 });
 
 export default styles;

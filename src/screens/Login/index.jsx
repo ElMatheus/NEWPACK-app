@@ -14,6 +14,7 @@ export default function Login() {
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // funcao sign: serve para fazer login
   const { signIn, popUpMessage } = useContext(AuthContext);
@@ -74,7 +75,23 @@ export default function Login() {
               </View>
               <View style={styles.inputContainer}>
                 <Icon color={"#b7b7b7"} name='key' size={18} />
-                <TextInput onChangeText={setPassword} value={password} placeholder='Insira sua senha' secureTextEntry={true} style={styles.inputTxt} />
+                <TextInput
+                  onChangeText={setPassword}
+                  value={password}
+                  placeholder='Insira sua senha'
+                  secureTextEntry={!showPassword}
+                  style={styles.inputTxt}
+                />
+                <TouchableOpacity
+                  style={styles.showPasswordIcon}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Icon
+                    name={showPassword ? 'eye-slash' : 'eye'}
+                    size={18}
+                    color="#b7b7b7"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
             <TouchableOpacity onPress={handleLogin} style={styles.button}>
