@@ -14,7 +14,6 @@ export default function Login() {
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [appVersion] = useState(version); // Add state for app version
 
   // funcao sign: serve para fazer login
   const { signIn, popUpMessage } = useContext(AuthContext);
@@ -64,10 +63,9 @@ export default function Login() {
       </View>
       <View style={styles.container}>
         <View style={styles.containerImg}>
-          <Image style={{ width: 150, height: 100 }} source={require('../../../assets/images/newpack-logo.png')} />
+          <Image style={{ width: 160, height: 110 }} source={require('../../../assets/images/newpack-logo.png')} />
         </View>
         <View style={styles.containerLogin}>
-          <Text style={styles.title}>Acesse sua conta</Text>
           <View style={styles.containerInps}>
             <View style={styles.containerInps2}>
               <View style={styles.inputContainer}>
@@ -81,11 +79,13 @@ export default function Login() {
             </View>
             <TouchableOpacity onPress={handleLogin} style={styles.button}>
               {
-                loading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.buttonTxt}>Entrar</Text>
+                loading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.buttonTxt}>Acessar</Text>
               }
             </TouchableOpacity>
           </View>
         </View>
+
+        {popUp2 && <PopUp2 user={name} message={popUp2} exitPopUp={setPopUp2} />}
       </View>
     </>
 

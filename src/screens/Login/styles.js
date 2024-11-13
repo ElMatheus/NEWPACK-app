@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#e8e8e8',
     padding: 10,
     alignItems: 'center',
-    borderTopLeftRadius: 110,
+    borderTopLeftRadius: 58,
+    borderTopRightRadius: 58,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -20,11 +21,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.58,
     shadowRadius: 16.00,
     elevation: 2,
-
   },
   containerImg: {
     alignItems: 'center',
-    padding: "20%",
+    padding: "17%",
   },
   title: {
     fontSize: 34,
@@ -34,10 +34,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins_700Bold',
   },
   containerInps: {
+    marginTop: 45,
     width: '85%',
   },
   containerInps2: {
-    gap: 40,
+    gap: 43,
     marginBottom: 30,
   },
   inputContainer: {
@@ -59,22 +60,13 @@ const styles = StyleSheet.create({
     padding: 17,
     borderRadius: 12,
     alignItems: 'center',
+    marginTop: 16
   },
   buttonTxt: {
     color: '#fff',
     fontSize: 18,
     fontFamily: 'Poppins_500Medium',
   },
-  versionContainer: {
-    position: 'absolute',
-    bottom: 10,
-    left: 10,
-
-  },
-  version: {
-    fontFamily: 'Poppins_500Medium',
-    color: '#f2c',
-  }
 });
 
 export default styles;
