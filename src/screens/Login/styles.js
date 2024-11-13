@@ -72,6 +72,13 @@ const styles = StyleSheet.create({
     right: 15,
     zIndex: 1,
   },
+  versionText: {
+    marginTop: "50%",
+    textAlign: 'center',
+    fontSize: 14,
+    color: '#b7b7b7',
+    fontFamily: 'Poppins_400Regular',
+  },
 });
 
 export default styles;

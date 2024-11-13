@@ -96,9 +96,10 @@ export default function Login() {
             </View>
             <TouchableOpacity onPress={handleLogin} style={styles.button}>
               {
-                loading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.buttonTxt}>Acessar</Text>
+                loading ? <ActivityIndicator size="large" color={"#fff"} /> : <Text style={styles.buttonTxt}>Entrar</Text>
               }
             </TouchableOpacity>
+            <Text style={styles.versionText}>Versão {version}</Text>
           </View>
         </View>
 
