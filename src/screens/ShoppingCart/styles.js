@@ -61,7 +61,13 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Poppins_600SemiBold',
   },
-
+  btnDeleteProduct: {
+    backgroundColor: '#4B6584',
+    padding: 10,
+    borderRadius: 10,
+    position: 'absolute',
+    right: 10,
+  },
 });
 
 export default styles;

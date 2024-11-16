@@ -1,7 +1,7 @@
 import styles from './styles';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+
 import { useState, useEffect } from 'react';
 
 const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {

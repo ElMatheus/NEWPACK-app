@@ -1,10 +1,11 @@
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { CartContext } from '../../contexts/CartContext';
 import styles from './styles';
 import { useContext, useEffect, useState } from 'react';
 import CartItem from '../../components/CartItem';
 import { useNavigation } from '@react-navigation/native';
 import GlobalLoading from '../../components/GlobalLoading';
+import { Feather } from '@expo/vector-icons';
 
 export default function ShoppingCart() {
   const navigation = useNavigation();
@@ -49,7 +50,11 @@ export default function ShoppingCart() {
         ) : (
           <View style={styles.container}>
             <View style={styles.leftPanel}>
+
               <Text style={styles.title}>Produtos Selecionados</Text>
+              <TouchableOpacity onPress={() => onDelete(item)} style={styles.btnDeleteProduct}>
+                <Feather name="trash" size={20} color="#fff" />
+              </TouchableOpacity>
               <ScrollView style={styles.productList}>
                 {cart.map((item) => (
                   <TouchableOpacity key={item.produto_id} onPress={() => navigation.navigate('ProductDetails', { product: item })}>
