@@ -4,31 +4,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f3f3f3',
-    marginVertical: 22,
-    marginHorizontal: 16,
+    marginTop: 30,
   },
   productList: {
-    backgroundColor: '#fff',
-    minHeight: 300,
-    borderColor: '#b9c3cd',
-    borderWidth: 1,
-    padding: 10,
-    borderStyle: 'dashed',
-    maxHeight: 530,
+    maxHeight: 570,
   },
   title: {
     marginTop: 10,
     fontSize: 20,
+    textAlign: 'center',
     color: '#000',
-    fontFamily: 'Poppins_500Medium',
+    fontFamily: 'Poppins_600SemiBold',
   },
   assistantView: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginLeft: 10,
+  },
+  assistantView2: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginVertical: 10,
-    gap: 6,
   },
   txt: {
-    fontSize: 15,
+    fontSize: 13,
     color: '#000',
     fontFamily: 'Poppins_400Regular',
   },
@@ -37,6 +36,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
+    marginHorizontal: 10,
   },
   txtBtn: {
     fontSize: 16,
@@ -48,6 +48,20 @@ const styles = StyleSheet.create({
     zIndex: 20,
     marginTop: 26,
   },
+  rightPanel: {
+    paddingHorizontal: 12,
+    paddingVertical: 15,
+    backgroundColor: '#fff',
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+  },
+  title2: {
+    fontSize: 18,
+    color: '#000',
+    fontFamily: 'Poppins_600SemiBold',
+  },
+
 });
 
 export default styles;

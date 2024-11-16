@@ -1,13 +1,14 @@
-import { View, TouchableOpacity, Text, ActivityIndicator, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/AuthContext';
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import CardProduct from '../../components/CardProduct';
 import styles from './styles';
 import { CartContext } from '../../contexts/CartContext';
 import GlobalLoading from '../../components/GlobalLoading';
 import NoProductsMessage from '../../components/NoProductsMessage';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Feather from '@expo/vector-icons/Feather';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ export default function Home() {
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
+  const [moreInfo, setMoreInfo] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('tudo');
 
   const handleExit = () => {
@@ -64,18 +66,30 @@ export default function Home() {
       ) : (
         <View style={styles.container}>
           <View style={styles.headerApp}>
-            <View>
+            <View style={styles.containerHeader}>
               <Text style={styles.txtStyle}>
                 Bem Vindo,
               </Text>
               <Text style={styles.txtStyle}>
                 {user.name}
               </Text>
-              <TouchableOpacity onPress={handleExit}>
-                <Text style={styles.txtExit}>Sair</Text>
-              </TouchableOpacity>
             </View>
-            <View>
+            <View style={styles.containerInfo}>
+              <View style={{ position: "relative" }}>
+                <FontAwesome
+                  name="user-o"
+                  size={24}
+                  color="#4B6584"
+                  onPress={() => setMoreInfo(!moreInfo)}
+                />
+                {
+                  moreInfo && (
+                    <TouchableOpacity onPress={handleExit} style={styles.exitButton}>
+                      <Text style={styles.exitButtonText}>Sair</Text>
+                    </TouchableOpacity>
+                  )
+                }
+              </View>
               {
                 cart.length > 0 && (
                   <View style={styles.cartBtn}>
@@ -83,12 +97,13 @@ export default function Home() {
                   </View>
                 )
               }
-              <FontAwesome5
+              <Feather
                 name="shopping-cart"
                 size={24}
                 color="#4B6584"
                 onPress={() => navigation.navigate('CartTab')}
                 style={styles.cart} />
+
             </View>
 
           </View>

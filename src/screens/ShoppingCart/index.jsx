@@ -5,7 +5,6 @@ import { useContext, useEffect, useState } from 'react';
 import CartItem from '../../components/CartItem';
 import { useNavigation } from '@react-navigation/native';
 import GlobalLoading from '../../components/GlobalLoading';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function ShoppingCart() {
   const navigation = useNavigation();
@@ -65,22 +64,22 @@ export default function ShoppingCart() {
               </ScrollView>
             </View>
             <View style={styles.rightPanel}>
-              <Text style={styles.title}>
+              <Text style={styles.title2}>
                 Resumo do Carrinho
               </Text>
               <View style={styles.assistantView}>
                 <Text style={styles.txt}>
-                  Quantidade de Produtos:
+                  Quantidade de Produtos
                 </Text>
                 <Text style={styles.txt}>
                   {cart.length}
                 </Text>
               </View>
-              <View style={styles.assistantView}>
-                <Text style={styles.txt}>
-                  Preço Total:
+              <View style={styles.assistantView2}>
+                <Text style={styles.title2}>
+                  Total
                 </Text>
-                <Text style={styles.txt}>
+                <Text style={styles.title2}>
                   {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(totalValue)}
                 </Text>
               </View>

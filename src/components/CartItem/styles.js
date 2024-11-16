@@ -4,27 +4,30 @@ const styles = StyleSheet.create({
   product: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
-    marginVertical: 10,
+    gap: 15,
+    marginVertical: 7,
+    backgroundColor: '#Ffff',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     // maxWidth: 200,
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 5,
+    width: 90,
+    height: 90,
+    borderRadius: 10,
   },
   containerInfos: {
-    width: '70%',
     flexDirection: 'column',
+    maxWidth: 230,
   },
   txtName: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#000',
     fontFamily: 'Poppins_700Bold',
   },
   txtPrice: {
-    fontSize: 14,
-    color: '#000',
+    fontSize: 12,
+    color: '#4A6584',
     fontFamily: 'Poppins_500Medium',
   },
   containerQuantity: {
@@ -33,9 +36,9 @@ const styles = StyleSheet.create({
     gap: 17,
   },
   txtQntd: {
-    fontSize: 14,
-    color: '#000',
-    fontFamily: 'Poppins_400Regular',
+    fontSize: 15,
+    color: '#4A6584',
+    fontFamily: 'Poppins_500Medium',
   },
   btnDeleteProduct: {
     marginLeft: 'auto',
@@ -50,9 +53,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   txtDesc: {
-    fontSize: 11,
-    color: '#000',
-    fontFamily: 'Poppins_400Regular',
+    fontSize: 12,
+    color: '#4A6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  containerQuant: {
+    alignItems: 'center',
+    gap: 10,
+    marginLeft: 'auto',
   },
 });
 

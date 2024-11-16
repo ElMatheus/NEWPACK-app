@@ -13,8 +13,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 12,
     width: '100%',
-    borderBottomWidth: 1,
-    borderBottomColor: '#4B6584',
+  },
+  containerHeader: {
+    flexDirection: 'row',
+    gap: 5,
+  },
+  containerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 18,
   },
   txtStyle: {
     fontSize: 15,
@@ -29,7 +36,6 @@ const styles = StyleSheet.create({
   containerProducts: {
     flex: 1,
     padding: 10,
-    marginTop: 20,
   },
   containerCards: {
     gap: 8,
@@ -58,6 +64,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -7,
     right: -7,
+    zIndex: 2,
 
   },
   cartText: {
@@ -68,6 +75,23 @@ const styles = StyleSheet.create({
   cart: {
     position: 'relative',
     padding: 10,
+    backgroundColor: '#b9c3cd',
+    borderRadius: 15,
+    padding: 10,
+    zIndex: 1,
+  },
+  exitButton: {
+    position: 'absolute',
+    top: 30,
+    left: -15,
+    width: 50,
+    padding: 10,
+    backgroundColor: '#4B6584',
+    borderRadius: 5,
+  },
+  exitButtonText: {
+    color: '#fff',
+    fontFamily: 'Poppins_500Medium',
   },
 });
 
