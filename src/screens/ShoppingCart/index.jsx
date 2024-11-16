@@ -6,6 +6,7 @@ import CartItem from '../../components/CartItem';
 import { useNavigation } from '@react-navigation/native';
 import GlobalLoading from '../../components/GlobalLoading';
 import { Feather } from '@expo/vector-icons';
+import { Swipeable } from 'react-native-gesture-handler';
 
 export default function ShoppingCart() {
   const navigation = useNavigation();
@@ -42,6 +43,12 @@ export default function ShoppingCart() {
     }
   };
 
+  const renderRightActions = (item) => (
+    <TouchableOpacity onPress={() => onDelete(item)} style={styles.swipeableDeleteButton}>
+      <Feather name="trash" size={24} color="#fff" />
+    </TouchableOpacity>
+  );
+
   return (
     <>
       {
@@ -49,25 +56,27 @@ export default function ShoppingCart() {
           <GlobalLoading />
         ) : (
           <View style={styles.container}>
-            <View style={styles.leftPanel}>
-
-              <Text style={styles.title}>Produtos Selecionados</Text>
-              <TouchableOpacity onPress={() => onDelete(item)} style={styles.btnDeleteProduct}>
-                <Feather name="trash" size={20} color="#fff" />
-              </TouchableOpacity>
-              <ScrollView style={styles.productList}>
+            <ScrollView style={styles.productList}>
+              <View style={styles.leftPanel}>
+                <Text style={styles.title}>Produtos Selecionados</Text>
+                <Text style={styles.swipeHint}>Deslize para o lado para remover um produto</Text>
                 {cart.map((item) => (
-                  <TouchableOpacity key={item.produto_id} onPress={() => navigation.navigate('ProductDetails', { product: item })}>
-                    <CartItem
-                      item={item}
-                      onIncrease={onIncreaseFunc}
-                      onDecrease={onDecreaseFunc}
-                      onDelete={onDelete}
-                    />
-                  </TouchableOpacity>
+                  <Swipeable
+                    key={item.produto_id}
+                    renderRightActions={() => renderRightActions(item)}
+                  >
+                    <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { product: item })}>
+                      <CartItem
+                        item={item}
+                        onIncrease={onIncreaseFunc}
+                        onDecrease={onDecreaseFunc}
+                        onDelete={onDelete}
+                      />
+                    </TouchableOpacity>
+                  </Swipeable>
                 ))}
-              </ScrollView>
-            </View>
+              </View>
+            </ScrollView>
             <View style={styles.rightPanel}>
               <Text style={styles.title2}>
                 Resumo do Carrinho
@@ -98,8 +107,9 @@ export default function ShoppingCart() {
                 <Text style={styles.txtBtn}>Limpar</Text>
               </TouchableOpacity> */}
             </View>
-          </View>
-        )}
+          </View >
+        )
+      }
     </>
   )
 }

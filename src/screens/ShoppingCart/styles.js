@@ -6,9 +6,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3f3f3',
     marginTop: 30,
   },
-  productList: {
-    maxHeight: 570,
-  },
   title: {
     marginTop: 10,
     fontSize: 20,
@@ -52,9 +49,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 15,
     backgroundColor: '#fff',
-    position: 'absolute',
+    // position: 'absolute',
     width: '100%',
-    bottom: 0,
+    // bottom: 0,
   },
   title2: {
     fontSize: 18,
@@ -67,6 +64,24 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     position: 'absolute',
     right: 10,
+  },
+  swipeableContainer: {
+    flex: 1,
+  },
+  swipeableDeleteButton: {
+    backgroundColor: '#ff3b30',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingHorizontal: 20,
+    marginVertical: 10,
+    borderRadius: 5,
+  },
+  swipeHint: {
+    fontSize: 14,
+    color: '#888',
+    textAlign: 'center',
+    marginVertical: 5,
+    fontFamily: 'Poppins_400Regular',
   },
 });
 
