@@ -83,6 +83,23 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     fontFamily: 'Poppins_400Regular',
   },
+  containerNo: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: "50%",
+    gap: 12,
+  },
+  txtNo: {
+    fontSize: 20,
+    color: '#000',
+    fontFamily: 'Poppins_600SemiBold',
+  },
+  title2No: {
+    textAlign: 'center',
+    fontSize: 15,
+    color: '#868889',
+    fontFamily: 'Poppins_500Medium',
+  },
 });
 
 export default styles;

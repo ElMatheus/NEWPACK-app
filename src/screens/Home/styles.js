@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#4B6584',
     borderRadius: 5,
+    zIndex: 2,
   },
   exitButtonText: {
     color: '#fff',
