@@ -101,7 +101,7 @@ export default function Home() {
                 name="shopping-cart"
                 size={24}
                 color="#4B6584"
-                onPress={() => navigation.navigate('Sucess')}
+                onPress={() => navigation.navigate('CartTab')}
                 style={styles.cart} />
 
             </View>
