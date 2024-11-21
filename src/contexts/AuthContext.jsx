@@ -196,7 +196,7 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiURL}/orders`, {
         "client_id": user.id,
-        "status": "Inválido",
+        "status": "Invalido",
         "description": desc,
         "installment": installment
       });
