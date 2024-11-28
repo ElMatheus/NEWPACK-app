@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
   containerTitle: {
     marginLeft: 20,
     marginTop: 50,
-    width: '50%',
+    marginBottom: 17,
   },
   title: {
+    lineHeight: 45,
     fontSize: 32,
     fontFamily: 'Poppins_600SemiBold',
   },

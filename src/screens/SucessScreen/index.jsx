@@ -9,7 +9,8 @@ export default function Sucess() {
   return (
     <View style={styles.container}>
       <View style={styles.containerTitle}>
-        <Text style={styles.title}>Pedido Concluído!</Text>
+        <Text style={styles.title}>Pedido </Text>
+        <Text style={styles.title}>Concluído!</Text>
       </View>
       <Text style={styles.txt}>O seu pedido foi processado com sucesso.</Text>
       <View style={styles.containerIcon}>

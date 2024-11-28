@@ -84,9 +84,11 @@ export default function Home() {
                 />
                 {
                   moreInfo && (
-                    <TouchableOpacity onPress={handleExit} style={styles.exitButton}>
-                      <Text style={styles.exitButtonText}>Sair</Text>
-                    </TouchableOpacity>
+                    <View style={styles.containerButton}>
+                      <TouchableOpacity onPress={handleExit} style={styles.exitButton}>
+                        <Text style={styles.exitButtonText}>Sair</Text>
+                      </TouchableOpacity>
+                    </View>
                   )
                 }
               </View>

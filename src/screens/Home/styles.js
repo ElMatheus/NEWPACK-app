@@ -80,15 +80,18 @@ const styles = StyleSheet.create({
     padding: 10,
     zIndex: 1,
   },
-  exitButton: {
+  containerButton: {
     position: 'absolute',
     top: 30,
+    right: -15,
     left: -15,
-    width: 50,
-    padding: 10,
+    zIndex: 2,
+    alignItems: 'center',
+  },
+  exitButton: {
     backgroundColor: '#4B6584',
     borderRadius: 5,
-    zIndex: 2,
+    padding: 10,
   },
   exitButtonText: {
     color: '#fff',
