@@ -59,7 +59,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     backgroundColor: "#F3F3F3",
     borderRadius: 5,
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     gap: 15,
   },
   inputContainer2: {
