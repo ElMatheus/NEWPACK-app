@@ -1,4 +1,4 @@
-import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, TextInput } from 'react-native';
+import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback, TextInput, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { useContext, useState } from 'react';
 import styles from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -71,68 +71,71 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
         {msgError && <PopUp message={msgError} />}
         <TouchableWithoutFeedback>
           <View style={styles.containerModal}>
-            <Text style={styles.title}>Adicionar Endereço</Text>
-            <View style={styles.containerCards}>
-              <View style={styles.containerInps}>
-                <View style={styles.inputContainer}>
-                  <Feather name="map-pin" size={24} color="#6B6B6B" style={styles.icon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Rua"
-                    value={street}
-                    onChangeText={setStreet}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <MaterialIcons name="maps-home-work" size={19} color="#6B6B6B" style={styles.icon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="CEP"
-                    value={cep}
-                    onChangeText={handleCepChange}
-                  />
-                </View>
-                <View style={styles.containerRow}>
-                  <View style={styles.inputContainer2}>
-                    <SimpleLineIcons name="map" size={19} color="#6B6B6B" style={styles.icon} />
+            <ScrollView contentContainerStyle={styles.scrollView}>
+              <Text style={styles.title}>Adicionar Endereço</Text>
+              <View style={styles.containerCards}>
+                <View style={styles.containerInps}>
+                  <View style={styles.inputContainer}>
+                    <Feather name="map-pin" size={24} color="#6B6B6B" style={styles.icon} />
                     <TextInput
                       style={styles.input}
-                      placeholder="Cidade"
-                      value={city}
-                      onChangeText={setCity}
+                      placeholder="Rua"
+                      value={street}
+                      onChangeText={setStreet}
                     />
                   </View>
-                  <View style={styles.inputContainer2}>
-                    <Feather name="globe" size={19} color="#6B6B6B" style={styles.icon} />
+                  <View style={styles.inputContainer}>
+                    <MaterialIcons name="maps-home-work" size={19} color="#6B6B6B" style={styles.icon} />
                     <TextInput
                       style={styles.input}
-                      placeholder="Estado"
-                      value={state}
-                      onChangeText={handleStateChange}
+                      keyboardType="numeric"
+                      placeholder="CEP"
+                      value={cep}
+                      onChangeText={handleCepChange}
                     />
                   </View>
-                </View>
-                <View style={styles.inputContainer}>
-                  <Feather name="grid" size={19} color="#6B6B6B" style={styles.icon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Complemento"
-                    value={complement}
-                    onChangeText={setComplement}
-                  />
-                </View>
-                <View style={styles.inputContainer}>
-                  <MaterialCommunityIcons name="keyboard" size={19} color="#6B6B6B" style={styles.icon} />
-                  <TextInput
-                    style={styles.input}
-                    keyboardType="numeric"
-                    placeholder="Número"
-                    value={number}
-                    onChangeText={setNumber}
-                  />
+                  <View style={styles.containerRow}>
+                    <View style={styles.inputContainer2}>
+                      <SimpleLineIcons name="map" size={19} color="#6B6B6B" style={styles.icon} />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Cidade"
+                        value={city}
+                        onChangeText={setCity}
+                      />
+                    </View>
+                    <View style={styles.inputContainer2}>
+                      <Feather name="globe" size={19} color="#6B6B6B" style={styles.icon} />
+                      <TextInput
+                        style={styles.input}
+                        placeholder="Estado"
+                        value={state}
+                        onChangeText={handleStateChange}
+                      />
+                    </View>
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <Feather name="grid" size={19} color="#6B6B6B" style={styles.icon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Complemento"
+                      value={complement}
+                      onChangeText={setComplement}
+                    />
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <MaterialCommunityIcons name="keyboard" size={19} color="#6B6B6B" style={styles.icon} />
+                    <TextInput
+                      style={styles.input}
+                      keyboardType="numeric"
+                      placeholder="Número"
+                      value={number}
+                      onChangeText={setNumber}
+                    />
+                  </View>
                 </View>
               </View>
-            </View>
+            </ScrollView>
             <View style={styles.containerBtn}>
               <TouchableOpacity style={styles.btn} onPress={handleAddAddress}>
                 <Text style={styles.txtBtn}>Adicionar</Text>

@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fundo semitransparente
   },
   containerModal: {
-    width: '100%', // Largura do modal
+    marginTop: '30%',
+    width: '100%',
     backgroundColor: 'white',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
@@ -94,6 +95,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     alignItems: 'center',
+  },
+  scrollView: {
+    flexGrow: 1, // Allow the ScrollView to grow and take available space
   },
 });
 
