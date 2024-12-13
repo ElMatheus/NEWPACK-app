@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f0f4f7',
+    padding: 20,
   },
   containerTitle: {
     marginLeft: 20,
@@ -14,17 +15,21 @@ const styles = StyleSheet.create({
     lineHeight: 45,
     fontSize: 32,
     fontFamily: 'Poppins_600SemiBold',
+    color: '#333',
   },
   txt: {
     fontSize: 16,
     fontFamily: 'Poppins_400Regular',
     marginHorizontal: 10,
+    color: '#666',
+    textAlign: 'center',
   },
   containerIcon: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
     position: 'relative',
+    marginVertical: 30,
   },
   icon: {
     position: 'absolute',
@@ -36,14 +41,17 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#4B6584',
-    padding: 10,
+    padding: 15,
     marginTop: 10,
     borderRadius: 5,
-    marginBottom: 30
+    marginBottom: 30,
+    width: '80%',
+    alignItems: 'center',
   },
   btnTxt: {
     color: '#fff',
     fontFamily: 'Poppins_500Medium',
+    fontSize: 16,
   },
   image: {
     width: 200,
