@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
   },
   containerInfo: {
     flexDirection: "column",
+    maxWidth: "60%",
   },
   title: {
     fontSize: 17,
     fontFamily: 'Poppins_600SemiBold',
     color: "#000",
-    maxWidth: "90%",
   },
   txt: {
     fontSize: 12,

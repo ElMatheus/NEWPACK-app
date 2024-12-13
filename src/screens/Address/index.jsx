@@ -58,7 +58,6 @@ export default function Address() {
         ) : (
           <View style={{ marginTop: statusBarHeight }}>
             {popUp && <PopUp message={popUp} />}
-            {error && <PopUp2 exitPopUp={setPopUpMessage} />}
             <ScrollView>
               <View style={styles.containerHeader}>
                 <View style={styles.containerIcon}>
@@ -80,6 +79,7 @@ export default function Address() {
               </View>
               <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </ScrollView>
+            {error && <PopUp2 exitPopUp={setPopUpMessage} />}
           </View>
         )
       }

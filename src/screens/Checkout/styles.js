@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 28,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFF',
   },
   containerCard: {
     flexDirection: 'row',
@@ -32,12 +32,11 @@ const styles = StyleSheet.create({
     gap: 17,
   },
   containerDesc: {
-    gap: -4,
+    maxWidth: 250,
   },
   titleCard: {
     fontSize: 16,
     fontFamily: 'Poppins_600SemiBold',
-    maxWidth: 300,
     maxHeight: 25,
   },
   txtCard: {

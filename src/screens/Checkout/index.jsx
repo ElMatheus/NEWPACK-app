@@ -155,7 +155,7 @@ export default function Checkout() {
                   <Feather name="map-pin" size={27} color="#000" />
                   {
                     selectedAddress == null ? (
-                      <View>
+                      <View style={styles.containerDesc}>
                         <Text style={styles.titleCard}>Endereço não selecionado</Text>
                         <Text style={styles.txtCard}>Selecione um endereço para entrega</Text>
                       </View>
