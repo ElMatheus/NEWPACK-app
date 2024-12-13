@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import Constants from 'expo-constants';
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
 import { CartContext } from '../../contexts/CartContext';
@@ -26,6 +27,7 @@ export default function Checkout() {
   const [description, setDescription] = useState(null);
   const [msgError, setMsgError] = useState(null);
   const [error, setError] = useState(null);
+  const statusBarHeight = Constants.statusBarHeight;
 
   useFocusEffect(
     useCallback(() => {
@@ -105,7 +107,7 @@ export default function Checkout() {
   };
 
   return (
-    <>
+    <View style={{ marginTop: statusBarHeight }}>
       {
         msgError && <PopUp message={msgError} />
       }
@@ -238,7 +240,7 @@ export default function Checkout() {
         )
 
       }
-    </>
+    </View>
   )
 
 };

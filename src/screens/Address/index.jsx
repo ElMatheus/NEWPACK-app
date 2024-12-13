@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import Constants from 'expo-constants';
 import { useContext, useState, useEffect, useCallback } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Feather from '@expo/vector-icons/Feather';
@@ -19,6 +20,7 @@ export default function Address() {
   const [popUp, setPopUp] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const statusBarHeight = Constants.statusBarHeight;
 
   const fetchAddresses = async () => {
     const addresses = await getAddressesUser();
@@ -49,7 +51,7 @@ export default function Address() {
   }, [globalLoading]);
 
   return (
-    <>
+    <View style={{ marginTop: statusBarHeight }}>
       {
         loading ? (
           <GlobalLoading />
@@ -81,6 +83,6 @@ export default function Address() {
           </>
         )
       }
-    </>
+    </View>
   )
 }
