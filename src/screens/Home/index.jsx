@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { View, TouchableOpacity, Text, ScrollView, RefreshControl } from 'react-native';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -19,34 +19,38 @@ export default function Home() {
   const [popUp2, setPopUp2] = useState(null);
   const [moreInfo, setMoreInfo] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('tudo');
+  const [refreshing, setRefreshing] = useState(false);
 
   const handleExit = () => {
     signOut();
     clearCart();
   }
 
-  // toda vez que eu entrar na tela de home, ele vai chamar a funcao getProductsForUser do meu AuthContext
-  useEffect(() => {
-    const getAllProducts = async () => {
-      try {
-        const response = await getProductsForUser(selectedCategory);
-        // aqui ele vai setar os produtos que ele pegou na requisicao no caso do meu back, ele vai pegar os produtos que o usuario comprou
-        setProducts(response);
-      } catch (error) {
-        // se der erro na requisicao, seta um popUp de erro
-        if (error.response) {
-          // se a requisicao tiver uma mensagem programada do meu back como: "Usuario nao encontrado" seta um popUp2 com a mensagem que nela esta
-          setPopUp2(error.response.data.message);
-        } else {
-          // ai se nao tiver uma mensagem programada, seta um popUp de erro interno do servidor
-          setPopUp('Erro interno do servidor');
-          setTimeout(() => {
-            setPopUp(null);
-          }, 3000);
-        }
+  const fetchProducts = async () => {
+    try {
+      const response = await getProductsForUser(selectedCategory);
+      setProducts(response);
+    } catch (error) {
+      if (error.response) {
+        setPopUp2(error.response.data.message);
+      } else {
+        setPopUp('Erro interno do servidor');
+        setTimeout(() => {
+          setPopUp(null);
+        }, 3000);
       }
     }
-    getAllProducts();
+  }
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchProducts();
+    setRefreshing(false);
+  }
+
+  // toda vez que eu entrar na tela de home, ele vai chamar a funcao getProductsForUser do meu AuthContext
+  useEffect(() => {
+    fetchProducts();
   }, [selectedCategory]);
 
   const categoryMapping = {
@@ -126,7 +130,11 @@ export default function Home() {
               </ScrollView>
             </View>
             <Text style={styles.title}>Pedidos recentes</Text>
-            <ScrollView>
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
+            >
               <View style={styles.containerCards}>
                 {/* isso sao todos os meus produtos eu faco um map pegando cada um e componentizo ele */}
                 {products.length > 0 ? (
