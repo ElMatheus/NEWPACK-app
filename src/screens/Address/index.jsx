@@ -51,12 +51,12 @@ export default function Address() {
   }, [globalLoading]);
 
   return (
-    <View style={{ marginTop: statusBarHeight }}>
+    <>
       {
         loading ? (
           <GlobalLoading />
         ) : (
-          <>
+          <View style={{ marginTop: statusBarHeight }}>
             {popUp && <PopUp message={popUp} />}
             {error && <PopUp2 exitPopUp={setPopUpMessage} />}
             <ScrollView>
@@ -80,9 +80,9 @@ export default function Address() {
               </View>
               <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </ScrollView>
-          </>
+          </View>
         )
       }
-    </View>
+    </>
   )
 }

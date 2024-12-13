@@ -107,7 +107,7 @@ export default function Checkout() {
   };
 
   return (
-    <View style={{ marginTop: statusBarHeight }}>
+    <>
       {
         msgError && <PopUp message={msgError} />
       }
@@ -118,7 +118,7 @@ export default function Checkout() {
         loading || profile == null || user == null ? (
           <GlobalLoading />
         ) : (
-          <ScrollView>
+          <ScrollView style={{ marginTop: statusBarHeight }}>
             <View style={styles.containerHeader}>
               <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.goBack()}>
                 <AntDesign style={styles.icon} name="left" size={26} color="#000" />
@@ -240,7 +240,7 @@ export default function Checkout() {
         )
 
       }
-    </View>
+    </>
   )
 
 };
