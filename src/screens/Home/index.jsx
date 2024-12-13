@@ -144,7 +144,7 @@ export default function Home() {
                     </TouchableOpacity>
                   ))
                 ) : (
-                  <NoProductsMessage />
+                  <NoProductsMessage msg="Não foram encontrados produtos nessa categoria." />
                 )}
               </View>
             </ScrollView>

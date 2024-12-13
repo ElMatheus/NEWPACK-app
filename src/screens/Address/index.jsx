@@ -11,6 +11,7 @@ import CreateAddress from '../../components/CreateAddress';
 import PopUp from '../../components/PopUp';
 import GlobalLoading from '../../components/GlobalLoading';
 import PopUp2 from '../../components/PopUp2';
+import NoProductsMessage from '../../components/NoProductsMessage';
 
 export default function Address() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -73,9 +74,13 @@ export default function Address() {
                 </View>
               </View>
               <View>
-                {addresses && addresses.map((address, index) => (
-                  <CardAddress key={index} address={address} setPopUp={setPopUp} />
-                ))}
+                {addresses && addresses.length > 0 ? (
+                  addresses.map((address, index) => (
+                    <CardAddress key={index} address={address} setPopUp={setPopUp} />
+                  ))
+                ) : (
+                  <NoProductsMessage msg="Você não possui endereços cadastrados" />
+                )}
               </View>
               <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </ScrollView>
