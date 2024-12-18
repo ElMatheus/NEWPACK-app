@@ -51,7 +51,7 @@ export default function UserForm({ route }) {
           <View style={{ alignItems: 'center' }}>
             {msgPopUp ? <PopUp message={msgPopUp} /> : null}
           </View>
-          <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={styles.containerIcon} onPress={element ? () => navigation.goBack() : () => navigation.navigate('CartTab')}>
             <AntDesign style={styles.icon} name="left" size={26} color="#000" />
           </TouchableOpacity>
           <View style={styles.containerTxt}>

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ScrollView, BackHandler } from 'react-native';
 import Constants from 'expo-constants';
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -13,6 +13,7 @@ import { Picker } from '@react-native-picker/picker';
 import InfoUser from '../../components/InfoUser';
 import PopUp from '../../components/PopUp';
 import PopUp2 from '../../components/PopUp2';
+import Guarantee from '../../components/GuaranteePopUp';
 
 export default function Checkout() {
   const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail } = useContext(AuthContext);
@@ -26,6 +27,7 @@ export default function Checkout() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [description, setDescription] = useState(null);
   const [msgError, setMsgError] = useState(null);
+  const [guarante, setGuarante] = useState(false);
   const [error, setError] = useState(null);
   const statusBarHeight = Constants.statusBarHeight;
 
@@ -46,6 +48,17 @@ export default function Checkout() {
       };
 
       fetchProfile();
+
+      const onBackPress = () => {
+        setGuarante(true);
+        return true;
+      };
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+      return () => {
+        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+      };
     }, [])
   );
 
@@ -106,6 +119,18 @@ export default function Checkout() {
     clearCart();
   };
 
+  const verificationExit = () => {
+    setGuarante(true);
+  }
+
+  const handleExit = () => {
+    navigation.goBack();
+    setGuarante(false);
+
+  }
+
+
+
   return (
     <>
       {
@@ -115,12 +140,15 @@ export default function Checkout() {
         error && <PopUp2 exitPopUp={setPopUpMessage} />
       }
       {
+        guarante && <Guarantee onConfirm={handleExit} onCancel={() => setGuarante(false)} />
+      }
+      {
         loading || profile == null || user == null ? (
           <GlobalLoading />
         ) : (
           <ScrollView style={{ marginTop: statusBarHeight }}>
             <View style={styles.containerHeader}>
-              <TouchableOpacity style={styles.containerIcon} onPress={() => navigation.goBack()}>
+              <TouchableOpacity style={styles.containerIcon} onPress={verificationExit}>
                 <AntDesign style={styles.icon} name="left" size={26} color="#000" />
               </TouchableOpacity>
               <Text style={styles.titleHeader}>Finalização de Compra</Text>
@@ -204,7 +232,7 @@ export default function Checkout() {
                 <View style={styles.containerSelectValue}>
                   <Picker
                     selectedValue={selectedValue}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                    onValueChange={(itemValue) => setSelectedValue(itemValue)}
                     style={styles.picker}
                   >
                     {items.map((item, index) => (

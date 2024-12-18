@@ -31,11 +31,18 @@ const CartStack = () => (
     <Stack.Screen name="Cart" component={ShoppingCart} />
     <Stack.Screen name="Home" component={Home} />
     <Stack.Screen name="ProductDetails" component={ProductDetails} />
-    <Stack.Screen name="UserForm" component={UserForm} />
-    <Stack.Screen name="Address" component={Address} />
-    <Stack.Screen name="Checkout" component={Checkout} />
   </Stack.Navigator>
 );
+
+const FinishStack = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Checkout" component={Checkout} />
+    <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="UserForm" component={UserForm} />
+  </Stack.Navigator>
+);
+
+
 
 const PrivateTab = () => {
   const { cart } = useContext(CartContext);
@@ -85,6 +92,15 @@ const PrivateTab = () => {
             },
             tabBarActiveTintColor: "#4B6584",
             tabBarInactiveTintColor: "#b9c3cd",
+          }}
+        />
+        <Tab.Screen name="FinishTab" component={FinishStack}
+          options={{
+            tabBarVisible: false,
+            tabBarItemStyle: {
+              display: "none",
+            },
+            tabBarStyle: { display: 'none' },
           }}
         />
         <Tab.Screen name="Sucess" component={Sucess}

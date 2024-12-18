@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from "axios";
 
 export const CartContext = createContext();
 
@@ -109,6 +108,7 @@ const CartProvider = ({ children }) => {
   const clearCart = async () => {
     setGlobalLoading(true);
     setCart([]);
+    await AsyncStorage.setItem('@asyncStorage:cart', JSON.stringify([]));
     setGlobalLoading(false);
   };
 

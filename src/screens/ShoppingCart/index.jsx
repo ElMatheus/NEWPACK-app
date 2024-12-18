@@ -40,7 +40,7 @@ export default function ShoppingCart() {
       }, 3000);
     } else {
       await calculateTotal();
-      navigation.navigate('Checkout');
+      navigation.navigate('FinishTab');
     }
   };
 
