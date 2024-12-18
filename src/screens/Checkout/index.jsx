@@ -85,6 +85,11 @@ export default function Checkout() {
     setValueInstallment(installment);
   }, [selectedValue]);
 
+  useEffect(() => {
+    const installment = totalValue / Number(selectedValue);
+    setValueInstallment(installment);
+  }, [totalValue, selectedValue]);
+
   const items = [
     { label: '1x', value: 1 },
     { label: '2x', value: 2 },
