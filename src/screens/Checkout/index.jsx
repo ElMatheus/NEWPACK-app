@@ -35,7 +35,6 @@ export default function Checkout() {
     useCallback(() => {
       const fetchProfile = async () => {
         setLoading(true);
-        setSelectedValue(1);
         const address = await getAddressActiveUser();
         setSelectedAddress(address);
         const profileData = await getProfileFromAsyncStorage();
@@ -83,11 +82,6 @@ export default function Checkout() {
   useEffect(() => {
     const installment = totalValue / Number(selectedValue);
     setValueInstallment(installment);
-  }, [selectedValue]);
-
-  useEffect(() => {
-    const installment = totalValue / Number(selectedValue);
-    setValueInstallment(installment);
   }, [totalValue, selectedValue]);
 
   const items = [
@@ -131,10 +125,7 @@ export default function Checkout() {
   const handleExit = () => {
     navigation.goBack();
     setGuarante(false);
-
   }
-
-
 
   return (
     <>
@@ -241,7 +232,7 @@ export default function Checkout() {
                     style={styles.picker}
                   >
                     {items.map((item, index) => (
-                      <Picker.Item key={index} label={item.label} value={item.value} />
+                      item && <Picker.Item key={index} label={item.label} value={item.value} />
                     ))}
                   </Picker>
                 </View>
