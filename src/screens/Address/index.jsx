@@ -84,10 +84,10 @@ export default function Address() {
               </View>
               <CreateAddress modalVisible={modalVisible} setModalVisible={setModalVisible} />
             </ScrollView>
-            {error && <PopUp2 exitPopUp={setPopUpMessage} />}
           </View>
         )
       }
+      {error && <PopUp2 exitPopUp={setPopUpMessage} />}
     </>
   )
 }

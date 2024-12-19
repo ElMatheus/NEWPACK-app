@@ -1,8 +1,14 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, DevSettings } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PopUp = ({ user, message, exitPopUp }) => {
+
+  const handleUnexpectedError = () => {
+    exitPopUp(null);
+    DevSettings.reload();
+  }
+
   return (
     <View style={styles.screen}>
       <View style={styles.container}>
@@ -31,7 +37,10 @@ const PopUp = ({ user, message, exitPopUp }) => {
             )
           }
         </View>
-        <TouchableOpacity onPress={() => exitPopUp(null)} style={styles.button}>
+        <TouchableOpacity
+          onPress={() => message == 'Nome ou senha inválidos' || message == 'Usuário não encontrado' || message == 'Este usuário não possui pedidos ainda' ? exitPopUp(null) : handleUnexpectedError()}
+          style={styles.button}
+        >
           <Text style={styles.txtButton}>Tentar novamente</Text>
         </TouchableOpacity>
       </View>

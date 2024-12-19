@@ -11,35 +11,36 @@ const AuthProvider = ({ children }) => {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState(null);
 
-  useEffect(() => {
-    const loadingStoreData = async () => {
-      setGlobalLoading(true);
-      const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
-      if (storageToken) {
-        try {
-          const isLogged = await axios.post(`${apiURL}/users/refresh`, {
-            refreshToken: JSON.parse(storageToken)
+  const loadingStoreData = async () => {
+    setGlobalLoading(true);
+    const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
+    if (storageToken) {
+      try {
+        const isLogged = await axios.post(`${apiURL}/users/refresh`, {
+          refreshToken: JSON.parse(storageToken)
+        });
+        if (isLogged) {
+          const userById = await axios.get(`${apiURL}/users/${isLogged.data.user_id}`, {
+            headers: {
+              Authorization: `Bearer ${isLogged.data.token}`
+            }
           });
-          if (isLogged) {
-            const userById = await axios.get(`${apiURL}/users/${isLogged.data.user_id}`, {
-              headers: {
-                Authorization: `Bearer ${isLogged.data.token}`
-              }
-            });
-            setAcessToken(isLogged.data.token);
-            const { password, ...userWithoutPassword } = userById.data.user;
-            setUser(userWithoutPassword);
-          }
-        } catch (error) {
-          setPopUpMessage("Faça login novamente");
-          setTimeout(() => {
-            setPopUpMessage(null);
-          }, 3000);
-          AsyncStorage.clear();
+          setAcessToken(isLogged.data.token);
+          const { password, ...userWithoutPassword } = userById.data.user;
+          setUser(userWithoutPassword);
         }
+      } catch (error) {
+        setPopUpMessage("Faça login novamente");
+        setTimeout(() => {
+          setPopUpMessage(null);
+        }, 3000);
+        AsyncStorage.clear();
       }
-      setGlobalLoading(false);
-    };
+    }
+    setGlobalLoading(false);
+  };
+
+  useEffect(() => {
     loadingStoreData();
   }, []);
 
@@ -251,7 +252,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData }}>
       {children}
     </AuthContext.Provider>
   );

@@ -9,11 +9,12 @@ import GlobalLoading from '../../components/GlobalLoading';
 import NoProductsMessage from '../../components/NoProductsMessage';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
+import PopUp2 from '../../components/PopUp2';
 
 export default function Home() {
   const navigation = useNavigation();
   const { cart, clearCart } = useContext(CartContext);
-  const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
+  const { user, signOut, globalLoading, getProductsForUser, popUpMessage } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
@@ -64,6 +65,7 @@ export default function Home() {
 
   return (
     <>
+      {popUp2 && <PopUp2 message={popUp2} exitPopUp={setPopUp2} />}
       {globalLoading ? (
         <GlobalLoading />
       ) : (
