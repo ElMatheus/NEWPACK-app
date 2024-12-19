@@ -6,6 +6,7 @@ import PopUp from '../../components/PopUp';
 import PopUp2 from '../../components/PopUp2';
 import styles from './styles';
 import { version } from '../../../package.json';
+import GlobalLoading from '../../components/GlobalLoading';
 
 export default function Login() {
   const [name, setName] = useState('');
@@ -15,7 +16,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const { signIn, popUpMessage } = useContext(AuthContext);
+  const { signIn, popUpMessage, globalLoading } = useContext(AuthContext);
 
   const handleLogin = async () => {
     setLoading(true);
@@ -42,53 +43,60 @@ export default function Login() {
   }, [popUpMessage]);
 
   return (
-    <View style={styles.container}>
-      <View>
-        {popUp && <PopUp message={popUp} />}
-      </View>
-      <View style={styles.containerImg}>
-        <Image style={{ width: 160, height: 110 }} source={require('../../../assets/images/newpack-logo.png')} />
-      </View>
-      <View style={styles.containerLogin}>
-        <View style={styles.containerInps}>
-          <View style={styles.containerInps2}>
-            <View style={styles.inputContainer}>
-              <Icon color="#b7b7b7" name="user-check" size={18} />
-              <TextInput
-                onChangeText={setName}
-                value={name}
-                placeholder="Insira seu nome"
-                style={styles.inputTxt}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Icon color="#b7b7b7" name="key" size={18} />
-              <TextInput
-                onChangeText={setPassword}
-                value={password}
-                placeholder="Insira sua senha"
-                secureTextEntry={!showPassword}
-                style={styles.inputTxt}
-              />
-              <TouchableOpacity
-                style={styles.showPasswordIcon}
-                onPress={() => setShowPassword(!showPassword)}
-              >
-                <Icon
-                  name={showPassword ? 'eye-slash' : 'eye'}
-                  size={18}
-                  color="#b7b7b7"
-                />
+    <>
+      {globalLoading ? (
+        <GlobalLoading />
+      ) : (
+        <View style={styles.container}>
+          <View>
+            {popUp && <PopUp message={popUp} />}
+          </View>
+          <View style={styles.containerImg}>
+            <Image style={{ width: 160, height: 110 }} source={require('../../../assets/images/newpack-logo.png')} />
+          </View>
+          <View style={styles.containerLogin}>
+            <View style={styles.containerInps}>
+              <View style={styles.containerInps2}>
+                <View style={styles.inputContainer}>
+                  <Icon color="#b7b7b7" name="user-check" size={18} />
+                  <TextInput
+                    onChangeText={setName}
+                    value={name}
+                    placeholder="Insira seu nome"
+                    style={styles.inputTxt}
+                  />
+                </View>
+                <View style={styles.inputContainer}>
+                  <Icon color="#b7b7b7" name="key" size={18} />
+                  <TextInput
+                    onChangeText={setPassword}
+                    value={password}
+                    placeholder="Insira sua senha"
+                    secureTextEntry={!showPassword}
+                    style={styles.inputTxt}
+                  />
+                  <TouchableOpacity
+                    style={styles.showPasswordIcon}
+                    onPress={() => setShowPassword(!showPassword)}
+                  >
+                    <Icon
+                      name={showPassword ? 'eye-slash' : 'eye'}
+                      size={18}
+                      color="#b7b7b7"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <TouchableOpacity onPress={handleLogin} style={styles.button}>
+                {loading ? <ActivityIndicator size="large" color="#fff" /> : <Text style={styles.buttonTxt}>Entrar</Text>}
               </TouchableOpacity>
+              <Text style={styles.versionText}>Versão {version}</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={handleLogin} style={styles.button}>
-            {loading ? <ActivityIndicator size="large" color="#fff" /> : <Text style={styles.buttonTxt}>Entrar</Text>}
-          </TouchableOpacity>
-          <Text style={styles.versionText}>Versão {version}</Text>
+          {popUp2 && <PopUp2 user={name} message={popUp2} exitPopUp={setPopUp2} />}
         </View>
-      </View>
-      {popUp2 && <PopUp2 user={name} message={popUp2} exitPopUp={setPopUp2} />}
-    </View>
+      )
+      }
+    </>
   );
 }

@@ -24,21 +24,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 28,
-    backgroundColor: '#FFFF',
+    backgroundColor: '#fff',
   },
   containerCard: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 17,
+    flex: 1,
   },
   containerDesc: {
-    maxWidth: 250,
+    flexShrink: 1,
   },
   titleCard: {
     fontSize: 16,
     fontFamily: 'Poppins_600SemiBold',
     maxHeight: 25,
+    flexWrap: 'wrap', // Permite quebrar o texto em palavras menores
+    overflow: 'hidden', // Evita estouro
   },
+
   txtCard: {
     fontSize: 14,
     fontFamily: 'Poppins_400Regular',

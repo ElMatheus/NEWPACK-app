@@ -113,9 +113,11 @@ export default function Checkout() {
     });
     await Promise.all(orderItemsPromises);
     await sendEmail(order.order.id);
-    navigation.popToTop();
     navigation.navigate('Sucess');
     clearCart();
+    // Clear inputs after form submission
+    setDescription(null);
+    setSelectedValue(1);
   };
 
   const verificationExit = () => {
@@ -124,6 +126,8 @@ export default function Checkout() {
 
   const handleExit = () => {
     navigation.goBack();
+    setDescription(null);
+    setSelectedValue(1);
     setGuarante(false);
   }
 
@@ -189,10 +193,11 @@ export default function Checkout() {
                         <Text style={styles.titleCard}>{selectedAddress.street}, {selectedAddress.number}</Text>
                         <Text style={styles.txtCard}>{selectedAddress.city}</Text>
                       </View>
+
                     )
                   }
-
                 </View>
+
                 <TouchableOpacity onPress={() => navigation.navigate("Address")}>
                   <Text style={styles.txtButton}>Mudar</Text>
                 </TouchableOpacity>

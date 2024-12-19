@@ -17,6 +17,11 @@ const styles = StyleSheet.create({
     width: 38,
     height: 35,
   },
+  containerProduct: {
+    marginRight: "auto",
+    marginLeft: 10,
+    flexShrink: 1,
+  },
   containerQuantity: {
     backgroundColor: '#D9D9D9',
     width: 30,

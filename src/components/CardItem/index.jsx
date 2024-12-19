@@ -14,7 +14,7 @@ const CardItem = ({ image, quantity, name, desc, cod, price }) => {
           <Text style={styles.txt}>{quantity}</Text>
         </View>
       </View>
-      <View style={{ marginRight: "auto", marginLeft: 10 }}>
+      <View style={styles.containerProduct}>
         <Text style={styles.title}>{truncate(name, 27)}</Text>
         <View style={styles.containerTxts}>
           <Text style={styles.txtDesc}>{desc}</Text>

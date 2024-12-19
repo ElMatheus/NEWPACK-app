@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   containerInfo: {
     flexDirection: "column",
-    maxWidth: "60%",
+    flexShrink: 1,
   },
   title: {
     fontSize: 17,

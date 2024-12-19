@@ -64,7 +64,6 @@ export default function Home() {
 
   return (
     <>
-      {/* loading */}
       {globalLoading ? (
         <GlobalLoading />
       ) : (

@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
     const loadingStoreData = async () => {
       setGlobalLoading(true);
       const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
-
       if (storageToken) {
         try {
           const isLogged = await axios.post(`${apiURL}/users/refresh`, {

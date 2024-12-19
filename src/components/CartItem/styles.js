@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   },
   containerInfos: {
     flexDirection: 'column',
-    maxWidth: 230,
+    flexShrink: 1,
   },
   txtName: {
     fontSize: 15,
