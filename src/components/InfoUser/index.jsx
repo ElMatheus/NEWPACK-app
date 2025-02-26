@@ -1,6 +1,6 @@
 import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Foundation from '@expo/vector-icons/Foundation';
 import Fontisto from '@expo/vector-icons/Fontisto';

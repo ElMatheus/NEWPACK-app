@@ -14,7 +14,7 @@ import PopUp2 from '../../components/PopUp2';
 export default function Home() {
   const navigation = useNavigation();
   const { cart, clearCart } = useContext(CartContext);
-  const { user, signOut, globalLoading, getProductsForUser, popUpMessage } = useContext(AuthContext);
+  const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, ActivityIndicator, ScrollView } from 'react-native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
