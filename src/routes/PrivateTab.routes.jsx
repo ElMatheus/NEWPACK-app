@@ -4,8 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import Home from "../screens/Home";
-import ProductDetails from "../screens/ProductDetails";
+import Products from "../screens/Products";
+import ProductDetails from "../screens/Products/[id]/index";
 import Checkout from "../screens/Checkout";
 import Address from "../screens/Address";
 import ShoppingCart from "../screens/ShoppingCart";
@@ -18,19 +18,21 @@ import { useContext } from "react";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const HomeStack = () => (
+const ProductsStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name="Home" component={Home} />
+    <Stack.Screen name="Products" component={Products} />
     <Stack.Screen name="Cart" component={ShoppingCart} />
-    <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null }} />
+
   </Stack.Navigator>
 );
 
 const CartStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Cart" component={ShoppingCart} />
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen name="ProductDetails" component={ProductDetails} />
+    <Stack.Screen name="Products" component={Products} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null }} />
+
   </Stack.Navigator>
 );
 
@@ -54,7 +56,7 @@ const PrivateTab = () => {
           height: 67,
         },
       }}>
-        <Tab.Screen name="HomeTab" component={HomeStack}
+        <Tab.Screen name="ProductsTab" component={ProductsStack}
           options={{
             tabBarIcon: ({ focused }) => (
               <FontAwesome6

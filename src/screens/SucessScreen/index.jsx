@@ -18,7 +18,7 @@ export default function Sucess() {
         <BlobSvg style={styles.blobSvg} />
       </View>
       <View style={styles.containerGFG}>
-        <TouchableOpacity onPress={() => navigation.navigate('HomeTab')} style={styles.btn}>
+        <TouchableOpacity onPress={() => navigation.navigate('ProductsTab')} style={styles.btn}>
           <Text style={styles.btnTxt}>Voltar para a Área de Produtos</Text>
         </TouchableOpacity>
       </View>

@@ -245,14 +245,28 @@ const AuthProvider = ({ children }) => {
       const response = await axios.get(`${apiURL}/products/${id}`);
       return response.data.product;
     } catch (error) {
+      console.error('Error in getProductById:', error);
       setPopUpMessage("Não foi possível carregar o produto pelo id");
     } finally {
       setGlobalLoading(false);
     }
   };
 
+  const getOrderDetailsById = async (id) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.get(`${apiURL}/orders/details/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error in getOrderDetailsById:', error);
+      setPopUpMessage("Não foi possível carregar os detalhes do pedido");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById }}>
       {children}
     </AuthContext.Provider>
   );

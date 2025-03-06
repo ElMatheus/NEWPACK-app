@@ -11,7 +11,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
 import PopUp2 from '../../components/PopUp2';
 
-export default function Home() {
+export default function Products() {
   const navigation = useNavigation();
   const { cart, clearCart } = useContext(CartContext);
   const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
@@ -140,7 +140,7 @@ export default function Home() {
                 {/* isso sao todos os meus produtos eu faco um map pegando cada um e componentizo ele */}
                 {products.length > 0 ? (
                   products.map((product, index) => (
-                    <TouchableOpacity key={index} onPress={() => navigation.navigate('ProductDetails', { product })}>
+                    <TouchableOpacity key={index} onPress={() => navigation.navigate('ProductDetails', { id: product.detalhe_pedido_id })}>
                       <CardProduct name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
                     </TouchableOpacity>
                   ))
