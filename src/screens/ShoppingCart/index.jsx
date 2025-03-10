@@ -13,6 +13,7 @@ export default function ShoppingCart() {
   const navigation = useNavigation();
   const [totalValue, setTotalValue] = useState(0);
   const { cart, onDecrease, onIncrease, removeFromCart, globalLoading, calculateTotal } = useContext(CartContext);
+
   const [popUp, setPopUp] = useState(null);
 
   useEffect(() => {
@@ -78,7 +79,7 @@ export default function ShoppingCart() {
                       key={item.produto_id}
                       renderRightActions={() => renderRightActions(item)}
                     >
-                      <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { product: item })}>
+                      <TouchableOpacity onPress={() => navigation.navigate('ProductDetails', { id: item.pedido_id, quantityParams: item.produto_quantidade })}>
                         <CartItem
                           item={item}
                           onIncrease={onIncreaseFunc}

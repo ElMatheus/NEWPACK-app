@@ -22,7 +22,7 @@ const ProductsStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Products" component={Products} />
     <Stack.Screen name="Cart" component={ShoppingCart} />
-    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null }} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
 
   </Stack.Navigator>
 );
@@ -31,7 +31,7 @@ const CartStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Cart" component={ShoppingCart} />
     <Stack.Screen name="Products" component={Products} />
-    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null }} />
+    <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
 
   </Stack.Navigator>
 );

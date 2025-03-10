@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView, FlatList, Dimensions, Animated } from 'react-native';
 import { CartContext } from '../../../contexts/CartContext';
 import { AuthContext } from '../../../contexts/AuthContext';
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext, use } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import styles from './styles';
@@ -25,20 +25,22 @@ export default function ProductDetails() {
   const [product, setProduct] = useState({});
   const flatListRef = useRef();
   const navigation = useNavigation();
-  const { id } = route.params
+  const { id, quantityParams } = route.params
   const [quantity, setQuantity] = useState(0);
   const [error, setError] = useState(null);
   const [imageIndex, setImageIndex] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const scale = useAnimatedScale(cart.length);
 
-
-
   useEffect(() => {
     const fetchProduct = async () => {
       const orderData = await getOrderDetailsById(id);
       setOrder(orderData.orderDetail);
-      setQuantity(orderData.orderDetail.quantity);
+      if (quantityParams) {
+        setQuantity(quantityParams);
+      } else {
+        setQuantity(orderData.orderDetail.quantity);
+      }
       if (orderData) {
         const productData = await getProductById(orderData.orderDetail.product_id);
         setProduct(productData);
@@ -71,6 +73,7 @@ export default function ProductDetails() {
       const fullPrice = Number(quantity) * order.unitary_price;
       const productCart = {
         produto_id: product.id,
+        pedido_id: order.id,
         produto_nome: product.name,
         total_value: (product.quantity_mts || 1) * fullPrice,
         produto_tipo: product.type,
@@ -80,7 +83,7 @@ export default function ProductDetails() {
         produto_desc: product.description,
         produto_dimensao: product.dimension,
         produto_dureza: product.toughness,
-        produto_preco: order.unitary_value,
+        produto_preco: order.unitary_price,
         produto_quantidade_mts: product.quantity_mts,
         full_price: fullPrice.toFixed(2)
       };

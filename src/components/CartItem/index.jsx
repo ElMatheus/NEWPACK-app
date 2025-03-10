@@ -40,18 +40,6 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
           <AntDesign name="minus" size={20} color="#4A6584" />
         </TouchableOpacity>
       </View>
-      {/* <View style={styles.containerQuantity}>
-          <TouchableOpacity onPress={() => onDecrease(item)}>
-            <AntDesign name="minuscircleo" size={20} color="#b9c3cd" />
-          </TouchableOpacity>
-          <Text style={styles.txtQntd}>{quantityAll}</Text>
-          <TouchableOpacity onPress={() => onIncrease(item)}>
-            <AntDesign name="pluscircleo" size={20} color="#b9c3cd" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => onDelete(item)} style={styles.btnDeleteProduct}>
-            <Feather name="trash" size={16} color="#000" />
-          </TouchableOpacity>
-        </View> */}
     </View>
   );
 }
