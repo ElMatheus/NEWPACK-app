@@ -4,6 +4,7 @@
     "slug": "newpack",
     "version": "1.1.2",
     "orientation": "portrait",
+    "newArchEnabled": true,
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {

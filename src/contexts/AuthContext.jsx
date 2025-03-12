@@ -174,7 +174,15 @@ const AuthProvider = ({ children }) => {
       }
       );
     } catch (error) {
-      setPopUpMessage("Não foi possível adicionar o endereço");
+      if (error.response.status === 400) {
+        if (error.response.data.message === "Cep inválido") {
+          setPopUpMessage("CEP inválido");
+        } else {
+          setPopUpMessage("Preencha todos os campos obrigatórios");
+        }
+      } else {
+        setPopUpMessage("Não foi possível adicionar o endereço");
+      }
     } finally {
       setGlobalLoading(false);
     }

@@ -159,30 +159,36 @@ export default function ProductDetails() {
                 ) : null}
               </View>
               <View style={styles.containerDetails}>
-                <Text style={styles.txtName}>{product.name}</Text>
-                <View style={styles.containerCod}>
-                  <Feather name="tag" size={22} color="#000" />
-                  <Text style={styles.txtCode}>Cod. {product.id}</Text>
+                <View>
+                  <Text style={styles.txtName}>{product.name}</Text>
+                  <View style={styles.containerCod}>
+                    <Feather name="tag" size={22} color="#000" />
+                    <Text style={styles.txtCode}>Cod. {product.id}</Text>
+                  </View>
                 </View>
-              </View>
-              <View style={styles.containerSpecifications}>
-                {product.dimension && (
-                  <View style={styles.card}>
-                    <Feather name="maximize" size={18} color="#fff" />
-                    <Text style={styles.txtSpecification}>{product.dimension}</Text>
+                <View style={styles.containerProduct}>
+                  <View style={styles.containerQuantity}>
+                    <Text style={styles.txtQuant}>Quantidade:</Text>
+                    <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(Number(text))} style={styles.input} />
                   </View>
-                )}
-                {product.toughness && (
-                  <View style={styles.card}>
-                    <Feather name="box" size={18} color="#fff" />
-                    <Text style={styles.txtSpecification}>{product.toughness}</Text>
+                  <View style={styles.containerSpecifications}>
+                    {product.dimension && (
+                      <View style={styles.card}>
+                        <Feather name="maximize" size={18} color="#fff" />
+                        <Text style={styles.txtSpecification}>{product.dimension}</Text>
+                      </View>
+                    )}
+                    {product.toughness && (
+                      <View style={styles.card}>
+                        <Feather name="box" size={18} color="#fff" />
+                        <Text style={styles.txtSpecification}>{product.toughness}</Text>
+                      </View>
+                    )}
                   </View>
-                )}
+                </View>
+
               </View>
-              <View style={styles.containerQuantity}>
-                <Text style={styles.txtQuant}>Quantidade:</Text>
-                <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(Number(text))} style={styles.input} />
-              </View>
+
             </View >
           </ScrollView>
           <ContainerPurchase type={product.type} desc={product.description} totalPrice={totalPrice} handleAddToCart={handleAddToCart} />

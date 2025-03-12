@@ -27,6 +27,9 @@ const styles = StyleSheet.create({
     borderRadius: 41,
   },
   containerDetails: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     paddingVertical: 10,
     paddingHorizontal: 13,
   },
@@ -37,13 +40,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontFamily: 'Poppins_400Regular',
   },
+  containerProduct: {
+    flexDirection: 'column',
+    marginTop: 30,
+  },
   containerCod: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
     backgroundColor: '#fff',
     alignSelf: 'flex-end',
-    padding: 4,
+    padding: 5,
     borderRadius: 4,
   },
   txtCode: {
@@ -54,6 +61,7 @@ const styles = StyleSheet.create({
   containerSpecifications: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'flex-end',
     width: '100%',
     marginTop: 20,
   },
@@ -69,24 +77,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Poppins_700Bold',
   },
+
   containerQuantity: {
+    alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 25,
-    marginBottom: 20,
+    flexDirection: 'row',
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    gap: 10,
   },
   txtQuant: {
-    fontSize: 18,
+    fontSize: 17,
     color: '#000',
     fontFamily: 'Poppins_500Medium',
   },
   input: {
-    backgroundColor: '#fff',
-    padding: 10,
+    padding: 8,
     borderRadius: 8,
     width: 100,
     textAlign: 'center',
     fontFamily: 'Poppins_500Medium',
+    backgroundColor: '#f3f3f3',
+
   },
   containerPoints: {
     flexDirection: 'row',

@@ -36,11 +36,19 @@ export default function Address() {
 
   useEffect(() => {
     if (popUpMessage) {
-      setError(true)
+      if (popUpMessage === "CEP inválido") {
+        setPopUp("CEP inválido");
+        setTimeout(() => {
+          setPopUp(null);
+          setPopUpMessage(null); // Reset popUpMessage to ensure it can be set again
+        }, 3000);
+      } else {
+        setError(true);
+      }
     } else {
-      setError(false)
+      setError(false);
     }
-  }, [popUpMessage]);
+  }, [popUpMessage, setPopUpMessage]);
 
   useEffect(() => {
     if (globalLoading) {
