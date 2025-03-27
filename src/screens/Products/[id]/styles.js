@@ -131,6 +131,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Poppins_500Medium',
   },
+  conatinerHeaderShare: {
+    flexDirection: 'row',
+    gap: 10,
+
+  }
 });
 
 export default styles;
