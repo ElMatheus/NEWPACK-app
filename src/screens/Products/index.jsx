@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text, ScrollView, RefreshControl } from 'react-native';
-import { use, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/AuthContext';
 import CardProduct from '../../components/CardProduct';
@@ -18,14 +18,8 @@ export default function Products() {
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
-  const [moreInfo, setMoreInfo] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('tudo');
   const [refreshing, setRefreshing] = useState(false);
-
-  const handleExit = () => {
-    signOut();
-    clearCart();
-  }
 
   useEffect(() => {
     setPopUp2(popUpMessage);
@@ -77,17 +71,9 @@ export default function Products() {
                   name="user-o"
                   size={24}
                   color="#4B6584"
-                  onPress={() => setMoreInfo(!moreInfo)}
+                  onPress={() => navigation.navigate('UserInfos')}
                 />
-                {
-                  moreInfo && (
-                    <View style={styles.containerButton}>
-                      <TouchableOpacity onPress={handleExit} style={styles.exitButton}>
-                        <Text style={styles.exitButtonText}>Sair</Text>
-                      </TouchableOpacity>
-                    </View>
-                  )
-                }
+
               </View>
               {
                 cart.length > 0 && (

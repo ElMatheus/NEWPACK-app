@@ -14,6 +14,7 @@ import Sucess from "../screens/SucessScreen";
 import { Text } from 'react-native';
 import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
+import UserInfos from "../screens/UserInfos";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -23,7 +24,8 @@ const ProductsStack = () => (
     <Stack.Screen name="Products" component={Products} />
     <Stack.Screen name="Cart" component={ShoppingCart} />
     <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
-
+    <Stack.Screen name="UserInfos" component={UserInfos} />
+    <Stack.Screen name="Address" component={Address} />
   </Stack.Navigator>
 );
 
@@ -32,7 +34,6 @@ const CartStack = () => (
     <Stack.Screen name="Cart" component={ShoppingCart} />
     <Stack.Screen name="Products" component={Products} />
     <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
-
   </Stack.Navigator>
 );
 
