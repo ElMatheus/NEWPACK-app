@@ -10,12 +10,13 @@ import PopUp from '../../components/PopUp';
 
 const CreateAddress = ({ modalVisible, setModalVisible }) => {
   const { addAddress } = useContext(AuthContext);
-  const [street, setStreet] = useState(null);
   const [cep, setCep] = useState(null);
-  const [city, setCity] = useState(null);
-  const [state, setState] = useState(null);
-  const [complement, setComplement] = useState(null);
+  const [street, setStreet] = useState(null);
   const [number, setNumber] = useState(null);
+  const [complement, setComplement] = useState(null);
+  const [city, setCity] = useState(null);
+  const [neighborhood, setNeighborhood] = useState(null);
+  const [state, setState] = useState(null);
   const [msgError, setMsgError] = useState(null);
 
   const handleAddAddress = async () => {
@@ -26,6 +27,7 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
         number: number,
         complement: complement,
         city: city,
+        neighborhood: neighborhood,
         state: state,
       };
       await addAddress(address);
@@ -54,6 +56,14 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
     if (text.length <= 8) {
       setCep(text);
     }
+  };
+
+  const handleCityChange = (text) => {
+    const words = text.split(' ');
+    const capitalizedWords = words.map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    );
+    setCity(capitalizedWords.join(' '));
   };
 
   const clearFields = () => {
@@ -101,7 +111,7 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                         style={styles.input}
                         placeholder="Cidade"
                         value={city}
-                        onChangeText={setCity}
+                        onChangeText={handleCityChange}
                       />
                     </View>
                     <View style={styles.inputContainer2}>
@@ -113,6 +123,15 @@ const CreateAddress = ({ modalVisible, setModalVisible }) => {
                         onChangeText={handleStateChange}
                       />
                     </View>
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <MaterialCommunityIcons name="home-group" size={19} color="#6B6B6B" style={styles.icon} />
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Bairro"
+                      value={neighborhood}
+                      onChangeText={setNeighborhood}
+                    />
                   </View>
                   <View style={styles.inputContainer}>
                     <Feather name="grid" size={19} color="#6B6B6B" style={styles.icon} />

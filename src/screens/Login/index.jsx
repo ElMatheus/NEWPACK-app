@@ -28,7 +28,7 @@ export default function Login() {
         setTimeout(() => setPopUp(null), 3000);
       }
     } catch (error) {
-      if (error.response) {
+      if (error.response.data.error == "Invalid credentials") {
         setPopUp2(error.response.data.message);
       } else {
         setPopUp('Erro interno do servidor');

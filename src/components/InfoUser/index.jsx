@@ -25,13 +25,7 @@ const InfoUser = ({ modalVisible, setModalVisible }) => {
                 <View style={styles.iconContainer}>
                   <Fontisto name="file-1" size={24} color="#6B6B6B" />
                 </View>
-                <Text style={styles.txt}>{user.cnpj}</Text>
-              </View>
-              <View style={styles.card}>
-                <View style={styles.iconContainer}>
-                  <Foundation name="telephone" size={24} color="#6B6B6B" />
-                </View>
-                <Text style={styles.txt}>{user.tel}</Text>
+                <Text style={styles.txt}>{user.full_name}</Text>
               </View>
             </View>
           </View>

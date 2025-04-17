@@ -16,7 +16,7 @@ import PopUp2 from '../../components/PopUp2';
 import Guarantee from '../../components/GuaranteePopUp';
 
 export default function Checkout() {
-  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail } = useContext(AuthContext);
+  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail, updateOrderStatusInvalid } = useContext(AuthContext);
   const { cart, totalValue, clearCart } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
@@ -36,7 +36,11 @@ export default function Checkout() {
       const fetchProfile = async () => {
         setLoading(true);
         const address = await getAddressActiveUser();
-        setSelectedAddress(address);
+        if (address.length > 0) {
+          setSelectedAddress(address[0]);
+        } else {
+          console.log('Nenhum endereço encontrado');
+        }
         const profileData = await getProfileFromAsyncStorage();
         if (profileData) {
           setProfile(JSON.parse(profileData));
@@ -95,29 +99,63 @@ export default function Checkout() {
   };
 
   const handleCompletion = async () => {
-    if (selectedAddress == null) {
-      setMsgError('Selecione um endereço para entrega');
-      setTimeout(() => {
-        setMsgError(null);
-      }, 3000);
-      return;
+    try {
+      if (selectedAddress == null) {
+        setMsgError('Selecione um endereço para entrega');
+        setTimeout(() => setMsgError(null), 3000);
+        return;
+      }
+
+      if (cart.length === 0) {
+        setMsgError('Seu carrinho está vazio');
+        setTimeout(() => setMsgError(null), 3000);
+        return;
+      }
+
+      setLoading(true);
+
+      const order = await createOrder(description, selectedValue);
+      if (!order) {
+        throw new Error('Falha ao criar pedido');
+      }
+
+      let hasError = false;
+      const orderItemsPromises = cart.map(async (item) => {
+        const orderItem = {
+          "order_id": order.id,
+          "product_id": item.produto_id,
+          "quantity": item.produto_quantidade
+        };
+
+        const order_detail = await createOrderItem(orderItem);
+        if (!order_detail || order_detail.full_price !== parseInt(item.total_value)) {
+          await updateOrderStatusInvalid(order.id);
+          hasError = true;
+          throw new Error('Valor do pedido não confere com o valor total do produto');
+        }
+      });
+
+      await Promise.all(orderItemsPromises);
+
+      if (hasError) return;
+
+      const email = await sendEmail(order.id);
+      if (email?.message === "Email sent successfully") {
+        clearCart();
+        setDescription(null);
+        setSelectedValue(1);
+        navigation.navigate('Sucess', { orderId: order.id });
+      } else {
+        await updateOrderStatusInvalid(order.id);
+        throw new Error('Falha ao enviar email de confirmação');
+      }
+
+    } catch (error) {
+      setMsgError(error.message || 'Erro ao processar pedido');
+      setTimeout(() => setMsgError(null), 3000);
+    } finally {
+      setLoading(false);
     }
-    const order = await createOrder(description, selectedValue);
-    const orderItemsPromises = cart.map(async (item) => {
-      const orderItem = {
-        "order_id": order.order.id,
-        "product_id": item.produto_id,
-        "quantity": item.produto_quantidade
-      };
-      await createOrderItem(orderItem);
-    });
-    await Promise.all(orderItemsPromises);
-    await sendEmail(order.order.id);
-    navigation.navigate('Sucess');
-    clearCart();
-    // Clear inputs after form submission
-    setDescription(null);
-    setSelectedValue(1);
   };
 
   const verificationExit = () => {
@@ -159,7 +197,7 @@ export default function Checkout() {
                   <Feather name="truck" size={27} color="#000" />
                   <View style={styles.containerDesc}>
                     <Text style={styles.titleCard}>{user.name}</Text>
-                    <Text style={styles.txtCard}>{user.cnpj}</Text>
+                    <Text style={styles.txtCard}>{user.full_name}</Text>
                   </View>
                 </View>
                 <TouchableOpacity onPress={() => setModalVisible(true)}>
@@ -193,7 +231,6 @@ export default function Checkout() {
                         <Text style={styles.titleCard}>{selectedAddress.street}, {selectedAddress.number}</Text>
                         <Text style={styles.txtCard}>{selectedAddress.city}</Text>
                       </View>
-
                     )
                   }
                 </View>
@@ -211,7 +248,7 @@ export default function Checkout() {
               <View>
                 {
                   cart.map((item, index) => (
-                    <CardItem key={index} cod={item.produto_id} desc={item.produto_desc} image={item.produto_imagens[0]} name={item.produto_nome} price={parseInt(item.total_value)} quantity={item.produto_quantidade} />
+                    <CardItem key={index} cod={item.produto_id} desc={item.produto_desc} image={item.produto_imagem} name={item.produto_nome} price={parseInt(item.total_value)} quantity={item.produto_quantidade} />
                   ))
                 }
               </View>

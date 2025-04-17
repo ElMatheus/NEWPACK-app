@@ -18,11 +18,11 @@ const PopUp = ({ user, message, exitPopUp }) => {
         </View>
         <View style={styles.containerMsg}>
           {
-            message == 'Nome ou senha inválidos' ? (
+            message == 'Name or password invalid' ? (
               <Text style={styles.msg}>
                 Usuário ou senha inválidos!
               </Text>
-            ) : message == 'Usuário não encontrado' ? (
+            ) : message == 'Name or full name not found' ? (
               <Text style={styles.msg}>
                 Não foi possível encontrar um usuário apelidado de <Text style={styles.user}>{user}</Text>
               </Text>
@@ -38,7 +38,7 @@ const PopUp = ({ user, message, exitPopUp }) => {
           }
         </View>
         <TouchableOpacity
-          onPress={() => message == 'Nome ou senha inválidos' || message == 'Usuário não encontrado' || message == 'Este usuário não possui pedidos ainda' ? exitPopUp(null) : handleUnexpectedError()}
+          onPress={() => message == 'Name or password invalid' || message == 'Name or full name not found' || message == 'Este usuário não possui pedidos ainda' ? exitPopUp(null) : handleUnexpectedError()}
           style={styles.button}
         >
           <Text style={styles.txtButton}>Tentar novamente</Text>

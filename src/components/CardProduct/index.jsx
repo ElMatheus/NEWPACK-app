@@ -8,6 +8,10 @@ const CardProduct = ({ name, image, unitary_price, toughness, dimension, cod }) 
     return (str.length > n) ? str.substr(0, n - 1) + '...' : str;
   };
 
+  const formatPrice = (price) => {
+    return `R$${Number(price).toFixed(2).replace('.00', '')}`;
+  };
+
   return (
     <View style={styles.card}>
       <Image source={{ uri: image }} style={styles.image} />
@@ -16,7 +20,7 @@ const CardProduct = ({ name, image, unitary_price, toughness, dimension, cod }) 
           <Text style={styles.cod}>#{cod}</Text>
         </View>
         <Text style={styles.titleProduct}>{truncate(name, 50)}</Text>
-        <Text style={styles.titlePrice}>R${unitary_price}</Text>
+        <Text style={styles.titlePrice}>{formatPrice(unitary_price)}</Text>
         <View style={styles.specifications}>
           {toughness && (
             <View style={styles.specificationCard}>

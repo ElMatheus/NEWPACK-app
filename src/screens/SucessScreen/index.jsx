@@ -4,7 +4,8 @@ import BlobSvg from '../../../assets/images/blob.jsx';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import styles from './styles';
 
-export default function Sucess() {
+export default function Sucess({ route }) {
+  const { orderId } = route.params;
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -13,6 +14,7 @@ export default function Sucess() {
         <Text style={styles.title}>Concluído!</Text>
       </View>
       <Text style={styles.txt}>O seu pedido foi processado com sucesso.</Text>
+      <Text style={styles.orderId}>Pedido #{orderId}</Text>
       <View style={styles.containerIcon}>
         <Ionicons style={styles.icon} name="shield-checkmark-sharp" size={120} color="#fff" />
         <BlobSvg style={styles.blobSvg} />

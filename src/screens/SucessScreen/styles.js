@@ -24,6 +24,13 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
   },
+  orderId: {
+    fontSize: 18,
+    fontFamily: 'Poppins_600SemiBold',
+    color: '#4B6584',
+    textAlign: 'center',
+    marginTop: 10,
+  },
   containerIcon: {
     alignItems: 'center',
     justifyContent: 'center',

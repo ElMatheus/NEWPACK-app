@@ -42,6 +42,12 @@ export default function Address() {
           setPopUp(null);
           setPopUpMessage(null); // Reset popUpMessage to ensure it can be set again
         }, 3000);
+      } else if (popUpMessage === "Não é possível desativar o único endereço ativo") {
+        setPopUp("Não é possível desativar o único endereço ativo");
+        setTimeout(() => {
+          setPopUp(null);
+          setPopUpMessage(null); // Reset popUpMessage to ensure it can be set again
+        }, 3000);
       } else {
         setError(true);
       }

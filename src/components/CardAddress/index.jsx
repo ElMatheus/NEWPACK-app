@@ -14,13 +14,14 @@ const CardAddress = ({ address, setPopUp }) => {
   const [inpCep, setInpCep] = useState(address.cep);
   const [inpCity, setInpCity] = useState(address.city);
   const [inpState, setInpState] = useState(address.state);
+  const [inpNeighborhood, setInpNeighborhood] = useState(address.neighborhood);
   const [inpComplement, setInpComplement] = useState(address.complement);
   const [inpNumber, setInpNumber] = useState(address.number);
   const [inpActive, setInpActive] = useState(address.active);
   const { updateAddress, removeAddress } = useContext(AuthContext);
 
   const handleUpdate = async () => {
-    if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
+    if (inpStreet == address.street && inpCep == address.cep && inpCity == address.city && inpState == address.state && inpNeighborhood == address.neighborhood && inpComplement == address.complement && inpNumber == address.number && inpActive == address.active) {
       setPopUp('Nenhuma alteração foi feita');
       setTimeout(() => {
         setPopUp(null);
@@ -29,8 +30,9 @@ const CardAddress = ({ address, setPopUp }) => {
       const addressObj = {
         cep: inpCep,
         street: inpStreet,
-        number: inpNumber,
-        complement: inpComplement,
+        number: Number(inpNumber),
+        neighborhood: inpNeighborhood ? inpNeighborhood : undefined,
+        complement: inpComplement ? inpComplement : undefined,
         city: inpCity,
         state: inpState,
         active: inpActive
@@ -60,6 +62,7 @@ const CardAddress = ({ address, setPopUp }) => {
     setInpCep(address.cep);
     setInpCity(address.city);
     setInpState(address.state);
+    setInpNeighborhood(address.neighborhood);
     setInpComplement(address.complement);
     setInpNumber(address.number);
     setInpActive(address.active);
@@ -117,6 +120,7 @@ const CardAddress = ({ address, setPopUp }) => {
                   style={styles.input}
                   placeholder="CEP"
                   value={inpCep}
+                  keyboardType="numeric"
                   onChangeText={handleCepChange}
                 />
               </View>
@@ -139,6 +143,15 @@ const CardAddress = ({ address, setPopUp }) => {
                     onChangeText={handleStateChange}
                   />
                 </View>
+              </View>
+              <View style={styles.inputContainer}>
+                <MaterialCommunityIcons name="home-group" size={19} color="#6B6B6B" style={styles.icon} />
+                <TextInput
+                  style={styles.input}
+                  placeholder="Bairro"
+                  value={inpNeighborhood}
+                  onChangeText={setInpNeighborhood}
+                />
               </View>
               <View style={styles.inputContainer}>
                 <Feather name="grid" size={19} color="#6B6B6B" style={styles.icon} />
@@ -172,7 +185,7 @@ const CardAddress = ({ address, setPopUp }) => {
             </View>
             <View style={styles.containerBtn}>
               <TouchableOpacity onPress={handleUpdate} style={styles.btn}>
-                <Text style={styles.txtBtn}>Atualiar</Text>
+                <Text style={styles.txtBtn}>Atualizar</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.btnRmv} onPress={handleDelete}>
                 <Text style={styles.txtBtn}>Remover</Text>

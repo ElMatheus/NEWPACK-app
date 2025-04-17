@@ -16,18 +16,15 @@ const AuthProvider = ({ children }) => {
     const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
     if (storageToken) {
       try {
-        const isLogged = await axios.post(`${apiURL}/users/refresh`, {
-          refreshToken: JSON.parse(storageToken)
+        const isLogged = await axios.post(`${apiURL}/auth/refresh`, {
+          refresh_token: JSON.parse(storageToken)
         });
-        if (isLogged) {
-          const userById = await axios.get(`${apiURL}/users/${isLogged.data.user_id}`, {
-            headers: {
-              Authorization: `Bearer ${isLogged.data.token}`
-            }
-          });
-          setAcessToken(isLogged.data.token);
-          const { password, ...userWithoutPassword } = userById.data.user;
-          setUser(userWithoutPassword);
+        if (isLogged.status === 200) {
+          const userId = isLogged.data.user_id;
+          const token = isLogged.data.token;
+          await getUserById(userId, token);
+          setAcessToken(token);
+          await AsyncStorage.setItem('@asyncStorage:refreshToken', JSON.stringify(isLogged.data.refresh_token));
         }
       } catch (error) {
         setPopUpMessage("Faça login novamente");
@@ -35,6 +32,8 @@ const AuthProvider = ({ children }) => {
           setPopUpMessage(null);
         }, 3000);
         AsyncStorage.clear();
+        setUser(null);
+        setAcessToken(null);
       }
     }
     setGlobalLoading(false);
@@ -44,16 +43,42 @@ const AuthProvider = ({ children }) => {
     loadingStoreData();
   }, []);
 
+  const getUserById = async (id, token) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.get(`${apiURL}/users/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setUser({
+        id: response.data.id,
+        name: response.data.name,
+        full_name: response.data.full_name,
+      });
+    } catch (error) {
+      console.error('Error in getUserById:', error);
+      setPopUpMessage("Não foi possível carregar o usuário");
+      setTimeout(() => {
+        setPopUpMessage(null);
+      }, 3000);
+    }
+    finally {
+      setGlobalLoading(false);
+    }
+  };
+
   const signIn = async (name, password) => {
-    const isLogged = await axios.post(`${apiURL}/users/login/ `, {
-      name: name,
-      password: password,
+    const isLogged = await axios.post(`${apiURL}/auth/login`, {
+      name,
+      password,
     });
-    if (isLogged) {
-      setAcessToken(isLogged.data.token);
-      const { password, ...userWithoutPassword } = isLogged.data.user;
-      setUser(userWithoutPassword);
-      await AsyncStorage.setItem('@asyncStorage:refreshToken', JSON.stringify(isLogged.data.refreshToken.id));
+    if (isLogged.status === 200) {
+      const token = isLogged.data.token;
+      setAcessToken(token);
+      const userId = isLogged.data.user_id;
+      await getUserById(userId, token);
+      await AsyncStorage.setItem('@asyncStorage:refreshToken', JSON.stringify(isLogged.data.refresh_token));
     }
   }
 
@@ -61,7 +86,13 @@ const AuthProvider = ({ children }) => {
     setGlobalLoading(true);
     try {
       const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
-      await axios.delete(`${apiURL}/users/refresh/${JSON.parse(storageToken)}`)
+      await axios.delete(`${apiURL}/auth/refresh`, {
+        "refresh_token": JSON.parse(storageToken)
+      }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      })
       delete axios.defaults.headers.common["Authorization"];
       AsyncStorage.clear();
       setUser(null);
@@ -69,32 +100,37 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       setPopUpMessage("Não foi possível fazer logout");
       console.log(error);
-
     } finally {
       setGlobalLoading(false);
     }
   };
 
-  const getUsers = async () => {
-    setGlobalLoading(true);
-    const response = await axios.get(`${apiURL}/users`, {
-      headers: {
-        Authorization: `Bearer ${acessToken}`
-      }
-    });
-    setGlobalLoading(false);
-    return response.data.users;
-  };
-
   const getProductsForUser = async (category) => {
-    setGlobalLoading(true);
-    const response = await axios.get(`${apiURL}/orders/user/${user.id}?category=${category}&unique=true`, {
-      headers: {
-        Authorization: `Bearer ${acessToken}`
+    try {
+      setGlobalLoading(true);
+      if (category == "tudo") {
+        const response = await axios.get(`${apiURL}/users/${user.id}/products`, {
+          headers: {
+            Authorization: `Bearer ${acessToken}`
+          }
+        });
+        return response.data;
+      } else {
+        const response = await axios.get(`${apiURL}/users/${user.id}/products?category=${category}`, {
+          headers: {
+            Authorization: `Bearer ${acessToken}`
+          }
+        });
+        return response.data;
       }
-    });
-    setGlobalLoading(false);
-    return response.data;
+    } catch (error) {
+      if (error.response.status !== 404) {
+        console.error('Error in getProductsForUser:', error);
+        setPopUpMessage("Não foi possível carregar os produtos do usuário");
+      }
+    } finally {
+      setGlobalLoading(false);
+    }
   };
 
   const createProfileUser = async (name, country, telephone) => {
@@ -120,13 +156,13 @@ const AuthProvider = ({ children }) => {
   const getAddressesUser = async () => {
     setGlobalLoading(true);
     try {
-      const response = await axios.get(`${apiURL}/users/address/${user.id}`, {
+      const response = await axios.get(`${apiURL}/users/${user.id}`, {
         headers: {
           Authorization: `Bearer ${acessToken}`
         }
       }
       );
-      return response.data.address;
+      return response.data.Address;
     } catch (error) {
       setPopUpMessage("Não foi possível carregar os endereços");
     } finally {
@@ -137,17 +173,16 @@ const AuthProvider = ({ children }) => {
   const getAddressActiveUser = async () => {
     setGlobalLoading(true);
     try {
-      const response = await axios.get(`${apiURL}/users/address/${user.id}?active=true`, {
+      const response = await axios.get(`${apiURL}/users/${user.id}?active=true`, {
         headers: {
           Authorization: `Bearer ${acessToken}`
         }
       }
       );
-      return response.data.address;
+      return response.data.Address;
     } catch (error) {
-      if (error.response.status === 404) {
-        return null;
-      }
+      console.error('Error in getAddressActiveUser:', error);
+      setPopUpMessage("Erro ao carregar o endereço ativo");
     } finally {
       setGlobalLoading(false);
     }
@@ -156,8 +191,22 @@ const AuthProvider = ({ children }) => {
   const updateAddress = async (id, address) => {
     setGlobalLoading(true);
     try {
-      await axios.put(`${apiURL}/users/address/${id}`, address);
+      await axios.put(`${apiURL}/address/${id}`, address, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
     } catch (error) {
+      if (error.response.status === 400) {
+        if (error.response.data.message == "Cannot deactivate the only active address. User must have exactly one active address.") {
+          setPopUpMessage("Não é possível desativar o único endereço ativo");
+          return;
+        }
+        if (error.response.data.message == "body/cep CEP must be 8 characters long") {
+          setPopUpMessage("CEP inválido");
+          return;
+        }
+      }
       setPopUpMessage("Não foi possível atualizar o endereço");
     } finally {
       setGlobalLoading(false);
@@ -167,7 +216,16 @@ const AuthProvider = ({ children }) => {
   const addAddress = async (address) => {
     setGlobalLoading(true);
     try {
-      await axios.post(`${apiURL}/users/address/${user.id}`, address, {
+      await axios.post(`${apiURL}/address`, {
+        "user_id": user.id,
+        "cep": address.cep,
+        "street": address.street,
+        "number": Number(address.number),
+        "complement": address.complement ? address.complement : undefined,
+        "city": address.city,
+        "neighborhood": address.neighborhood ? address.neighborhood : undefined,
+        "state": address.state,
+      }, {
         headers: {
           Authorization: `Bearer ${acessToken}`
         }
@@ -175,7 +233,7 @@ const AuthProvider = ({ children }) => {
       );
     } catch (error) {
       if (error.response.status === 400) {
-        if (error.response.data.message === "Cep inválido") {
+        if (error.response.data.message == "body/cep CEP must be 8 characters long") {
           setPopUpMessage("CEP inválido");
         } else {
           setPopUpMessage("Preencha todos os campos obrigatórios");
@@ -191,7 +249,11 @@ const AuthProvider = ({ children }) => {
   const removeAddress = async (id) => {
     setGlobalLoading(true);
     try {
-      await axios.delete(`${apiURL}/users/address/${id}`);
+      await axios.delete(`${apiURL}/address/${id}`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
     } catch (error) {
       setPopUpMessage("Não foi possível excluir o endereço");
     } finally {
@@ -204,13 +266,34 @@ const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${apiURL}/orders`, {
         "client_id": user.id,
-        "status": "Invalido",
+        "status": "Concluído",
         "description": desc,
         "installment": installment
+      }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
       });
-      return response.data;
+      return response.data.data;
     } catch (error) {
       setPopUpMessage("Não foi possível criar o pedido");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const updateOrderStatusInvalid = async (id) => {
+    setGlobalLoading(true);
+    try {
+      await axios.put(`${apiURL}/orders/${id}`, {
+        "status": "Inválido",
+      }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+    } catch (error) {
+      setPopUpMessage("Não foi possível atualizar o status do pedido");
     } finally {
       setGlobalLoading(false);
     }
@@ -219,11 +302,12 @@ const AuthProvider = ({ children }) => {
   const createOrderItem = async (orderItem) => {
     setGlobalLoading(true);
     try {
-      await axios.post(`${apiURL}/orders/details`, orderItem, {
+      const response = await axios.post(`${apiURL}/orders_details`, orderItem, {
         headers: {
           Authorization: `Bearer ${acessToken}`
         }
       });
+      return response.data.data;
     } catch (error) {
       setPopUpMessage("Não foi possível criar o item do pedido");
     } finally {
@@ -236,10 +320,15 @@ const AuthProvider = ({ children }) => {
     try {
       const profileData = await getProfileFromAsyncStorage();
       const parsedProfileData = JSON.parse(profileData);
-      await axios.post(`${apiURL}/emails/${orderId}`, {
+      const response = await axios.post(`${apiURL}/email/${orderId}`, {
         name: parsedProfileData.name,
         telephone: `${parsedProfileData.country.callingCode} ${parsedProfileData.telephone}`
+      }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
       });
+      return response.data;
     } catch (error) {
       setPopUpMessage("Não foi possível enviar o e-mail");
     } finally {
@@ -263,7 +352,11 @@ const AuthProvider = ({ children }) => {
   const getOrderDetailsById = async (id) => {
     setGlobalLoading(true);
     try {
-      const response = await axios.get(`${apiURL}/orders/details/${id}`);
+      const response = await axios.get(`${apiURL}/orders_details/${id}`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
       return response.data;
     } catch (error) {
       console.error('Error in getOrderDetailsById:', error);
@@ -274,7 +367,7 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, getUsers, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById, updateOrderStatusInvalid }}>
       {children}
     </AuthContext.Provider>
   );

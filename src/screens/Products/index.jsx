@@ -1,5 +1,5 @@
 import { View, TouchableOpacity, Text, ScrollView, RefreshControl } from 'react-native';
-import { useContext, useEffect, useState } from 'react';
+import { use, useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../../contexts/AuthContext';
 import CardProduct from '../../components/CardProduct';
@@ -14,7 +14,7 @@ import PopUp2 from '../../components/PopUp2';
 export default function Products() {
   const navigation = useNavigation();
   const { cart, clearCart } = useContext(CartContext);
-  const { user, signOut, globalLoading, getProductsForUser } = useContext(AuthContext);
+  const { user, signOut, globalLoading, getProductsForUser, popUpMessage } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
   const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
@@ -27,20 +27,13 @@ export default function Products() {
     clearCart();
   }
 
+  useEffect(() => {
+    setPopUp2(popUpMessage);
+  }, [popUpMessage]);
+
   const fetchProducts = async () => {
-    try {
-      const response = await getProductsForUser(selectedCategory);
-      setProducts(response);
-    } catch (error) {
-      if (error.response) {
-        setPopUp2(error.response.data.message);
-      } else {
-        setPopUp('Erro interno do servidor');
-        setTimeout(() => {
-          setPopUp(null);
-        }, 3000);
-      }
-    }
+    const response = await getProductsForUser(selectedCategory);
+    setProducts(response);
   }
 
   const onRefresh = async () => {
@@ -49,7 +42,6 @@ export default function Products() {
     setRefreshing(false);
   }
 
-  // toda vez que eu entrar na tela de home, ele vai chamar a funcao getProductsForUser do meu AuthContext
   useEffect(() => {
     fetchProducts();
   }, [selectedCategory]);
@@ -137,11 +129,10 @@ export default function Products() {
               }
             >
               <View style={styles.containerCards}>
-                {/* isso sao todos os meus produtos eu faco um map pegando cada um e componentizo ele */}
-                {products.length > 0 ? (
-                  products.map((product, index) => (
-                    <TouchableOpacity key={index} onPress={() => navigation.navigate('ProductDetails', { id: product.detalhe_pedido_id })}>
-                      <CardProduct name={product.produto_nome} image={product.produto_imagens[0]} unitary_price={product.produto_preco} toughness={product.produto_dureza} dimension={product.produto_dimensao} cod={product.produto_id} />
+                {products ? (
+                  products.map((product) => (
+                    <TouchableOpacity key={product.id} onPress={() => navigation.navigate('ProductDetails', { id: product.order_details_id })}>
+                      <CardProduct name={product.name} image={product.image} unitary_price={product.unit_value} toughness={product.toughness} dimension={product.dimension} cod={product.id} />
                     </TouchableOpacity>
                   ))
                 ) : (

@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { useState, useEffect } from 'react';
 
-const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
+const CartItem = ({ item, onIncrease, onDecrease }) => {
   const [quantityAll, setQuantityAll] = useState(item.produto_quantidade);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const CartItem = ({ item, onIncrease, onDecrease, onDelete }) => {
 
   return (
     <View style={styles.product}>
-      <Image source={{ uri: item.produto_imagens[0] }} style={styles.image} />
+      <Image source={{ uri: item.produto_imagem }} style={styles.image} />
       <View style={styles.containerInfos}>
         <Text style={styles.txtName}>
           {truncate(item.produto_nome, 55)}
