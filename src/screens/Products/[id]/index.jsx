@@ -14,6 +14,7 @@ import GlobalLoading from '../../../components/GlobalLoading';
 import PopUp2 from '../../../components/PopUp2';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard';
+import { Share } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
@@ -69,8 +70,16 @@ export default function ProductDetails() {
   };
 
   const handleShare = async () => {
-    const redirectUrl = Linking.createURL(`Products/${id}`);
-    await Clipboard.setStringAsync(redirectUrl);
+    try {
+      const redirectUrl = Linking.createURL(`Products/${id}`);
+      await Clipboard.setStringAsync(redirectUrl);
+
+      await Share.share({
+        message: `Confira o produto que encontrei no app: ${redirectUrl}`,
+      });
+    } catch (error) {
+      console.error('Error sharing product:', error);
+    }
   };
 
   const handleAddToCart = async () => {

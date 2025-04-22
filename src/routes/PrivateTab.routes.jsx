@@ -1,6 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -47,12 +46,10 @@ const FinishStack = () => (
   </Stack.Navigator>
 );
 
-
-
 const PrivateTab = () => {
   const { cart } = useContext(CartContext);
   return (
-    <NavigationContainer>
+    <>
       <Tab.Navigator screenOptions={{
         headerShown: false,
         tabBarStyle: {
@@ -119,7 +116,7 @@ const PrivateTab = () => {
         />
       </Tab.Navigator>
       <StatusBar style="auto" />
-    </NavigationContainer>
+    </>
   );
 };
 
