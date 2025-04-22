@@ -15,6 +15,7 @@ import { Text } from 'react-native';
 import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
 import UserInfos from "../screens/UserInfos";
+import UserOrders from "../screens/UserOrders";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,6 +27,7 @@ const ProductsStack = () => (
     <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
     <Stack.Screen name="UserInfos" component={UserInfos} />
     <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="UserOrders" component={UserOrders} />
   </Stack.Navigator>
 );
 

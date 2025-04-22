@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,12 +8,15 @@ import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../../contexts/AuthContext';
 import { CartContext } from '../../contexts/CartContext';
+import Constants from 'expo-constants';
+import PopUp2 from '../../components/PopUp2';
 
 export default function UserInfos() {
   const navigation = useNavigation();
-  const { signOut, user } = useContext(AuthContext);
+  const { signOut, user, popUpMessage } = useContext(AuthContext);
   const { clearCart } = useContext(CartContext);
-
+  const statusBarHeight = Constants.statusBarHeight;
+  const [error, setError] = useState(false);
 
   const handleExitScreen = () => {
     navigation.goBack();
@@ -25,14 +28,22 @@ export default function UserInfos() {
   }
 
   const handleAcessOrder = () => {
-    navigation.navigate('Orders');
+    navigation.navigate('UserOrders');
   }
 
   const handleAcessLocalization = () => {
     navigation.navigate('Address');
   }
+
+  useEffect(() => {
+    if (popUpMessage) {
+      setError(true);
+    }
+  }, [popUpMessage]);
+
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginTop: statusBarHeight }]}>
       <View style={styles.header}>
         <AntDesign style={styles.icon} name="left" size={28} color="#000" onPress={handleExitScreen} />
         <View style={styles.containerHeader}>
@@ -66,6 +77,7 @@ export default function UserInfos() {
           </View>
         </TouchableOpacity>
       </View>
+      {error && <PopUp2 message={popUpMessage} exitPopUp={setError} />}
     </View>
   )
 }

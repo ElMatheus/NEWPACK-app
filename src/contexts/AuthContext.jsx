@@ -87,19 +87,20 @@ const AuthProvider = ({ children }) => {
     try {
       const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
       await axios.delete(`${apiURL}/auth/refresh`, {
-        "refresh_token": JSON.parse(storageToken)
-      }, {
+        data: {
+          refresh_token: JSON.parse(storageToken)
+        },
         headers: {
           Authorization: `Bearer ${acessToken}`
         }
-      })
+      });
       delete axios.defaults.headers.common["Authorization"];
       AsyncStorage.clear();
       setUser(null);
       setAcessToken(null);
     } catch (error) {
+      console.error('Error in signOut:', error);
       setPopUpMessage("Não foi possível fazer logout");
-      console.log(error);
     } finally {
       setGlobalLoading(false);
     }
@@ -366,8 +367,25 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const getOrdersForUser = async () => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.get(`${apiURL}/orders?user_id=${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error in getOrdersForUser:', error);
+      setPopUpMessage("Não foi possível carregar os pedidos do usuário");
+    } finally {
+      setGlobalLoading(false);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById, updateOrderStatusInvalid }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById, updateOrderStatusInvalid, getOrdersForUser }}>
       {children}
     </AuthContext.Provider>
   );
