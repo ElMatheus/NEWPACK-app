@@ -18,7 +18,14 @@
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "http://ec2-3-146-152-124.us-east-2.compute.amazonaws.com"
+      }
     }
   },
   "submit": {
