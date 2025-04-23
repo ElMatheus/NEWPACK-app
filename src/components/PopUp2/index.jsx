@@ -1,12 +1,15 @@
-import { View, Text, TouchableOpacity, DevSettings } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { useContext } from 'react';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const PopUp = ({ user, message, exitPopUp }) => {
+  const { loadingStoreData } = useContext(AuthContext);
 
   const handleUnexpectedError = () => {
     exitPopUp(null);
-    DevSettings.reload();
+    loadingStoreData();
   }
 
   return (
