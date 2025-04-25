@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 17,
     fontFamily: 'Poppins_500Medium',
+    paddingVertical: 8,
   },
   button: {
     backgroundColor: '#4B6584',
