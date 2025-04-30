@@ -13,10 +13,9 @@ import PopUp2 from '../../components/PopUp2';
 
 export default function Products() {
   const navigation = useNavigation();
-  const { cart, clearCart } = useContext(CartContext);
-  const { user, signOut, globalLoading, getProductsForUser, popUpMessage } = useContext(AuthContext);
+  const { cart } = useContext(CartContext);
+  const { user, globalLoading, getProductsForUser, popUpMessage } = useContext(AuthContext);
   const [products, setProducts] = useState([]);
-  const [popUp, setPopUp] = useState(null);
   const [popUp2, setPopUp2] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('tudo');
   const [refreshing, setRefreshing] = useState(false);
@@ -118,7 +117,7 @@ export default function Products() {
                 {products ? (
                   products.map((product) => (
                     <TouchableOpacity key={product.id} onPress={() => navigation.navigate('ProductDetails', { id: product.order_details_id })}>
-                      <CardProduct name={product.name} image={product.image} unitary_price={product.unit_value} toughness={product.toughness} dimension={product.dimension} cod={product.id} />
+                      <CardProduct name={product.name} image={product.image} unitary_price={product.unit_value} toughness={product.toughness} dimension={product.dimension} cod={product.id} status={product.order_status} />
                     </TouchableOpacity>
                   ))
                 ) : (

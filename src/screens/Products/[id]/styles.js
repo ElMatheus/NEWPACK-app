@@ -43,6 +43,63 @@ const styles = StyleSheet.create({
   containerProduct: {
     flexDirection: 'column',
     marginTop: 30,
+    gap: 20,
+  },
+  quantityCard: {
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 15,
+  },
+  quantityLabel: {
+    fontSize: 12,
+    color: '#4B6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  quantityInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  quantityInput: {
+    fontSize: 18,
+    color: '#4B6584',
+    fontFamily: 'Poppins_700Bold',
+    width: 80,
+  },
+  quantityUnit: {
+    fontSize: 14,
+    color: '#4B6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  specificationsContainer: {
+    marginTop: 15,
+    flexDirection: 'row',
+    gap: 10,
+    flexWrap: 'wrap',
+  },
+  specificationCard: {
+    flex: 1,
+    minWidth: 150,
+    backgroundColor: '#fff',
+    padding: 15,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  specificationLabel: {
+    fontSize: 12,
+    color: '#4B6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  specificationValue: {
+    fontSize: 14,
+    color: '#4B6584',
+    fontFamily: 'Poppins_700Bold',
   },
   containerCod: {
     flexDirection: 'row',
@@ -64,6 +121,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     width: '100%',
     marginTop: 20,
+    flexWrap: 'wrap',
+    gap: 10,
   },
   card: {
     backgroundColor: '#4B6584',
@@ -77,7 +136,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Poppins_700Bold',
   },
-
+  categoryTypeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    gap: 10,
+  },
+  categoryTypeCard: {
+    flex: 1,
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  categoryTypeLabel: {
+    fontSize: 12,
+    color: '#4B6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  categoryTypeValue: {
+    fontSize: 14,
+    color: '#4B6584',
+    fontFamily: 'Poppins_700Bold',
+  },
   containerQuantity: {
     alignSelf: 'center',
     alignItems: 'center',

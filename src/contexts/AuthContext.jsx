@@ -11,6 +11,36 @@ const AuthProvider = ({ children }) => {
   const [globalLoading, setGlobalLoading] = useState(false);
   const [popUpMessage, setPopUpMessage] = useState(null);
 
+  useEffect(() => {
+    let refreshTimer;
+
+    const scheduleTokenRefresh = () => {
+      const refreshTime = 29 * 60 * 1000;
+
+      refreshTimer = setTimeout(async () => {
+        try {
+          const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
+          if (storageToken && acessToken) {
+            await loadingStoreData();
+          }
+        } catch (error) {
+          console.error('Error in scheduleTokenRefresh:', error);
+          setPopUpMessage("Erro ao atualizar o token");
+        }
+      }, refreshTime)
+    }
+
+    if (acessToken) {
+      scheduleTokenRefresh();
+    }
+
+    return () => {
+      if (refreshTimer) {
+        clearTimeout(refreshTimer);
+      }
+    };
+  }, [acessToken]);
+
   const loadingStoreData = async () => {
     setGlobalLoading(true);
     const storageToken = await AsyncStorage.getItem("@asyncStorage:refreshToken");
@@ -25,6 +55,8 @@ const AuthProvider = ({ children }) => {
           await getUserById(userId, token);
           setAcessToken(token);
           await AsyncStorage.setItem('@asyncStorage:refreshToken', JSON.stringify(isLogged.data.refresh_token));
+          setGlobalLoading(false);
+          return true;
         }
       } catch (error) {
         setPopUpMessage("Faça login novamente");
@@ -34,9 +66,12 @@ const AuthProvider = ({ children }) => {
         AsyncStorage.clear();
         setUser(null);
         setAcessToken(null);
+        setGlobalLoading(false);
+        return false;
       }
     }
     setGlobalLoading(false);
+    return false;
   };
 
   useEffect(() => {

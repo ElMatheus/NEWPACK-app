@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   iconContainer: {
-    width: 40, // Largura fixa para o contêiner do ícone
-    alignItems: 'center', // Centraliza o ícone horizontalmente
+    width: 40,
+    alignItems: 'center',
   },
   title: {
     fontSize: 26,
@@ -38,6 +38,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins_500Medium',
     color: '#6B6B6B',
+    flex: 1,
+    flexWrap: 'wrap',
   },
 });
 

@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   },
   containerCards: {
     gap: 8,
+    marginTop: 10,
   },
   title: {
     fontSize: 18,

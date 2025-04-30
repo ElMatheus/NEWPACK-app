@@ -178,25 +178,75 @@ export default function ProductDetails() {
                     <Text style={styles.txtCode}>Cod. {order.product.id}</Text>
                   </View>
                 </View>
-                <View style={styles.containerProduct}>
-                  <View style={styles.containerQuantity}>
-                    <Text style={styles.txtQuant}>Quantidade:</Text>
-                    <TextInput keyboardType="numeric" value={quantity.toString()} onChangeText={(text) => setQuantity(Number(text))} style={styles.input} />
+                <View style={styles.quantityCard}>
+                  <View>
+                    <Text style={styles.quantityLabel}>Quantidade</Text>
+                    <View style={styles.quantityInputContainer}>
+                      <TextInput
+                        keyboardType="numeric"
+                        value={quantity.toString()}
+                        onChangeText={(text) => setQuantity(Number(text))}
+                        style={styles.quantityInput}
+                      />
+                      <Text style={styles.quantityUnit}>
+                        {(() => {
+                          const firstWord = order.product.description?.split(' ')[0]?.toLowerCase() || 'unidade';
+                          return Number(quantity) > 1
+                            ? firstWord === 'caixa'
+                              ? 'caixas'
+                              : `${firstWord}s`
+                            : firstWord;
+                        })()}
+                        {' '}
+                        {order.product.description?.split(' ').slice(1).join(' ')}
+                      </Text>
+                    </View>
                   </View>
-                  <View style={styles.containerSpecifications}>
+                  <Feather name="package" size={24} color="#4B6584" />
+                </View>
+
+                <View style={styles.containerProduct}>
+                  <View style={styles.specificationsContainer}>
                     {order.product.dimension && (
-                      <View style={styles.card}>
-                        <Feather name="maximize" size={18} color="#fff" />
-                        <Text style={styles.txtSpecification}>{order.product.dimension}</Text>
+                      <View style={styles.specificationCard}>
+                        <Feather name="maximize" size={18} color="#4B6584" />
+                        <View>
+                          <Text style={styles.specificationLabel}>Dimensão</Text>
+                          <Text style={styles.specificationValue}>{order.product.dimension}</Text>
+                        </View>
                       </View>
                     )}
                     {order.product.toughness && (
-                      <View style={styles.card}>
-                        <Feather name="box" size={18} color="#fff" />
-                        <Text style={styles.txtSpecification}>{order.product.toughness}</Text>
+                      <View style={styles.specificationCard}>
+                        <Feather name="box" size={18} color="#4B6584" />
+                        <View>
+                          <Text style={styles.specificationLabel}>Dureza</Text>
+                          <Text style={styles.specificationValue}>{order.product.toughness}</Text>
+                        </View>
                       </View>
                     )}
                   </View>
+                  <View style={styles.categoryTypeContainer}>
+                    <View style={styles.categoryTypeCard}>
+                      <Feather name="package" size={18} color="#4B6584" />
+                      <View>
+                        <Text style={styles.categoryTypeLabel}>Tipo</Text>
+                        <Text style={styles.categoryTypeValue}>
+                          {order.product.type || 'Produto Padrão'}
+                        </Text>
+                      </View>
+                    </View>
+                    <View style={styles.categoryTypeCard}>
+                      <Feather name="grid" size={18} color="#4B6584" />
+                      <View>
+                        <Text style={styles.categoryTypeLabel}>Categoria</Text>
+                        <Text style={styles.categoryTypeValue}>
+                          {order.product.category || 'Geral'}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+
                 </View>
               </View>
             </View>

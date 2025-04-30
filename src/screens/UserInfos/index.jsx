@@ -49,7 +49,7 @@ export default function UserInfos() {
         <View style={styles.containerHeader}>
           <View style={styles.containerNames}>
             <Text style={styles.titleName}>{user.name}</Text>
-            <Text style={styles.textName}>{user.full_name}</Text>
+            <Text style={styles.textName} numberOfLines={2}>{user.full_name}</Text>
           </View>
           <MaterialCommunityIcons name="account-edit" size={58} color="black" />
         </View>

@@ -5,11 +5,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../../contexts/AuthContext';
 
 const PopUp = ({ user, message, exitPopUp }) => {
-  const { loadingStoreData } = useContext(AuthContext);
+  const { loadingStoreData, signOut } = useContext(AuthContext);
 
-  const handleUnexpectedError = () => {
+  const handleUnexpectedError = async () => {
+    const tokenRefreshed = await loadingStoreData();
+
+    if (!tokenRefreshed) {
+      await signOut();
+      exitPopUp(null);
+      return;
+    }
+
     exitPopUp(null);
-    loadingStoreData();
   }
 
   return (

@@ -57,6 +57,55 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#4B6584',
   },
+  offerCard: {
+    backgroundColor: '#4B6584',
+    borderWidth: 2,
+    borderColor: '#FFD700',
+    shadowColor: "#FFD700",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  offerBadge: {
+    position: 'absolute',
+    top: -10,
+    left: '50%',
+    transform: [{ translateX: -45 }],
+    backgroundColor: '#4B6584',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: '#FFD700',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+    zIndex: 1,
+  },
+  offerText: {
+    color: '#FFD700',
+    fontFamily: 'Poppins_700Bold',
+    fontSize: 12,
+  },
+  offerContainerCod: {
+    backgroundColor: '#FFD700',
+  },
+  offerTitleProduct: {
+    color: '#ffffff',
+  },
+  offerTitlePrice: {
+    color: '#FFD700',
+  },
+  offerSpecificationCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  offerSpecificationText: {
+    color: '#FFD700',
+  },
 });
 
 export default styles;

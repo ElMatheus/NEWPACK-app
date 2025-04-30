@@ -17,17 +17,22 @@ const styles = StyleSheet.create({
   },
   containerNames: {
     flexDirection: 'column',
+    flex: 1,
+    marginRight: 10,
   },
   titleName: {
     fontSize: 35,
     fontFamily: 'Poppins_700Bold',
     color: '#000',
+    flexWrap: 'wrap',
   },
   textName: {
     fontSize: 17,
     fontFamily: 'Poppins_400Regular',
     color: '#000',
-    marginTop: -10, // Add negative margin to reduce space
+    marginTop: -10,
+    flexWrap: 'wrap',
+    numberOfLines: 2,
   },
   containerApp: {
     flexDirection: 'column',
