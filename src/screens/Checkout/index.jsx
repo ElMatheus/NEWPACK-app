@@ -128,7 +128,8 @@ export default function Checkout() {
         };
 
         const order_detail = await createOrderItem(orderItem);
-        if (!order_detail || order_detail.full_price !== parseInt(item.total_value)) {
+
+        if (!order_detail || Number(order_detail.full_price) !== Number(item.total_value)) {
           await updateOrderStatusInvalid(order.id);
           hasError = true;
           throw new Error('Valor do pedido não confere com o valor total do produto');
