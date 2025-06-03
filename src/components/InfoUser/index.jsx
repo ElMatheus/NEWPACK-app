@@ -2,7 +2,7 @@ import { View, Text, Modal, TouchableOpacity, TouchableWithoutFeedback } from 'r
 import styles from './styles';
 import { useContext } from 'react';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import Foundation from '@expo/vector-icons/Foundation';
+import Feather from '@expo/vector-icons/Feather';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -27,6 +27,16 @@ const InfoUser = ({ modalVisible, setModalVisible }) => {
                 </View>
                 <Text style={styles.txt}>{user.full_name}</Text>
               </View>
+              {
+                user.email && (
+                  <View style={styles.card}>
+                    <View style={styles.iconContainer}>
+                      <Feather name="mail" size={24} color="#6B6B6B" />
+                    </View>
+                    <Text style={styles.txt}>{user.email}</Text>
+                  </View>
+                )
+              }
             </View>
           </View>
         </TouchableWithoutFeedback>

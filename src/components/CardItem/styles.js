@@ -16,11 +16,11 @@ const styles = StyleSheet.create({
   image: {
     width: 38,
     height: 35,
-  },
-  containerProduct: {
+  }, containerProduct: {
     marginRight: "auto",
     marginLeft: 10,
     flexShrink: 1,
+    maxWidth: '65%', // Limitar largura para evitar sobreposição com o preço
   },
   containerQuantity: {
     backgroundColor: '#D9D9D9',
@@ -37,15 +37,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Poppins_500Medium',
     color: '#000',
-  },
-  containerTxts: {
+  }, containerTxts: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  txtDesc: {
+    flexWrap: 'nowrap', // Impede quebra de linha dos textos
+  }, txtDesc: {
     fontSize: 14,
     fontFamily: 'Poppins_500Medium',
     color: '#4B6584',
+    flexShrink: 1, // Permite que o texto seja reduzido se necessário
   },
   ellipse: {
     marginHorizontal: 5,

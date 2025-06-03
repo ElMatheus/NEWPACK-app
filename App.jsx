@@ -1,3 +1,9 @@
+/**
+ * Desenvolvido por Matheus Gomes - [https://github.com/ElMatheus | matheusgomesgoncalves.564@gmail.com]
+ * Projeto: NEWPACK-APP
+ * Data de criação: 2024-2025
+ */
+
 import Routes from "./src/routes";
 import AuthProvider from "./src/contexts/AuthContext";
 import CartProvider from "./src/contexts/CartContext";

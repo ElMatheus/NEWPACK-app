@@ -7,6 +7,7 @@ import Products from "../screens/Products";
 import ProductDetails from "../screens/Products/[id]/index";
 import Checkout from "../screens/Checkout";
 import Address from "../screens/Address";
+import EmailForm from "../screens/EmailForm";
 import ShoppingCart from "../screens/ShoppingCart";
 import UserForm from "../screens/UserForm";
 import Sucess from "../screens/SucessScreen";
@@ -26,6 +27,7 @@ const ProductsStack = () => (
     <Stack.Screen name="ProductDetails" component={ProductDetails} initialParams={{ id: null, quantityParams: null }} />
     <Stack.Screen name="UserInfos" component={UserInfos} />
     <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="EmailForm" component={EmailForm} />
     <Stack.Screen name="UserOrders" component={UserOrders} />
   </Stack.Navigator>
 );
@@ -42,6 +44,7 @@ const FinishStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Checkout" component={Checkout} />
     <Stack.Screen name="Address" component={Address} />
+    <Stack.Screen name="EmailForm" component={EmailForm} />
     <Stack.Screen name="UserForm" component={UserForm} />
   </Stack.Navigator>
 );

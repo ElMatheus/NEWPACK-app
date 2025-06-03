@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
   },
   txtPrice: {
     fontSize: 12,
-    color: '#4A6584',
+    color: '#000',
     fontFamily: 'Poppins_500Medium',
   },
   containerQuantity: {
@@ -54,13 +54,27 @@ const styles = StyleSheet.create({
   },
   txtDesc: {
     fontSize: 12,
-    color: '#4A6584',
+    color: '#000',
     fontFamily: 'Poppins_500Medium',
   },
   containerQuant: {
     alignItems: 'center',
     gap: 10,
     marginLeft: 'auto',
+  },
+  totalContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  totalLabel: {
+    fontSize: 14,
+    color: '#4A6584',
+    fontFamily: 'Poppins_500Medium',
+  },
+  totalValue: {
+    fontSize: 15,
+    color: '#4A6584',
+    fontFamily: 'Poppins_700Bold',
   },
 });
 

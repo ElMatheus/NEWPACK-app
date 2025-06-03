@@ -12,6 +12,7 @@ import useAnimatedScale from '../../../hooks/useAnimatedScale';
 import ContainerPurchase from '../../../components/ContainerPurchase';
 import GlobalLoading from '../../../components/GlobalLoading';
 import PopUp2 from '../../../components/PopUp2';
+import PopUp from '../../../components/PopUp';
 import * as Linking from 'expo-linking';
 import * as Clipboard from 'expo-clipboard';
 import { Share } from 'react-native';
@@ -19,7 +20,7 @@ import { Share } from 'react-native';
 const { width } = Dimensions.get('window');
 
 export default function ProductDetails() {
-  const { addToCart, cart } = useContext(CartContext);
+  const { addToCart, cart, msgError } = useContext(CartContext);
   const { getOrderDetailsById, globalLoading, popUpMessage } = useContext(AuthContext);
   const route = useRoute();
   const [order, setOrder] = useState(null);
@@ -31,6 +32,7 @@ export default function ProductDetails() {
   const [imageIndex, setImageIndex] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const scale = useAnimatedScale(cart.length);
+  const [error2, setError2] = useState(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -60,6 +62,15 @@ export default function ProductDetails() {
     }
   }, [popUpMessage]);
 
+  useEffect(() => {
+    if (msgError) {
+      setError2(msgError);
+      setTimeout(() => {
+        setError2(null);
+      }, 1500);
+    }
+  }, [msgError]);
+
   const ImageSlider = ({ image }) => {
     return <Image source={{ uri: image.image_url }} style={styles.image} />;
   };
@@ -84,6 +95,13 @@ export default function ProductDetails() {
 
   const handleAddToCart = async () => {
     try {
+      if (quantity <= 0) {
+        setError2('Quantidade inválida');
+        setTimeout(() => {
+          setError2(null);
+        }, 1500);
+        return;
+      }
       const fullPrice = Number(quantity) * order.product.unit_value;
       const productCart = {
         produto_id: order.product.id,
@@ -109,6 +127,7 @@ export default function ProductDetails() {
 
   return (
     <>
+      {error2 && <PopUp message={error2} />}
       {error && <PopUp2 exitPopUp={setError} />}
       {globalLoading ? (
         <GlobalLoading />

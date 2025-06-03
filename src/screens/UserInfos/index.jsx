@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
 import Octicons from '@expo/vector-icons/Octicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -33,6 +34,10 @@ export default function UserInfos() {
 
   const handleAcessLocalization = () => {
     navigation.navigate('Address');
+  }
+
+  const handleAcessEmail = () => {
+    navigation.navigate('EmailForm');
   }
 
   useEffect(() => {
@@ -67,6 +72,16 @@ export default function UserInfos() {
             <TouchableOpacity onPress={handleAcessOrder} style={styles.containerCard}>
               <MaterialCommunityIcons name="note-multiple-outline" size={21} color="black" />
               <Text style={styles.title2}>Pedidos</Text>
+            </TouchableOpacity>
+
+          </View>
+          <Text style={styles.title}>
+            Informações
+          </Text>
+          <View style={styles.containerResources}>
+            <TouchableOpacity onPress={handleAcessEmail} style={styles.containerCard2}>
+              <Feather name="mail" size={21} color="black" />
+              <Text style={styles.title2}>Email</Text>
             </TouchableOpacity>
           </View>
         </View>

@@ -30,6 +30,11 @@ const CartItem = ({ item, onIncrease, onDecrease }) => {
             ({item.produto_desc})
           </Text>
         </View>
+        <View style={styles.totalContainer}>
+          <Text style={styles.totalValue}>
+            {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(item.total_value))}
+          </Text>
+        </View>
       </View>
       <View style={styles.containerQuant}>
         <TouchableOpacity onPress={() => onIncrease(item)}>

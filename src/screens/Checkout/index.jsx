@@ -1,3 +1,9 @@
+/**
+ * Desenvolvido por Matheus Gomes - [https://github.com/ElMatheus | matheusgomesgoncalves.564@gmail.com]
+ * Projeto: NEWPACK-APP
+ * Data de criação: 2024-2025
+ */
+
 import { View, Text, TouchableOpacity, TextInput, ScrollView, BackHandler } from 'react-native';
 import Constants from 'expo-constants';
 import { useState, useEffect, useContext, useCallback } from 'react';
@@ -16,7 +22,7 @@ import PopUp2 from '../../components/PopUp2';
 import Guarantee from '../../components/GuaranteePopUp';
 
 export default function Checkout() {
-  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail, updateOrderStatusInvalid } = useContext(AuthContext);
+  const { getProfileFromAsyncStorage, getAddressActiveUser, user, globalLoading, createOrder, createOrderItem, popUpMessage, setPopUpMessage, sendEmail, updateOrderStatusInvalid, notifyOrder, sendEmailConfirmation } = useContext(AuthContext);
   const { cart, totalValue, clearCart } = useContext(CartContext);
   const [profile, setProfile] = useState(null);
   const navigation = useNavigation();
@@ -36,16 +42,20 @@ export default function Checkout() {
       const fetchProfile = async () => {
         setLoading(true);
         const address = await getAddressActiveUser();
+
         if (address.length > 0) {
           setSelectedAddress(address[0]);
         } else {
-          console.log('Nenhum endereço encontrado');
+          setSelectedAddress(null);
         }
         const profileData = await getProfileFromAsyncStorage();
         if (profileData) {
           setProfile(JSON.parse(profileData));
         } else {
           navigation.navigate('UserForm', { element: null });
+        }
+        if (!user || !user.email || user.email.trim() === '') {
+          navigation.navigate('EmailForm');
         }
         setLoading(false);
       };
@@ -62,7 +72,7 @@ export default function Checkout() {
       return () => {
         BackHandler.removeEventListener('hardwareBackPress', onBackPress);
       };
-    }, [])
+    }, [user])
   );
 
   // globalLoading
@@ -127,9 +137,14 @@ export default function Checkout() {
           "quantity": item.produto_quantidade
         };
 
+        const roundToTwo = (num) => Math.round((num + Number.EPSILON) * 100) / 100;
+
         const order_detail = await createOrderItem(orderItem);
 
-        if (!order_detail || Number(order_detail.full_price) !== Number(item.total_value)) {
+        const valorPedido = roundToTwo(Number(order_detail.full_price));
+        const valorCarrinho = roundToTwo(Number(item.total_value));
+
+        if (!order_detail || valorPedido !== valorCarrinho) {
           await updateOrderStatusInvalid(order.id);
           hasError = true;
           throw new Error('Valor do pedido não confere com o valor total do produto');
@@ -137,19 +152,35 @@ export default function Checkout() {
       });
 
       await Promise.all(orderItemsPromises);
-
       if (hasError) return;
 
-      const email = await sendEmail(order.id);
-      if (email?.message === "Email sent successfully") {
-        clearCart();
-        setDescription(null);
-        setSelectedValue(1);
-        navigation.navigate('Sucess', { orderId: order.id });
-      } else {
+      let hasNotification = false;
+      try {
+        const whatsapp = await notifyOrder(order.id);
+        if (whatsapp && whatsapp.status == "success") {
+          hasNotification = true;
+        }
+      } catch (error) {
+        await updateOrderStatusInvalid(order.id);
+        throw new Error('Falha ao enviar notificação. Tente novamente mais tarde.');
+      }
+      const email = await sendEmail(order.id, hasNotification);
+      if (!email || email.message !== "Email sent successfully") {
+        await updateOrderStatusInvalid(order.id);
+        throw new Error('Falha ao enviar email');
+      }
+
+      const email_confirmation = await sendEmailConfirmation(order.id);
+      if (!email_confirmation || email_confirmation.status !== 201) {
         await updateOrderStatusInvalid(order.id);
         throw new Error('Falha ao enviar email de confirmação');
       }
+
+      // Success case
+      clearCart();
+      setDescription(null);
+      setSelectedValue(1);
+      navigation.navigate('Sucess', { orderId: order.id });
 
     } catch (error) {
       setMsgError(error.message || 'Erro ao processar pedido');

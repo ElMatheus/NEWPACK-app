@@ -1,3 +1,9 @@
+/**
+ * Desenvolvido por Matheus Gomes - [https://github.com/ElMatheus | matheusgomesgoncalves.564@gmail.com]
+ * Projeto: NEWPACK-APP
+ * Data de criação: 2024-2025
+ */
+
 import axios from "axios";
 import { createContext, useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -90,6 +96,7 @@ const AuthProvider = ({ children }) => {
         id: response.data.id,
         name: response.data.name,
         full_name: response.data.full_name,
+        email: response.data.email,
       });
     } catch (error) {
       console.error('Error in getUserById:', error);
@@ -99,6 +106,38 @@ const AuthProvider = ({ children }) => {
       }, 3000);
     }
     finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const updateEmail = async (email) => {
+    setGlobalLoading(true);
+    try {
+      await axios.put(`${apiURL}/users/${user.id}`, {
+        email: email
+      }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+      setUser({
+        ...user,
+        email: email
+      });
+      return true;
+    } catch (error) {
+      if (error.response.status === 400) {
+        if (error.response.data.message == "body/email Invalid email format") {
+          setPopUpMessage("E-mail inválido");
+          setTimeout(() => {
+            setPopUpMessage(null);
+          }, 3000);
+          return false;
+        }
+      }
+      setPopUpMessage("Não foi possível atualizar o e-mail");
+      return false;
+    } finally {
       setGlobalLoading(false);
     }
   };
@@ -350,15 +389,36 @@ const AuthProvider = ({ children }) => {
       setGlobalLoading(false);
     }
   };
+  const notifyOrder = async (orderId) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.post(`${apiURL}/whatsapp/send-message`, { orderId }, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.status === 503) {
+        return { status: "error", reason: "whatsapp-not-connected" };
+      }
+      setPopUpMessage("Não foi possível enviar a notificação");
+      throw error;
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
 
-  const sendEmail = async (orderId) => {
+
+  const sendEmail = async (orderId, hasNotification) => {
     setGlobalLoading(true);
     try {
       const profileData = await getProfileFromAsyncStorage();
       const parsedProfileData = JSON.parse(profileData);
       const response = await axios.post(`${apiURL}/email/${orderId}`, {
         name: parsedProfileData.name,
-        telephone: `${parsedProfileData.country.callingCode} ${parsedProfileData.telephone}`
+        telephone: `${parsedProfileData.country.callingCode} ${parsedProfileData.telephone}`,
+        hasNotification: hasNotification
       }, {
         headers: {
           Authorization: `Bearer ${acessToken}`
@@ -367,6 +427,22 @@ const AuthProvider = ({ children }) => {
       return response.data;
     } catch (error) {
       setPopUpMessage("Não foi possível enviar o e-mail");
+    } finally {
+      setGlobalLoading(false);
+    }
+  };
+
+  const sendEmailConfirmation = async (orderId) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.post(`${apiURL}/email/order-confirmation/${orderId}`, {}, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+      return response;
+    } catch (error) {
+      setPopUpMessage("Não foi possível enviar o e-mail de confirmação");
     } finally {
       setGlobalLoading(false);
     }
@@ -419,8 +495,26 @@ const AuthProvider = ({ children }) => {
     }
   }
 
+  const getOrderById = async (id) => {
+    setGlobalLoading(true);
+    try {
+      const response = await axios.get(`${apiURL}/orders/${id}`, {
+        headers: {
+          Authorization: `Bearer ${acessToken}`
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error in getOrderById:', error);
+      setPopUpMessage("Não foi possível carregar o pedido pelo id");
+    }
+    finally {
+      setGlobalLoading(false);
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ setUser, user, signIn, signOut, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById, updateOrderStatusInvalid, getOrdersForUser }}>
+    <AuthContext.Provider value={{ setUser, user, signIn, signOut, globalLoading, popUpMessage, setPopUpMessage, getProductsForUser, getProductById, createProfileUser, getProfileFromAsyncStorage, clearProfileFromAsyncStorage, getAddressesUser, getAddressActiveUser, updateAddress, addAddress, removeAddress, createOrder, createOrderItem, sendEmail, loadingStoreData, getOrderDetailsById, updateOrderStatusInvalid, getOrdersForUser, notifyOrder, getOrderById, sendEmailConfirmation, updateEmail }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,3 +1,9 @@
+/**
+ * Desenvolvido por Matheus Gomes - [https://github.com/ElMatheus | matheusgomesgoncalves.564@gmail.com]
+ * Projeto: NEWPACK-APP
+ * Data de criação: 2024-2025
+ */
+
 import { NavigationContainer } from "@react-navigation/native";
 import { useContext } from "react";
 import PrivateTab from "./PrivateTab.routes";
