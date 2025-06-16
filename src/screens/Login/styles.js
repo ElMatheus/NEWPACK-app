@@ -2,41 +2,36 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
     zIndex: 2,
+  },
+  popUpContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
   containerLogin: {
     flex: 1,
     backgroundColor: '#e8e8e8',
-    padding: 10,
-    alignItems: 'center',
+    width: '100%',
+    paddingVertical: 54,
+    paddingHorizontal: 28,
     borderTopLeftRadius: 58,
     borderTopRightRadius: 58,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 12 },
     shadowOpacity: 0.58,
-    zIndex: 1,
     shadowRadius: 16,
+    justifyContent: 'space-between',
   },
-  containerImg: {
-    alignItems: 'center',
-    padding: '17%',
+  containerImage: {
+    paddingVertical: 58
   },
-  title: {
-    fontSize: 34,
-    marginTop: 70,
-    marginBottom: 50,
-    color: '#000',
-    fontFamily: 'Poppins_700Bold',
-  },
-  containerInps: {
-    marginTop: 45,
-    width: '85%',
-  },
-  containerInps2: {
-    gap: 43,
-    marginBottom: 30,
+  containerInputs: {
+    gap: 36,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -59,17 +54,18 @@ const styles = StyleSheet.create({
     padding: 17,
     borderRadius: 12,
     alignItems: 'center',
-    marginTop: 16,
+    marginTop: 14,
   },
   buttonTxt: {
     color: '#fff',
     fontSize: 18,
     fontFamily: 'Poppins_500Medium',
   },
-  showPasswordIcon: {
-    position: 'absolute',
-    right: 15,
-    zIndex: 1,
+  helpText: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: '#b7b7b7',
+    fontFamily: 'Poppins_400Regular',
   },
   versionText: {
     marginTop: '50%',

@@ -16,6 +16,7 @@ import { CartContext } from '../../src/contexts/CartContext';
 import { useContext } from "react";
 import UserInfos from "../screens/UserInfos";
 import UserOrders from "../screens/UserOrders";
+import HelpPage from "../screens/HelpPage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,6 +30,7 @@ const ProductsStack = () => (
     <Stack.Screen name="Address" component={Address} />
     <Stack.Screen name="EmailForm" component={EmailForm} />
     <Stack.Screen name="UserOrders" component={UserOrders} />
+    <Stack.Screen name="Help" component={HelpPage} />
   </Stack.Navigator>
 );
 

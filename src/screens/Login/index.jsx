@@ -7,8 +7,10 @@ import PopUp2 from '../../components/PopUp2';
 import styles from './styles';
 import { version } from '../../../package.json';
 import GlobalLoading from '../../components/GlobalLoading';
+import { useNavigation } from '@react-navigation/native';
 
 export default function Login() {
+  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [popUp, setPopUp] = useState(null);
@@ -41,6 +43,10 @@ export default function Login() {
     setLoading(false);
   };
 
+  const handleHelp = () => {
+    navigation.navigate('Help');
+  }
+
   useEffect(() => {
     setPopUp(popUpMessage);
   }, [popUpMessage]);
@@ -51,48 +57,57 @@ export default function Login() {
         <GlobalLoading />
       ) : (
         <View style={styles.container}>
-          <View>
+          <View style={styles.popUpContainer}>
             {popUp && <PopUp message={popUp} />}
           </View>
-          <View style={styles.containerImg}>
-            <Image style={{ width: 160, height: 110 }} source={require('../../../assets/images/newpack-logo.png')} />
+          <View style={styles.containerImage}>
+            <Image
+              style={{ width: 160, height: 110 }}
+              source={require('../../../assets/images/newpack-logo.png')}
+            />
           </View>
           <View style={styles.containerLogin}>
-            <View style={styles.containerInps}>
-              <View style={styles.containerInps2}>
-                <View style={styles.inputContainer}>
-                  <Icon color="#b7b7b7" name="user-check" size={18} />
-                  <TextInput
-                    onChangeText={setName}
-                    value={name}
-                    placeholder="Insira seu nome"
-                    style={styles.inputTxt}
+            <View style={styles.containerInputs}>
+              <View style={styles.inputContainer}>
+                <Icon color="#b7b7b7" name="user-check" size={18} />
+                <TextInput
+                  onChangeText={setName}
+                  value={name}
+                  placeholder="Insira seu nome"
+                  style={styles.inputTxt}
+                />
+              </View>
+              <View style={styles.inputContainer}>
+                <Icon color="#b7b7b7" name="key" size={18} />
+                <TextInput
+                  onChangeText={setPassword}
+                  value={password}
+                  placeholder="Insira sua senha"
+                  secureTextEntry={!showPassword}
+                  style={styles.inputTxt}
+                />
+                <TouchableOpacity
+                  style={styles.showPasswordIcon}
+                  onPress={() => setShowPassword(!showPassword)}
+                >
+                  <Icon
+                    name={showPassword ? 'eye-slash' : 'eye'}
+                    size={18}
+                    color="#b7b7b7"
                   />
-                </View>
-                <View style={styles.inputContainer}>
-                  <Icon color="#b7b7b7" name="key" size={18} />
-                  <TextInput
-                    onChangeText={setPassword}
-                    value={password}
-                    placeholder="Insira sua senha"
-                    secureTextEntry={!showPassword}
-                    style={styles.inputTxt}
-                  />
-                  <TouchableOpacity
-                    style={styles.showPasswordIcon}
-                    onPress={() => setShowPassword(!showPassword)}
-                  >
-                    <Icon
-                      name={showPassword ? 'eye-slash' : 'eye'}
-                      size={18}
-                      color="#b7b7b7"
-                    />
-                  </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
               </View>
               <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 {loading ? <ActivityIndicator size="large" color="#fff" /> : <Text style={styles.buttonTxt}>Entrar</Text>}
               </TouchableOpacity>
+            </View>
+            <View>
+              <Text style={styles.helpText}>
+                Está precisando de ajuda?{' '}
+                <Text onPress={handleHelp} style={{ color: '#4B6584' }}>
+                  Clique aqui
+                </Text>
+              </Text>
               <Text style={styles.versionText}>Versão {version}</Text>
             </View>
           </View>

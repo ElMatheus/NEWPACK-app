@@ -40,6 +40,10 @@ export default function UserInfos() {
     navigation.navigate('EmailForm');
   }
 
+  const handleAcessHelp = () => {
+    navigation.navigate('Help');
+  }
+
   useEffect(() => {
     if (popUpMessage) {
       setError(true);
@@ -84,6 +88,12 @@ export default function UserInfos() {
               <Text style={styles.title2}>Email</Text>
             </TouchableOpacity>
           </View>
+        </View>
+        <View style={styles.containerResources}>
+          <TouchableOpacity onPress={handleAcessHelp} style={styles.containerCard2}>
+            <Ionicons name="help" size={21} color="black" />
+            <Text style={styles.title2}>Ajuda</Text>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.button} onPress={handleExitAcc}>
           <View style={styles.containerButton}>
