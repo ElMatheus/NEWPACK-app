@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from './styles';
 import { useContext, useEffect, useCallback, useState } from 'react';
-import Octicons from '@expo/vector-icons/Octicons';
 import { AuthContext } from '../../contexts/AuthContext';
 import GlobalLoading from '../../components/GlobalLoading';
 import PopUp2 from '../../components/PopUp2';

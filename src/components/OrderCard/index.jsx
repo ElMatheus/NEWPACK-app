@@ -1,9 +1,12 @@
-import { View, Text, TouchableOpacity, DevSettings } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import styles from './styles';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
 const OrderCard = ({ order }) => {
   const [expanded, setExpanded] = useState(false);
+  const navigation = useNavigation();
 
   const total = order.Order_details.reduce((sum, product) => sum + product.full_price, 0);
 
@@ -13,6 +16,10 @@ const OrderCard = ({ order }) => {
       maximumFractionDigits: 2
     });
   };
+
+  const acessReceipt = () => {
+    navigation.navigate('Sucess', { orderId: order.id });
+  }
 
   return (
     order.status !== 'Oferta' && (
@@ -80,6 +87,10 @@ const OrderCard = ({ order }) => {
                     <Text style={styles.productTextItem}>Endereço não informado</Text>
                   )}
                 </View>
+                <TouchableOpacity onPress={acessReceipt} style={styles.button}>
+                  <Text style={styles.textButton}>Acessar comprovante</Text>
+                  <MaterialIcons name="receipt" size={24} color="#fff" />
+                </TouchableOpacity>
               </View>
             )}
           </TouchableOpacity>

@@ -87,6 +87,19 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#eee',
   },
+  button: {
+    backgroundColor: '#4B6584',
+    padding: 12,
+    borderRadius: 8,
+    marginTop: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  textButton: {
+    color: '#fff',
+    fontSize: 16,
+    fontFamily: 'Poppins_600SemiBold',
+  },
 });
 
 export default styles;
